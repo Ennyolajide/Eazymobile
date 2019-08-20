@@ -10,9 +10,8 @@ class PasswordResetController extends Controller
 
     public function index()
     {
-        return view('users/register');
+        $app = $this->getAppDetails();
+
+        return view('users/reset', compact('app'));
     }
-
-
-
 }

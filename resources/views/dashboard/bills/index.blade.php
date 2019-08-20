@@ -1,37 +1,14 @@
 @extends('dashboard.layouts.master')
 
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h4>Pay Bills</h4>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li class="active">Bills</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    @endsection
+    @section('title')Bills @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Pay Bills</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
+                <div class="box-content">
+                    <h3 class="box-title">Pay Bills</h2>
+
                     <div class="x_content">
                         <section class="container">
                             <br />

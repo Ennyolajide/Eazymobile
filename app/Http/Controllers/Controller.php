@@ -14,6 +14,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+
+
     public function notify($notification = null)
     {
         Message::create([
@@ -74,5 +76,10 @@ class Controller extends BaseController
     protected function getUniqueReference()
     {
         return md5(env('APP_REFERENCE') . time() . rand(1, 10000));
+    }
+
+    protected function getAppDetails()
+    {
+        return \config('constants.site');
     }
 }

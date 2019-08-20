@@ -17,16 +17,16 @@ Route::get('/', function () {
 
 //Auth::routes();
 
-//Auth
-Route::get('/users/login', 'LoginController@index')->name('user.login');
+//Authetication
+Route::get('/users/login', 'LoginController@showLogin')->name('show.login');
 Route::post('/users/login', 'LoginController@login')->name('user.login');
 Route::get('/users/logout', 'LoginController@logout')->name('user.logout');
-Route::get('/register', 'RegisterController@index')->name('user.register');
+Route::get('/register', 'RegisterController@index')->name('show.register');
 Route::post('/register', 'RegisterController@register')->name('user.register');
-Route::get('/register/referrer/{wallet}', 'RegisterController@show')->name('user.register.referrer');
+//Route::get('/register/referrer/{wallet}', 'RegisterController@show')->name('user.register.referrer');
 
-Route::get('users/verify/{email}/{token}', 'VerificationController@verify');
-Route::get('users/reset', 'PasswordResetController@index')->name('user.passwordReset');
+Route::get('/users/verify/{email}/{token}', 'VerificationController@verify')->name('user.verification');
+Route::get('users/reset', 'PasswordResetController@index')->name('show.passwordReset');
 Route::post('users/reset', 'PasswordResetController@reset')->name('user.passwordReset');
 
 //
@@ -39,6 +39,7 @@ Route::post('/dashboard/bank/add', 'BankController@storeBank')->name('user.bank.
 Route::patch('/dashboard/bank/{bank}/delete', 'BankController@deleteBank')->name('user.bank.delete');
 Route::post('/dashboard/bank/details', 'BankController@resolveBankDetails')->name('paystack.bankDetails');
 Route::post('/dashboard/profile/password/edit', 'ProfileController@editPassword')->name('user.password.edit');
+Route::patch('/dashboard/profile/edit', 'ProfileController@editProfile')->name('user.profile.edit');
 
 
 //Message

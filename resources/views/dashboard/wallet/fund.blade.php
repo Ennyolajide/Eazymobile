@@ -1,181 +1,154 @@
 @extends('dashboard.layouts.master')
 
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h4>Fund Wallet</h4>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li class="active">Wallet</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    @endsection
+    @section('title')Fund Wallet @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Fund Wallet</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-                                <form id="fund-wallet-form" class="form-horizontal" method="post">
-                                    @csrf
-                                    <br/>
-                                    <div id="atmBankBitcoin-form">
-                                        <div class="form-group" id="gateway-type">
-                                            <label for="inputWallet" class="col-sm-3 col-xs-12 control-label">Payment Method</label>
-                                            <div class="col-sm-9 col-xs-12 ">
-                                                <select class="form-control" id="gateway" name="gateway" required>
-                                                    <option value="" disabled selected>Select gateway Method</option>
-                                                    @foreach ($gateways as $gateway)
-                                                        <option value="{{ $gateway->id }}">
-                                                            {{ $gateway->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                <div class="box-content">
+                    <h3 class="box-title">Fund Wallet</h3>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                            <form id="fund-wallet-form" class="form-horizontal" method="post">
+                                @csrf
+                                <br/>
+                                <div id="atmBankBitcoin-form">
+                                    <div class="form-group" id="gateway-type">
+                                        <label for="inputWallet" class="col-sm-3 col-xs-12 control-label">Payment Method</label>
+                                        <div class="col-sm-9 col-xs-12 ">
+                                            <select class="form-control" id="gateway" name="gateway" required>
+                                                <option value="" disabled selected>Select gateway Method</option>
+                                                @foreach ($gateways as $gateway)
+                                                    <option value="{{ $gateway->id }}">
+                                                        {{ $gateway->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                        </div>
-                                        <input type="hidden" name="email" value="{{ Auth::user()->email }}">
                                     </div>
-                                    <br/>
-                                    <div id="amount-field" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Amount</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" class="form-control" name="amount" required>
-                                                <p class="help-block text-olive">Enter amount you want to fund.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="bank-transfer" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Depositor</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" class="form-control" name="depositor" value="" required>
-                                                <p class="help-block text-olive">Enter depositor name or account name.</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" id="chooseBank">
-                                            <label class="col-sm-3 col-xs-12 control-label">Bank</label>
-                                            <div class="col-sm-9 col-xs-12 ">
-                                                <select class="form-control" id="bank" name="bankId" required>
-                                                    <option value="" disabled selected>Select Our Bank </option>
-                                                    @foreach ($banks as $item)
-                                                        <option value="{{ $item->id }}">
-                                                            {{ $item->bank_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <p class="help-block text-olive">Bank to transfer to</p>
-                                            </div>
-                                            <div class="col-sm-9 col-sm-offset-3 col-xs-12 ">
-                                                <div class="radio" style="display:none; border: 2px solid #605ca8;">
-                                                    <p class="text-center well no-shadow" style="margin:-6px 0px 0px 0px; padding: 2px 7px;">
-                                                        <span class="bankName"></span><br/>
-                                                        <strong><span class="accNo"></span></strong><br/>
-                                                        <span class="accName"></span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <br/>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Reference (optional)</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" class="form-control" name="reference" value="">
-                                                <p class="help-block text-olive">Enter reference / teller</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Remarks (optional)</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <textarea name="remarks" class="form-control" style="height: 80px"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="airtime-form" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label" >Network</label>
-                                            <div class="col-sm-9 col-xs-12">
-                                                <div id="percentages" data-networks="{{ $networks }}">
-                                                    <select class="form-control" name="network" id="network">
-                                                        <option value="" disabled selected>Choose Network</option>
-                                                        @foreach ($networks as $network)
-                                                            <option value="{{ $network->id }}">
-                                                                {{ $network->network }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <p class="help-block text-olive">Select the network you want to fund with.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Amount</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" id="airtimeAmount" class="form-control" name="airtimeAmount" value="" required>
-                                                <p class="help-block text-olive">Enter amount you want to fund.</p>
-                                            </div>
-                                        </div>
-                                        <div id="wallet-amount" class="form-group" style="display:none;">
-                                            <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input id="wallet_amount" type="text" class="form-control" name="wallet_amount" disabled>
-                                                <p class="help-block text-olive">Enter amount you want to fund.</p>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Phone Number</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" class="form-control" name="swapFromPhone" required>
-                                                <p class="help-block text-olive">The phone number you want to transfer the airtime from.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="ecard-form" style="display:none;">
-                                        <div class="form-group">
-                                            <label class="col-sm-3 col-xs-12 control-label">Voucher Pin</label>
-                                            <div class="col-sm-9 col-xs-12 form-grouping">
-                                                <input type="text" class="form-control" name="voucher">
-                                                {{-- <p class="help-block text-olive">Enter the Voucher Pin</p> --}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br/>
+                                    <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+                                </div>
+                                <br/>
+                                <div id="amount-field" style="display:none;">
                                     <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <button id="submit" class="btn bg-purple pull-right">Continue</button>
+                                        <label class="col-sm-3 col-xs-12 control-label">Amount</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" class="form-control" name="amount" required>
+                                            <p class="help-block text-olive">Enter amount you want to fund.</p>
                                         </div>
                                     </div>
-                                    <br/><br/>
-                                </form>
-                            </div>
+                                </div>
+
+                                <div id="bank-transfer" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Depositor</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" class="form-control" name="depositor" value="" required>
+                                            <p class="help-block text-olive">Enter depositor name or account name.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="chooseBank">
+                                        <label class="col-sm-3 col-xs-12 control-label">Bank</label>
+                                        <div class="col-sm-9 col-xs-12 ">
+                                            <select class="form-control" id="bank" name="bankId" required>
+                                                <option value="" disabled selected>Select Our Bank </option>
+                                                @foreach ($banks as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->bank_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <p class="help-block text-olive">Bank to transfer to</p>
+                                        </div>
+                                        <div class="col-sm-9 col-sm-offset-3 col-xs-12 ">
+                                            <div class="radio" style="display:none; border: 2px solid #605ca8;">
+                                                <p class="text-center well no-shadow" style="margin:-6px 0px 0px 0px; padding: 2px 7px;">
+                                                    <span class="bankName"></span><br/>
+                                                    <strong><span class="accNo"></span></strong><br/>
+                                                    <span class="accName"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Reference (optional)</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" class="form-control" name="reference" value="">
+                                            <p class="help-block text-olive">Enter reference / teller</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Remarks (optional)</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <textarea name="remarks" class="form-control" style="height: 80px"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="airtime-form" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label" >Network</label>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <div id="percentages" data-networks="{{ $networks }}">
+                                                <select class="form-control" name="network" id="network">
+                                                    <option value="" disabled selected>Choose Network</option>
+                                                    @foreach ($networks as $network)
+                                                        <option value="{{ $network->id }}">
+                                                            {{ $network->network }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <p class="help-block text-olive">Select the network you want to fund with.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Amount</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" id="airtimeAmount" class="form-control" name="airtimeAmount" value="" required>
+                                            <p class="help-block text-olive">Enter amount you want to fund.</p>
+                                        </div>
+                                    </div>
+                                    <div id="wallet-amount" class="form-group" style="display:none;">
+                                        <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input id="wallet_amount" type="text" class="form-control" name="wallet_amount" disabled>
+                                            <p class="help-block text-olive">Enter amount you want to fund.</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Phone Number</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" class="form-control" name="swapFromPhone" required>
+                                            <p class="help-block text-olive">The phone number you want to transfer the airtime from.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="ecard-form" style="display:none;">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 col-xs-12 control-label">Voucher Pin</label>
+                                        <div class="col-sm-9 col-xs-12 form-grouping">
+                                            <input type="text" class="form-control" name="voucher">
+                                            {{-- <p class="help-block text-olive">Enter the Voucher Pin</p> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button id="submit" class="btn bg-primary btn-rounded pull-right">Continue</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        @include('dashboard.layouts.errors')
                     </div>
-                    @include('dashboard.layouts.box-footer')
+                    @include('dashboard.layouts.errors')
                 </div>
+                @include('dashboard.layouts.box-footer')
             </div>
         </div>
     @endSection
@@ -225,8 +198,8 @@
                         <div class="modal-footer">
                             <form action="{{ route('airtime.cash.completed', ['airtimeRecord' => session('modal')->airtimeRecordId ]) }}" method="post">
                                 @csrf @method('patch')
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Completed</button>
+                                <button type="button" class="btn btn-default btn-rounded pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-rounded">Completed</button>
                             </form>
                         </div>
                     </div>
@@ -280,8 +253,8 @@
                         <div class="modal-footer">
                             <form action="{{ route('wallet.fund.bank.completed', ['bankTransferRecord' => session('modal')->record->id ]) }}" method="post">
                                 @csrf @method('patch')
-                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Completed</button>
+                                <button type="button" class="btn btn-default btn-rounded pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-rounded">Completed</button>
                             </form>
                         </div>
                     </div>

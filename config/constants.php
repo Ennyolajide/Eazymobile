@@ -3,7 +3,8 @@
 return [
 
     'site' => [
-        'name' => 'Ogdams'
+        'year' => 2016,
+        'name' => getenv('APP_NAME')
     ],
 
     'url' => [

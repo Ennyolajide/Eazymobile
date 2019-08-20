@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         factory(App\Message::class, 20)->create();
 
         //Tansaction Seeder
-        factory(App\Transaction::class, 5)->create();
+        factory(App\Transaction::class, 50)->create();
 
         $this->call(UsersTableSeeder::class);
         $this->call(BanksTableSeeder::class);

@@ -19,11 +19,7 @@ class ProfileController extends PaystackController
      */
     public function profileIndex()
     {
-        $banks = $this->bankList()->data; //get the list of all available banks
-        $myBanks = Bank::where('user_id', Auth::user()->id)->get();  //get User's bank List
-        $messages = Message::where('user_id', Auth::user()->id)->orderBy('id', 'desc');
-
-        return view('dashboard.profile.index', compact('banks', 'myBanks', 'messages'));
+        return view('dashboard.profile.index');
     }
 
     /**
@@ -38,5 +34,18 @@ class ProfileController extends PaystackController
         $message = $status ? $this->successResponse : ($isValidCurrentPassword ? $this->failureResponse : $this->errorResponse);
 
         return back()->withNotification($this->clientNotify($message, $status));
+    }
+
+    /**
+     * Edit/Change user passwordd
+     */
+    public function editProfile(Request $request)
+    {
+        //validate Request
+        $this->validate(request(), ['name' => 'required|string|min:5|max:35', 'phone' => 'required|string|min:10|max:15']);
+        $status = User::find(Auth::user()->id)->update(['name' => $request->name, 'number' => $request->phone]) ? true : false; //update profile info
+        $message = $status ? 'successful' : 'failed';
+
+        return back()->withNotification($this->clientNotify('Profile update ' . $message, $status));
     }
 }

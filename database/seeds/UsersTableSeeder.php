@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('secret'),
             'api_token' => Str::random(60),
             'role' => 'admin',
+            'route' => 'control',
             'permission' => true,
             'active' => true,
             'number' => '07063637002',

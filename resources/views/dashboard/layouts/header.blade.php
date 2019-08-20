@@ -4,60 +4,50 @@ $unReadMessages = Auth::user()->messages->where('read',0)->sortByDesc('id');
 
 @endphp
 
-<!-- top navigation -->
-<div class="top_nav">
-
-    <div class="nav_menu">
-        <nav class="" role="navigation">
-            <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
-            </div>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li class="">
-                    <a class="text-bold">@naira(Auth::user()->balance)</a>
-                </li>
-
-                <li role="presentation" class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="badge bg-green">{{ $unReadMessages->count() }}</span>
-                    </a>
-                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
-                        @foreach ($unReadMessages as $unReadMessage)
-                        <li>
-                            <a href="{{ route('messages.message',$unReadMessage->id) }}">
-                                <span class="image">
-                                    <img src="images/img.jpg" alt="Profile Image" />
-                                </span>
-                                <span>
-                                    <span>{{ $unReadMessage->sender->name }}</span>
-                                    <span class="time"> {{ $unReadMessage->created_at->diffForHumans() }}</span>
-                                </span>
-                                <span class="message">
-                                {{ str_limit($unReadMessage->content, 12, '...') }}
-                                </span>
-                            </a>
-                            @if($loop->iteration >= 5)
-                                @break;
-                            @endif
-                        </li>
-                        <!-- end message -->
-                        @endForeach
-                        <li>
-                            <div class="text-center">
-                                <a href="{{ route('messages.inbox') }}">
-                                    <strong>See All Messages</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
+<div class="fixed-navbar">
+    <div class="pull-left">
+        <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+        <h1 class="page-title">@yield('title')</h1>
+        <!-- /.page-title -->
     </div>
-
+    <!-- /.pull-left -->
+	<div class="pull-right">
+        <!-- /.ico-item -->
+        <a href="#" class="ico-item ti-email notice-alarm js__toggle_open" data-target="#message-popup">
+            <span class="info-number bg-warning">{{ $unReadMessages->count() }}</sup>
+        </a> &nbsp;&nbsp;
+        <a class="text-bold text-white">@naira(Auth::user()->balance)</a>
+    </div>
+	<!-- /.pull-right -->
 </div>
+<!-- /.fixed-navbar -->
+
+<div id="message-popup" class="notice-popup js__toggle" data-space="75">
+    <h2 class="popup-title">Recent Messages<a href="#" class="pull-right text-danger">New message</a></h2>
+    <!-- /.popup-title -->
+    <div class="content">
+        <ul class="notice-list">
+            @foreach ($unReadMessages as $unReadMessage)
+                <li>
+                    <a href="{{ route('messages.message',$unReadMessage->id) }}">
+                        <span class="avatar"><img src="https://placehold.it/80x80" alt=""></span>
+                        <span class="name">{{ $unReadMessage->sender->name }}</span>
+                        <span class="desc">{{ str_limit($unReadMessage->content, 12, '...') }}</span>
+                        <span class="time">{{ $unReadMessage->created_at->diffForHumans() }}</span>
+                    </a>
+                </li>
+                @if($loop->iteration >= 5)
+                    @break;
+                @endif
+            @endForeach
+        </ul>
+        <!-- /.notice-list -->
+        <a href="{{ route('messages.inbox') }}" class="notice-read-more">
+            See more messages <i class="fa fa-angle-down"></i>
+        </a>
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /#message-popup -->
+
 <!-- /top navigation -->

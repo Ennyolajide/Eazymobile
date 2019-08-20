@@ -1,11 +1,16 @@
 @extends('dashboard.layouts.master')
 
+    @section('title')
+        test
+    @endSection
+
     @section('content-header')
 
     @endSection
 
     @section('content')
         <!-- top tiles -->
+        <div class="row">
         <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> Total Users</span>

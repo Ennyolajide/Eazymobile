@@ -2,33 +2,33 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Meta, title, CSS, favicons, etc. -->
-        <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
         <title>@yield('title')</title>
+        <link rel="stylesheet" href="\styles/style.min.css">
 
-        <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="\css/bootstrap/bootstrap.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="\plugins/font-awesome/css/font-awesome.min.css">
-        <!-- NProgress -->
-        <link href="\plugins/nprogress/nprogress.css" rel="stylesheet">
-        <!-- Animate.css -->
-        <link href="\css/animate.min.css" rel="stylesheet">
-
-        <!-- Theme style -->
-        <link href="\css/custom.min.css" rel="stylesheet">
-
+        <!-- Waves Effect -->
+        <link rel="stylesheet" href="\plugins/waves/waves.min.css">
+        @yield('css')
 
     </head>
 
-    <body class="login">
-
+    <body>
         @yield('content')
 
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="\js/jquery.min.js"></script>
+        <script src="\js/modernizr.min.js"></script>
+        <script src="\plugins/bootstrap/js/bootstrap.min.js"></script>
+        <script src="\plugins/nprogress/nprogress.js"></script>
+        <script src="\plugins/waves/waves.min.js"></script>
+
+        <script src="\js/main.min.js"></script>
         @yield('scripts')
     </body>
 </html>
+
+

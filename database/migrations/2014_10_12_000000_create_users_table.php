@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('email', 40)->unique();
             $table->boolean('active')->default(false);
             $table->string('token')->nullable();
+            $table->string('route')->default('dashboard');
             $table->string('role')->default('customer');
             $table->boolean('permission')->default(false);
             $table->string('number')->nullable();
@@ -32,7 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('referrer')->nullable();
             $table->string('wallet_id')->unique();
             $table->rememberToken();
-            $table->string('api_token');
+            $table->string('api_token')->nullable();
             $table->timestamps();
         });
     }
