@@ -21,7 +21,7 @@ class RegistrationNotification extends Mailable
      */
     public function __construct($name, $link)
     {
-        $this->name = $name;
+        $this->name = ucwords($name);
         $this->link = $link;
     }
 

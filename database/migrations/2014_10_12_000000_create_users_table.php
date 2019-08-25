@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email', 40)->unique();
+            $table->string('facebook_id')->nullable();
             $table->boolean('active')->default(false);
             $table->string('token')->nullable();
             $table->string('route')->default('dashboard');
@@ -31,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('pin')->nullable();
             $table->string('referrer')->nullable();
-            $table->string('wallet_id')->unique();
+            $table->string('wallet_id')->nullable();
             $table->rememberToken();
             $table->string('api_token')->nullable();
             $table->timestamps();

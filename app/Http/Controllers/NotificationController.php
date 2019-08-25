@@ -132,18 +132,6 @@ class NotificationController extends HomeController
         return $message;
     } */
 
-    /**
-     * Notify Client of something that happend
-     */
-    public function clientNotify($message, $status = false)
-    {
-        return (object) [
-            'message' => $message,
-            'status' => $status ? $status : false,
-        ];
-    }
-
-
     /* Control Notification */
 
     protected function controlWithdrawalNotification($amount)

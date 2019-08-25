@@ -20,7 +20,7 @@
             <li><a href="{{ route('data.buy') }}"><i class="fa fa-wifi"></i> <span>Buy Data</span></a></li>
             <li><a href="{{ route('sms.bulk') }}"><i class="fa fa-envelope-o"></i> <span>Bulk Sms</span></a></li>
             <li><a href="{{ route('bills') }} "><i class="fa fa-credit-card custom"></i> <span>Pay Bills</span></a></li>
-            {{-- <li>
+            <li>
                 <a href="{{ route('messages.inbox') }}">
                     <i class="fa fa-envelope"></i> <span>Inbox</span>
                     <span class="pull-right-container">
@@ -29,7 +29,7 @@
                         <small class="label pull-right bg-red">5</small>
                     </span>
                 </a>
-            </li> --}}
+            </li>
 
             <li><a href="{{ route('user.transactions') }}"><i class="fa fa-gears"></i> <span>Transactions</span></a></li>
         @endif

@@ -25,6 +25,17 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Notify Client of something that happend
+     */
+    public function clientNotify($message, $status = false)
+    {
+        return (object) [
+            'message' => $message,
+            'status' => $status ? $status : false,
+        ];
+    }
+
     public function naira($amount)
     {
         return '₦' . number_format($amount, 2);

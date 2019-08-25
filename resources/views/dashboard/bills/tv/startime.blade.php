@@ -15,7 +15,7 @@
                                     <h3 class="text-primary text-center"><strong> {{ $product->name }} </strong></h3>
                                     {{-- <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3> --}}
                                 </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  pull-right">
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3  pull-right">
                                     <br/>
                                     <img  src="\images/bills/{{ $product->logo }}" class="img-thumbnail">
                                 </div>
@@ -58,7 +58,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Smart Card No.</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" id="cardNo" value="02027857407" class="form-control" name="cardNo" placeholder="Smart Card Number">
+                                            <input type="text" id="cardNo" value="{{ old('cardNo') }}" class="form-control" name="cardNo" placeholder="Smart Card Number">
                                         </div>
                                     </div>
                                     <div class="form-group" id="nameDiv" style="display:none;">
@@ -100,15 +100,14 @@
                     </div>
                     @include('dashboard.layouts.errors')
                 </div>
-                <!-- .box-footer -->
-                @include('dashboard.layouts.box-footer')
-                <!-- /.box-footer -->
             </div>
             <!-- /.box -->
         </div>
+    @endSection
 
+    @section('modals')
         <!-- .modal -->
-        <div class="modal fade" tabindex="-1" id="error-modal" role="dialog">
+        <div class="modal fade" id="error-modal">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -128,6 +127,7 @@
                             </div>
                         <div>
                     </div>
+
                 </div>
                 <!-- /.modal-content -->
             </div>

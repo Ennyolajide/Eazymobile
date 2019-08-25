@@ -47,11 +47,11 @@
                                             <div class="col-sm-9">
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <button type="submit" name="debit" value="1" class="btn btn-danger btn-rounded waves-effect waves-light">Debit User</button>
+                                                        <button type="submit" name="debit" value="1" class="btn btn-danger btn-rounded waves-effect waves-light text-white">Debit User</button>
                                                     </span>
                                                     <input type="text" name="amount" class="form-control">
                                                     <span class="input-group-btn">
-                                                        <button type="submit" name="credit" value="1" class="btn btn-primary btn-rounded waves-effect waves-light">Credit User</button>
+                                                        <button type="submit" name="credit" value="1" class="btn btn-primary btn-rounded waves-effect waves-light text-white">Credit User</button>
                                                     </span>
                                                 </div>
                                             </div>

@@ -31,7 +31,22 @@
         @yield('css')
         <!-- Custom styles -->
         @yield('style')
+
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/5cb5be96c1fe2560f3ff1308/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
     </head>
+
     <body>
         <div class="main-menu">
             <header class="header">
@@ -61,22 +76,21 @@
                 <!-- /.content  -->
                 @include('dashboard.layouts.footer')
             </div>
-            <!-- Notifier -->
-            {{-- simple modal without header and footer to display response form server to client --}}
-            @include('dashboard.layouts.notifier')
-            <!-- /.Notifier -->
-
             <!-- /.main-content -->
         </div>
 
+        <!-- Notifier -->
+        {{-- simple modal without header and footer to display response form server to client --}}
+        @include('dashboard.layouts.notifier')
+        <!-- /.Notifier -->
+
+        @yield('modals');
 
         <!-- jQuery -->
         <script src="\js/jquery.min.js"></script>
         <!-- Bootstrap -->
         <script src="\js/modernizr.min.js"></script>
         <script src="\js/bootstrap.min.js"></script>
-        <!-- FastClick -->
-        <!--script src="\js/fastclick.js"></script-->
         <!-- mCustomScroller -->
         <script src="\plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
         <!-- NProgress -->
@@ -85,8 +99,7 @@
         <script src="\plugins/sweet-alert/sweetalert.min.js"></script>
         <!-- Waves -->
         <script src="\plugins/waves/waves.min.js"></script>
-        <!-- Custom Theme Scripts -->
-        <script src="\js/main.min.js"></script>
+
         <!-- Notify -->
         @if( session('notification'))
             <script>
@@ -100,5 +113,8 @@
         @endif
 
         @yield('scripts')
+
+        <!-- Custom Theme Scripts -->
+        <script src="\js/main.min.js"></script>
     </body>
 </html>

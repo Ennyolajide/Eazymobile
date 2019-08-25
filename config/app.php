@@ -177,8 +177,8 @@ return [
 
         /* paystack */
         Unicodeveloper\Paystack\PaystackServiceProvider::class,
-
-
+        /* Laravel Socialite */
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -228,7 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
-
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

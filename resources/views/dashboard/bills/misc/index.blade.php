@@ -15,7 +15,7 @@
                                     <h3 class="text-primary text-center"><strong> {{ $product->name }} </strong></h3>
                                     {{-- <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3> --}}
                                 </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  pull-right">
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3  pull-right">
                                     <br/>
                                     <img  src="\images/bills/{{ $product->logo }}" class="img-thumbnail">
                                 </div>
@@ -70,8 +70,6 @@
                     </div>
                     @include('dashboard.layouts.errors')
                 </div>
-                <!-- .box-footer -->
-                @include('dashboard.layouts.box-footer')
             </div>
         </div>
     @endSection

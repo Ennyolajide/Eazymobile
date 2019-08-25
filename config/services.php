@@ -40,4 +40,10 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'client_id' => env('FACEBOOK_CLIENT_ID'),
+        'redirect' => env('FACEBOOK_CALLBACK_URL'),
+        'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
+    ]
+
 ];

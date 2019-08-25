@@ -11,12 +11,12 @@
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing">
             <div class="col-md-12">
                 <div class="box-content">
-                    <h3 class="box-title">Monthly Recap Report</h3>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <table id="transactions-table" class="table table-bordered table-hover">
+                    <h3 class="box-title">Daily Recap Report</h3>
+                    <div class="box">
+                        <table id="transaction-table" class="table table-striped table-bordered display" style="width:100%">
                             <thead>
                                 <tr>
                                     <th class="hidden-xs">Reference</th>
@@ -131,7 +131,9 @@
         <script src="\plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
         <script src="\plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
         <script src="\plugins/datatables/extensions/Responsive/js/responsive.bootstrap.min.js"></script>
-        <script src="\js/datatables.demo.min.js"></script>
+        <script>
+            $('#transaction-table').length ? $('#transaction-table').DataTable() : false;
+        </script>
 
 
     @endSection

@@ -1,11 +1,12 @@
 @extends('dashboard.layouts.master')
 
-    @section('css')
-  	    <!-- Data Tables -->
-        <link rel="stylesheet" href="\bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-    @endsection
-
     @section('title')Transactions @endsection
+
+    @section('css')
+        <!-- Data Tables -->
+        <link rel="stylesheet" href="\plugins/datatables/media/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="\plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
+    @endsection
 
 
      @section('content')
@@ -14,79 +15,51 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="box-content">
                     <h3 class="box-title">My Transcations</h2>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <table id="transactions-table" class="table table-bordered">
-                                <thead>
+                    <div>
+                        <table id="transactions-table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="hidden-xs">Reference</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th class="hidden-xs">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    function getStatus($status){
+                                        $array = ['Declined','Pending','Success','Canceled'];
+                                        return $status ? $array[$status] : 'Decline';
+                                    }
+                                @endphp
+
+                                @foreach ($transactions as $transaction)
                                     <tr>
-                                        <th>#</th>
-                                        <th class="hidden-xs">Reference</th>
-                                        <th>Amount</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th class="hidden-xs">Date</th>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
+                                        <td class="">@naira($transaction->amount)</td>
+                                        <td><small>{{ $transaction->class->type }}</small></td>
+
+                                        <td>{{ getStatus($transaction->status) }}</td>
+                                        <td class="hidden-xs">{{ $transaction->created_at }}</td>
+                                        <td>
+                                        <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
+                                                <i class="fa fa-eye"></i>view
+                                            </a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        function getStatus($status){
-                                            $array = ['Declined','Pending','Success','Canceled'];
-                                            return $status ? $array[$status] : 'Decline';
-                                        }
-                                    @endphp
-
-                                    @foreach ($transactions as $transaction)
-                                        <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>
-                                            <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
-                                            <td class="">@naira($transaction->amount)</td>
-                                            <td><small>{{ $transaction->class->type }}</small></td>
-
-                                            <td>{{ getStatus($transaction->status) }}</td>
-                                            <td class="hidden-xs">{{ $transaction->created_at }}</td>
-                                            <td>
-                                            <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
-                                                    <i class="fa fa-eye"></i>view
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                @endforeach
+                            </tbody>
 
 
-                            </table>
-                            <div class="col-md-12">
-                                <div class="text-right">
-                                    @if ($transactions->hasPages())
-                                        {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
-                                        <div class="btn-group">
-                                            {{-- Previous Page Link --}}
-                                            @if (!$transactions->onFirstPage())
-                                                <button type="button" class="previousPage btn btn-default btn-sm">
-                                                    <i class="fa fa-chevron-left"></i>
-                                                </button>
-                                            @endif
-                                            {{-- Next Page Link --}}
-                                            @if ($transactions->hasMorePages())
-                                                <button type="button" class="nextPage btn btn-default btn-sm">
-                                                    <i class="fa fa-chevron-right"></i>
-                                                </button>
-                                            @endif
-
-                                        </div>
-                                        <!-- /.btn-group -->
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                        </table>
                     </div>
-                    @include('dashboard.layouts.errors')
+                    @php $elements = $transactions; @endphp
+                    @include('dashboard.layouts.paginate')
                 </div>
-                <!-- /.box-body -->
-
-                <!-- .box-footer -->
                 @include('dashboard.layouts.box-footer')
-                <!-- /.box-footer -->
             </div>
             <!-- /.box -->
         </div>
@@ -148,31 +121,6 @@
     @endforeach
 
     @section('scripts')
-        <!-- DataTables -->
-        <script src="\bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-        <script src="\bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <script>
-            $(function () {
-              $('#transactions-table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-              })
-            })
-          </script>
 
-        <script>
-            $(function() {
-                $('.previousPage').click( function(){
-                    window.location.href='{{ $transactions->previousPageUrl() }}';
-                });
 
-                $('.nextPage').click( function(){
-                    window.location.href='{{ $transactions->nextPageUrl() }}';
-                });
-            });
-        </script>
     @endSection

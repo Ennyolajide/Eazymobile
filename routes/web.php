@@ -25,6 +25,10 @@ Route::get('/register', 'RegisterController@index')->name('show.register');
 Route::post('/register', 'RegisterController@register')->name('user.register');
 //Route::get('/register/referrer/{wallet}', 'RegisterController@show')->name('user.register.referrer');
 
+//Socialite
+Route::get('/users/facebook/redirect', 'SocialAuthFacebookController@redirect')->name('facebook.login');
+Route::get('/users/facebook/callback', 'SocialAuthFacebookController@callback')->name('facebook.callback');
+
 Route::get('/users/verify/{email}/{token}', 'VerificationController@verify')->name('user.verification');
 Route::get('users/reset', 'PasswordResetController@index')->name('show.passwordReset');
 Route::post('users/reset', 'PasswordResetController@reset')->name('user.passwordReset');
@@ -44,14 +48,13 @@ Route::patch('/dashboard/profile/edit', 'ProfileController@editProfile')->name('
 
 //Message
 Route::get('/dashboard/inbox', 'MessageController@messageIndex')->name('messages.inbox');
-Route::get('/dashboard/inbox/compose', 'MessageController@createMessage')->name('messages.compose');
-Route::post('/dashboard/inbox/compose', 'MessageController@storeMessage')->name('messages.compose');
+//Route::get('/dashboard/inbox/compose', 'MessageController@createMessage')->name('messages.compose');
+//Route::post('/dashboard/inbox/compose', 'MessageController@storeMessage')->name('messages.compose');
 Route::get('/dashboard/inbox/{message}', 'MessageController@showMessage')->name('messages.message');
-Route::post('/dashboard/inbox/{message}/reply', 'MessageController@replyMessage')->name('messages.reply');
+//Route::post('/dashboard/inbox/{message}/reply', 'MessageController@replyMessage')->name('messages.reply');
 Route::delete('/dashboard/inbox/{message}/delete', 'MessageController@deleteMessage')->name('messages.delete');
 
 //Data
-Route::get('/dashboard/data/prices', 'DataController@index')->name('data.prices');
 Route::get('/dashboard/data/buy', 'DataController@create')->name('data.buy');
 Route::post('/dashboard/data/buy', 'DataController@store')->name('data.buy');
 

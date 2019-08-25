@@ -17,7 +17,7 @@
                                     <h3 class="text-primary text-center"><strong> {{ $product->name }} </strong></h3>
                                     {{-- <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3> --}}
                                 </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6  pull-right">
+                                <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3  pull-right">
                                     <br/>
                                     <img  src="\images/bills/{{ $product->logo }}" class="img-thumbnail">
                                 </div>
@@ -30,7 +30,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Meter id</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" id="cardNo" class="form-control" name="cardNo" value="23300065960" placeholder="Pls Eneter Meter ID">
+                                            <input type="text" id="cardNo" class="form-control" name="cardNo" value="{{ old('cardNo') }}" placeholder="Pls Eneter Meter ID">
                                         </div>
                                     </div>
                                     <div class="form-group" id="nameDiv" style="display:none;">
@@ -74,46 +74,46 @@
                     @include('dashboard.layouts.errors')
                 </div>
                 <!-- /.box-body -->
-
-                <!-- .box-footer -->
-                @include('dashboard.layouts.box-footer')
-                <!-- /.box-footer -->
             </div>
             <!-- /.box -->
-            <!-- .modal -->
-            <div class="modal fade" id="error-modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-9 col-sm-9 col-xs-10">
-                                    <h4 class="text-center text-danger">
-                                        <i class="block-center fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
-                                        <em>Invalid {{ ucfirst(strtolower($product->name)) }}  Meter Number</em>
-                                    </h4>
-                                </div>
-                                <div class="col-md-3 col-sm-3 col-xs-2">
-                                    <h4 class="text-right text-danger">
-                                        <button type="button" class="text-danger" data-dismiss="modal" aria-label="Close">
-                                            <i class="fa fa-close text-right"></i>
-                                        </button>
-                                    </h4>
-                                </div>
-                            <div>
-                        </div>
+        </div>
+    @endSection
 
+    @section('modals')
+        <!-- .modal -->
+        <div class="modal fade" id="error-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-9 col-sm-9 col-xs-10">
+                                <h4 class="text-center text-danger">
+                                    <i class="block-center fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+                                    <em>Invalid {{ ucfirst(strtolower($product->name)) }} Smartcard Number</em>
+                                </h4>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-2">
+                                <h4 class="text-right text-danger">
+                                    <button type="button" class="text-danger" data-dismiss="modal" aria-label="Close">
+                                        <i class="fa fa-close text-right"></i>
+                                    </button>
+                                </h4>
+                            </div>
+                        <div>
                     </div>
-                    <!-- /.modal-content -->
+
                 </div>
-                    <!-- /.modal-dialog -->
+                <!-- /.modal-content -->
             </div>
-                <!-- /.modal -->
-        </section>
+                <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
     @endSection
 
     @section('scripts')
 
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script>
         $(document).ready(function() {
 
@@ -141,9 +141,8 @@
                     },
                     amount: {
                         required: true,
-                        minlength: '{{ strlen($product->min_amount) }}',
-                        maxlength: '{{ strlen($product->max_amount) }}'
-
+                        integer : true,
+                        range: [ '{{ $product->min_amount }}','{{ $product->max_amount }}']
                     },
                     email: {
                         required: true,
@@ -166,8 +165,8 @@
                     },
                     amount: {
                         required: 'Bill amount cannot be blank',
-                        minlength: $.validator.format("Minimum of {0} characters required."),
-                        maxlength: $.validator.format("Maximum {0} characters.")
+                        integer : 'Invalid bill amount',
+                        range: $.validator.format("Minimum of ₦{0}, Maximum ₦{1}.")
                     },
                     email: {
                         minlength: $.validator.format("Minimum of {0} characters required."),
@@ -215,3 +214,4 @@
         });
     </script>
     @endSection
+

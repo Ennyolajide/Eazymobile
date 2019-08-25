@@ -49,7 +49,7 @@
                             <!-- /.txt-login-with -->
                         </div>
                         <!-- /.col-sm-12 -->
-                        <div class="col-sm-6"><button type="button" class="btn btn-sm btn-icon btn-icon-left btn-social-with-text btn-facebook text-white waves-effect waves-light"><i class="ico fa fa-facebook"></i><span>Facebook</span></button></div>
+                        <div class="col-sm-6"><a href="{{ route('facebook.login') }}" class="btn btn-sm btn-icon btn-icon-left btn-social-with-text btn-facebook text-white waves-effect waves-light"><i class="ico fa fa-facebook"></i><span>Facebook</span></a></div>
                         <!-- /.col-sm-6 -->
                         <div class="col-sm-6"><button type="button" class="btn btn-sm btn-icon btn-icon-left btn-social-with-text btn-google-plus text-white waves-effect waves-light"><i class="ico fa fa-google-plus"></i>Google+</button></div>
                         <!-- /.col-sm-6 -->

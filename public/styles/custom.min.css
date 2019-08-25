@@ -93,3 +93,13 @@
     border-image: initial !important;
 }
 
+.img-icon {
+    height: 50px;
+    width: 50px;
+}
+
+.img-avatar {
+    height: 70px;
+    width: 50px;
+}
+

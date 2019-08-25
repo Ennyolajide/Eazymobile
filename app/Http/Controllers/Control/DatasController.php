@@ -23,15 +23,33 @@ class DatasController extends ModController
 
     public function edit(Transaction $trans)
     {
-        $status = request()->has('decline') || request()->has('completed') ? true : false;
-        $transactionStatus = ['status' => request()->has('completed') ? 2 : 0];
-        $status ? $trans->class->update($transactionStatus) : false;
-        $status ? $trans->update($transactionStatus) : false;
-        //$status ? $this->notify($this->controlWithdrawalNotification($trans->amount)) : false;
+        $declined = request()->has('decline');
+        $completed = request()->has('completed');
+        $transStatus = $trans->class->status && $trans->status;
+        $declined = $declined && $transStatus ? $this->declineAndRefund($trans) : false;
+        $completed =  $completed && $transStatus ? $this->markOrderAsComplete($trans) : false;
+        $status = $declined || $completed ? true : false;
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
+
+    protected function markOrderAsComplete($trans)
+    {
+        $status = $trans->update(['status' => 2]);
+        return $status ? $trans->class->update(['status' => 2]) : false;
+    }
+
+    protected function declineAndRefund($trans)
+    {
+        $user = $trans->user;
+        $newBalance = $user->balance + $trans->amount;
+        $refundStatus = $user->update(['balance' => $newBalance]);
+        $status = $refundStatus ? $trans->update(['status' => 0]) : false;
+
+        return $status ? $trans->class->update(['status' => 0]) : false;
+    }
+
 
     public function settings(DataPlan $network)
     {

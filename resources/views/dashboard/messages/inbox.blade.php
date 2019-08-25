@@ -1,183 +1,172 @@
 @extends('dashboard.layouts.master')
 
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h4>{{ $messages->where('read',0)->count() }} new messages</h4>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Home</a>
-                    </li>
-                    <li class="active">Message</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
+    @section('title')Inbox @endsection
+
+    @section('css')
+        <!-- iCheck -->
+	    <link rel="stylesheet" href="\plugins/iCheck/skins/square/blue.css">
     @endsection
+
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="x_panel">
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-sm-3 col-xs-12 mail_list_column">
-                                <a href="{{ route('messages.compose') }}" class="btn btn-success btn-block margin-bottom">COMPOSE</a>
-                                <h3 class="x_title">Folders</h3>
-                                <div class="box-body no-padding">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        <li class="active">
-                                            <a href="{{ route('messages.inbox') }}">
-                                                <i class="fa fa-inbox"></i>
-                                                    Inbox
-                                                <span class="label label-primary pull-right text-bold">
-                                                    {{ $messages->where('read',0)->count() }}
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="fa fa-envelope-o"></i> Sent</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /.box-body -->
-
+        <div class="row small-spacing">
+            <div class="col-md-3 col-xs-12">
+                <a href="#" class="btn btn-danger btn-mail-main btn-block margin-bottom-20 waves-effect waves-light disabled">COMPOSE</a>
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="active"><a href="{{ route('messages.inbox') }}"><i class="fa fa-inbox"></i> Inbox
+                                <span class="label-text-right pull-right">{{ $messages->where('read',0)->count() }}</span></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-envelope"></i> Sent</a></li>
+                            <li><a href="#"><i class="fa fa-trash"></i> Trash</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#"><i class="fa fa-circle-o text-primary"></i> Important</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o text-success"></i> Promotions</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o text-danger"></i> Social</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col-md-3 col-xs-12 -->
+            <div class="col-md-9 col-xs-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Inbox</h3>
+                        <div class="box-tools">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" placeholder="Search Mail">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
                             </div>
-
-                            <div class="col-sm-9 col-xs-12 mail_view">
-                                <div class="inbox-body">
-                                    <div class="mail_heading row">
-                                        <div class="col-md-9">
-                                            <span class="h4">Inbox</span>
-                                        </div>
-                                        <div class="col-md-3 text-right">
-                                            <div class="pull-right">
-                                                @if ($messages->hasPages())
-                                                    {{ $messages->firstItem() }} - {{ $messages->lastItem() }}/{{ $messages->total() }}
-                                                    <div class="btn-group">
-                                                        {{-- Previous Page Link --}}
-                                                        @if (!$messages->onFirstPage())
-                                                            <button type="button" class="previousPage btn btn-default btn-sm">
-                                                                <i class="fa fa-chevron-left"></i>
-                                                            </button>
-                                                        @endif
-                                                        {{-- Next Page Link --}}
-                                                        @if ($messages->hasMorePages())
-                                                            <button type="button" class="nextPage btn btn-default btn-sm">
-                                                                <i class="fa fa-chevron-right"></i>
-                                                            </button>
-                                                        @endif
-
-                                                    </div>
-                                                    <!-- /.btn-group -->
-                                                @endif
-                                            </div>
-                                        </div>
-
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+					<div class="box-body no-padding">
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            {{-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --}}
+                            <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-trash"></i></button>
+                            {{-- <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-exclamation-circle"></i></button> --}}
+                            <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-refresh"></i></button>
+                            <div class="pull-right">
+                                @if ($messages->hasPages())
+                                    <span class="inbox-text">
+                                        {{ $messages->firstItem() }} - {{ $messages->lastItem() }}/{{ $messages->total() }}
+                                    </span>
+                                    <div class="btn-group">
+                                        {{-- Previous Page Link --}}
+                                        @if (!$messages->onFirstPage())
+                                            <button type="button" class="previousPage btn btn-default btn-sm waves-effect waves-light">
+                                                <i class="fa fa-angle-left"></i>
+                                            </button>
+                                        @endif
+                                        {{-- Next Page Link --}}
+                                        @if ($messages->hasMorePages())
+                                            <button type="button" class="nextPage btn btn-default btn-sm waves-effect waves-light">
+                                                <i class="fa fa-angle-right"></i>
+                                            </button>
+                                        @endif
                                     </div>
-                                    <br/>
-                                    <div class="mailbox-messages">
-                                        <table class="table table-hover table-striped">
-                                            <tbody>
-                                            @foreach ($messages as $message)
-                                                <tr>
-                                                    <td>
-                                                        <input type="checkbox">
-                                                    </td>
-                                                    <td class="mailbox-star">
-
-                                                        @if ($message->read)
-                                                            <a href="#"><i class="fa fa-star-o text-yellow"></i></a>
-                                                        @else
-                                                            <a href='#'><i class='fa fa-star text-yellow'></i></a>
-                                                        @endif
-
-
-                                                    </td>
-
-                                                    <td class="mailbox-name">
-                                                        <a href="/dashboard/inbox/{{ $message->id }}" class="submit" type="submit">
-
-                                                        {{ $message->sender->name }}</a>
-
-                                                </form>
-                                                    </td>
-                                                    <td class="mailbox-subject">
-                                                        <b>{{ $message->subject }}</b> -
-                                                        <a href="{{ route('messages.message',$message->id) }}">{{ str_limit($message->content,100,'...') }}</a></td>
-                                                    <td class="mailbox-attachment"></td>
-                                                    <td class="mailbox-date">{{ $message->created_at->diffForHumans() }}</td>
-                                                </tr>
-                                            @endforeach
-
-                                            </tbody>
-                                        </table>
-                                        <!-- /.table -->
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="btn-group">
-                                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
-                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
-                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
-                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="text-right">
-                                                @if ($messages->hasPages())
-                                                    {{ $messages->firstItem() }} - {{ $messages->lastItem() }}/{{ $messages->total() }}
-                                                    <div class="btn-group">
-                                                        {{-- Previous Page Link --}}
-                                                        @if (!$messages->onFirstPage())
-                                                            <button type="button" class="previousPage btn btn-default btn-sm">
-                                                                <i class="fa fa-chevron-left"></i>
-                                                            </button>
-                                                        @endif
-                                                        {{-- Next Page Link --}}
-                                                        @if ($messages->hasMorePages())
-                                                            <button type="button" class="nextPage btn btn-default btn-sm">
-                                                                <i class="fa fa-chevron-right"></i>
-                                                            </button>
-                                                        @endif
-
-                                                    </div>
-                                                    <!-- /.btn-group -->
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                    <!-- /.btn-group -->
+                                @endif
                             </div>
+                            <!-- /.pull-right -->
+                        </div>
+                        <div class="table-responsive mailbox-messages">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                    @foreach ($messages as $message)
+                                        <tr class="">
+                                            <td>
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="mailbox-star">
+                                                <a href="{{ route('messages.message',$message->id) }}">
+                                                    <i class="{{ $message->read ? 'fa fa-star-o' : 'fa fa-star' }} text-warning"></i>
+                                                </a>
+                                            </td>
+
+                                            <td class="mailbox-name">
+                                                <a href="{{ route('messages.message',$message->id) }}" class="submit" type="submit">
+                                                    {{ $message->sender->name }}
+                                                </a>
+                                            </td>
+                                            <td class="mailbox-subject">
+                                                <span class="mailbox-subject-title">
+                                                    <a href="{{ route('messages.message',$message->id) }}" class="text-success">
+                                                        <b>{{ $message->subject }}</b>
+                                                    </a> -
+                                                    <a href="{{ route('messages.message',$message->id) }}">{{ str_limit($message->content,85,'...') }}</a></td>
+                                            <td class="mailbox-attachment"></td>
+                                            <td class="mailbox-date"><small>{{ $message->created_at->diffForHumans() }}</small></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <!-- /.table -->
+                        </div>
+                        <div class="mailbox-controls">
+                            <!-- Check all button -->
+                            {{-- <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button> --}}
+                            <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-trash"></i></button>
+                            {{-- <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-exclamation-circle"></i></button> --}}
+                            <button type="button" class="btn btn-default btn-sm waves-effect waves-light"><i class="fa fa-refresh"></i></button>
+                            <div class="pull-right">
+                                @if ($messages->hasPages())
+                                    <span class="inbox-text">
+                                        {{ $messages->firstItem() }} - {{ $messages->lastItem() }}/{{ $messages->total() }}
+                                    </span>
+                                    <div class="btn-group">
+                                        {{-- Previous Page Link --}}
+                                        @if (!$messages->onFirstPage())
+                                            <button type="button" class="previousPage btn btn-default btn-sm waves-effect waves-light">
+                                                <i class="fa fa-angle-left"></i>
+                                            </button>
+                                        @endif
+                                        {{-- Next Page Link --}}
+                                        @if ($messages->hasMorePages())
+                                            <button type="button" class="nextPage btn btn-default btn-sm waves-effect waves-light">
+                                                <i class="fa fa-angle-right"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <!-- /.btn-group -->
+                                @endif
+                            </div>
+                            <!-- /.pull-right -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     @endSection
 
     @section('scripts')
-        @if (session('response'))
-            <script>alert('{{ session('response') }}');</script>
-        @endif
+        <!-- iCheck -->
+        <script src="\plugins/iCheck/icheck.min.js"></script>
+        <script src="\js/mailbox.init.min.js"></script>
 
         <script>
-        $(function() {
-            $('.previousPage').click( function(){
-                window.location.href='{{ $messages->previousPageUrl() }}';
-            });
+            $(function() {
+                $('.previousPage').click( function(){
+                    window.location.href='{{ $messages->previousPageUrl() }}';
+                });
 
-            $('.nextPage').click( function(){
-                window.location.href='{{ $messages->nextPageUrl() }}';
+                $('.nextPage').click( function(){
+                    window.location.href='{{ $messages->nextPageUrl() }}';
+                });
             });
-        });
         </script>
 
     @endSection

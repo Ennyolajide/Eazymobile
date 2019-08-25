@@ -7,7 +7,7 @@
         <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="box-content">
-                    <h3 class="box-title">Bank Setings</h3>
+                    <h3 class="box-title">Users</h3>
                     <!-- /.box-header -->
                     <div class="col-md-12">
                         <div class="form-group">

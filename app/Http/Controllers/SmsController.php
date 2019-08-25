@@ -60,7 +60,7 @@ class SmsController extends TransactionController
         $isSufficientBalance = Auth::user()->balance >= ($unitRequired * $smsConfig->amount_per_unit / 100);
         $body = $this->setFormParamters(request()->senderId, request()->message, $recipientList, $smsConfig->routing);
         $response = $isSufficientBalance  ? $this->sendSms($body) : false;
-        $response->units_used ? $this->debitWallet($response->units_used * $smsConfig->amount_per_unit / 100) : false;
+        isset($response->units_used) ? $this->debitWallet($response->units_used * $smsConfig->amount_per_unit / 100) : false;
 
         return $response;
     }

@@ -1,151 +1,122 @@
 @extends('dashboard.layouts.master')
 
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h4>Bulk Sms</h4>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Home</a>
-                    </li>
-                    <li class="active">Sms</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    @endsection
+    @section('title')Inbox @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Pay Bills</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="box-content">
+                    <h3 class="box-title">Sms</h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <br/>
+                            <form id="send-bulk-sms-form" method="POST" action="">
+                                @csrf
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-12 control-label">Package</label>
+                                    <div class="col-sm-8 col-xs-12 form-grouping text-bold">
+                                        <select style="height: 40px;" class="form-control" id="route" name="route">
+                                            <option value="" disabled selected><strong>Choose Sms Type</strong></option>
+                                            @foreach ($smsConfigs as $smsConfig)
+                                                <option value="{{ $smsConfig }}">
+
+                                                    {{ $smsConfig->route }} =
+                                                    <span class="pull-right">
+                                                        @if($smsConfig->amount_per_unit == 0 )
+                                                            @foreach ($smsConfigs as $item)
+                                                                @continue($item->amount_per_unit == 0 )
+                                                                @naira($item->amount_per_unit / 100)
+                                                                @if($loop->first) / @endif
+                                                            @endforeach
+                                                        @else
+                                                            @naira($smsConfig->amount_per_unit / 100)
+                                                        @endif
+                                                        Per Page Per Sms
+                                                    </span>
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <br/>
-                                <form id="send-bulk-sms-form" method="POST" action="">
-                                    @csrf
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-xs-12 control-label">Package</label>
-                                        <div class="col-sm-8 col-xs-12 form-grouping text-bold">
-                                            <select style="height: 40px;" class="form-control" id="route" name="route">
-                                                <option value="" disabled selected><strong>Choose Sms Type</strong></option>
-                                                @foreach ($smsConfigs as $smsConfig)
-                                                    <option value="{{ $smsConfig }}">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-12 control-label">Sender Id</label>
+                                    <div class="col-sm-8 col-xs-12 form-grouping">
+                                        <input type="text" class="form-control" name="senderId" placeholder="Enter Sender Id" required>
+                                    </div>
+                                </div>
 
-                                                        {{ $smsConfig->route }} =
-                                                        <span class="pull-right">
-                                                            @if($smsConfig->amount_per_unit == 0 )
-                                                                @foreach ($smsConfigs as $item)
-                                                                    @continue($item->amount_per_unit == 0 )
-                                                                    @naira($item->amount_per_unit / 100)
-                                                                    @if($loop->first) / @endif
-                                                                @endforeach
-                                                            @else
-                                                                @naira($smsConfig->amount_per_unit / 100)
-                                                            @endif
-                                                            Per Page Per Sms
-                                                        </span>
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-12 control-label">Recepient</label>
+                                    <div class="col-sm-8 col-xs-12 form-grouping">
+                                        <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">07063637002</textarea>
+                                        <div class="">
+                                            <p id="numbers" class="pull-left text-success" style="font-size:18px"></p>
                                         </div>
                                     </div>
-                                    <br/>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-xs-12 control-label">Sender Id</label>
-                                        <div class="col-sm-8 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" name="senderId" placeholder="Enter Sender Id" required>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-12  control-label">Message</label>
+                                    <div class="col-sm-8 col-xs-12  form-grouping">
+                                        <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">{{ $faker->paragraph(3) }}</textarea>
+                                        <div class="count">
+                                            <p id="characters" class="pull-left text-success" style="font-size:18px"></p>
+                                            <p id="pages" class="pull-right text-success" style="font-size:18px"></p>
                                         </div>
                                     </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-xs-12 control-label">Recepient</label>
-                                        <div class="col-sm-8 col-xs-12 form-grouping">
-                                            <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">07063637002</textarea>
-                                            <div class="">
-                                                <p id="numbers" class="pull-left text-success" style="font-size:18px"></p>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-xs-12 control-label"></label>
+                                    <div class="col-sm-8 col-xs-12 form-grouping">
+                                        <button id="continue" class="btn btn-primary btn-rounded waves-effect waves-light pull-right" disabled="true" type="submit">Send
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                        </button>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-xs-12  control-label">Message</label>
-                                        <div class="col-sm-8 col-xs-12  form-grouping">
-                                            <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">{{ $faker->paragraph(3) }}</textarea>
-                                            <div class="count">
-                                                <p id="characters" class="pull-left text-success" style="font-size:18px"></p>
-                                                <p id="pages" class="pull-right text-success" style="font-size:18px"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-xs-12 control-label"></label>
-                                        <div class="col-sm-8 col-xs-12 form-grouping">
-                                            <button id="continue" class="btn bg-purple btn-flat pull-right" disabled="true" type="submit">Send
-                                                <i class="fa fa-arrow-circle-right"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" id="smsPages">
-                                    <input type="hidden" id="totalNumbersOfRecepient">
-                                    <br/>
-                                </form>
-                                <!--/div-->
-                            </div>
-                        </div>
-                        @include('dashboard.layouts.errors')
-                    </div>
-
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer -->
-                    @include('dashboard.layouts.box-footer')
-                    <!-- /.box-footer -->
-                    <!-- /.box -->
-                </div>
-            </div>
-
-            <!--Modal-->
-            <div id="confirm-modal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">X</span>
-                            </button>
-                            <h4 class="modal-title">Confirm</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p style="font-size:18px;" class="text-bold text-center">You will be charge ₦<span id="total-charges"></span> <span id="both" style="display: none;"> or less due to variation in Basic & Corperate Route</span></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                            <button type="button" id="sendSms" class="btn btn-primary">Send Sms</button>
+                                </div>
+                                <input type="hidden" id="smsPages">
+                                <input type="hidden" id="totalNumbersOfRecepient">
+                                <br/>
+                            </form>
+                            <!--/div-->
                         </div>
                     </div>
-                    <!-- /.modal-content -->
+                    @include('dashboard.layouts.errors')
                 </div>
-                <!-- /.modal-dialog -->
+
+                <!-- /.box-body -->
+
+                <!-- .box-footer -->
+                @include('dashboard.layouts.box-footer')
+                <!-- /.box-footer -->
+                <!-- /.box -->
             </div>
-            <!-- /Modal-->
-
-
         </div>
-    </div>
     @endSection
+
+    <!--Modal-->
+    <div id="confirm-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                    <h4 class="modal-title">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size:18px;" class="text-bold text-center">You will be charge ₦<span id="total-charges"></span> <span id="both" style="display: none;"> or less due to variation in Basic & Corperate Route</span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-rounded waves-effect waves-light pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" id="sendSms" class="btn btn-primary btn-rounded waves-effect waves-light">Send Sms</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Modal-->
 
     @if(session('modal'))
         <!-- /Modal -->
@@ -184,18 +155,23 @@
                                 </fieldset>
                             </div>
 
-                            <div class="col-md-11 col-xs-11 text-center">
-                                <small class="text-bold">DnD Numbers </small>
-                                <p class="h6 text-bold text-primary">
-                                    {{ session('modal')->realtime_dnd }}
-                                </p>
-                            </div>
-                            <div class="col-md-11 col-xs-11 text-center">
-                                <small class="text-bold">Invalid Numbers </small>
-                                <p class="h6 text-bold text-dnager">
-                                    {{ session('modal')->invalid }}
-                                </p>
-                            </div>
+                            @if(isset(session('modal')->realtime_dnd))
+                                <div class="col-md-11 col-xs-11 text-center">
+                                    <small class="text-bold">DnD Numbers </small>
+                                    <p class="h6 text-bold text-primary">
+                                        {{ session('modal')->realtime_dnd }}
+                                    </p>
+                                </div>
+                            @endif
+
+                            @if(isset(session('modal')->invalid))
+                                <div class="col-md-11 col-xs-11 text-center">
+                                    <small class="text-bold">Invalid Numbers </small>
+                                    <p class="h6 text-bold text-dnager">
+                                        {{ session('modal')->invalid }}
+                                    </p>
+                                </div>
+                            @endif
                             <div class="col-md-11 col-xs-11 text-center">
                                 <small class="text-bold">Transaction Reference :</small>
                                 <p class="h4"><b> {{ session('modal')->ref_id }} </b></p>
@@ -203,54 +179,58 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default btn-rounded waves-effect waves-light pull-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Modal -->
     @else
-        <!-- Modal -->
-        <div id="info-modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title text-orange text-bold">Important Info</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" style="font-size: 20px;">
-                            @foreach ($smsConfigs as $smsConfig)
-                                <div class="col-md-12 col-xs-12 ">
-                                    <p class="text-bold text-olive text-center">
-                                        <u>
-                                            @if($smsConfig->amount_per_unit > 0)
-                                                {{ $smsConfig->route }} @naira($smsConfig->amount_per_unit / 100)  / Sms / Page
-                                            @else
-                                                {{ str_replace('( DND and Non DND )',' ',$smsConfig->route) }} @naira($smsConfigs[0]->amount_per_unit / 100) for non DND |
-                                                @naira($smsConfigs[2]->amount_per_unit / 100) for DND  / Sms / Page
+        @if(session('notification'))
 
-                                            @endif
-                                        </u>
-                                    </p>
-                                    <p class="text-center"><small>{{ $smsConfig->description }}</small></p>
-                                </div>
-                            @endforeach
+        @else
+            <!-- Modal -->
+            <div id="info-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-orange text-bold">Important Info</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="font-size: 20px;">
+                                @foreach ($smsConfigs as $smsConfig)
+                                    <div class="col-md-12 col-xs-12 ">
+                                        <p class="text-bold text-olive text-center">
+                                            <u>
+                                                @if($smsConfig->amount_per_unit > 0)
+                                                    {{ $smsConfig->route }} @naira($smsConfig->amount_per_unit / 100)  / Sms / Page
+                                                @else
+                                                    {{ str_replace('( DND and Non DND )',' ',$smsConfig->route) }} @naira($smsConfigs[0]->amount_per_unit / 100) for non DND |
+                                                    @naira($smsConfigs[2]->amount_per_unit / 100) for DND  / Sms / Page
+
+                                                @endif
+                                            </u>
+                                        </p>
+                                        <p class="text-center"><small>{{ $smsConfig->description }}</small></p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">Close</button>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
 
+                </div>
             </div>
-        </div>
-        <!-- /Modal -->
+            <!-- /Modal -->
+        @endif
     @endif
 
     @section('scripts')
-        <script src="/js/jquery-number.min.js"></script>
+        <script src="\js/jquery-number.min.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
         <script>
             $(document).ready(function() {
