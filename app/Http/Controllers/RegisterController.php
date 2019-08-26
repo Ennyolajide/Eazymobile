@@ -38,6 +38,7 @@ class RegisterController extends Controller
         ]);
 
         $status = User::create([
+            'active'        => true,
             'token'         => $token,
             'email'         => request()->email,
             'number'        => request()->phone,
