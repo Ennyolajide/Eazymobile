@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+}); */
 
 //Auth::routes();
 
 //Authetication
+Route::get('/', 'LoginController@showLogin');
 Route::get('/users/login', 'LoginController@showLogin')->name('show.login');
 Route::post('/users/login', 'LoginController@login')->name('user.login');
 Route::get('/users/logout', 'LoginController@logout')->name('user.logout');

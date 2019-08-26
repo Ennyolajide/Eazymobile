@@ -66,17 +66,17 @@
     <body>
         <div class="flex-center position-ref full-height">
 
-                <div class="top-right links">
+            <div class="top-right links">
 
 
-                    <a href="{{ route('users.login') }}">Login</a>
+                <a href="{{ route('show.login') }}">Login</a>
 
 
-                    <a href="{{ route('users.register') }}">Register</a>
+                <a href="{{ route('show.register') }}">Register</a>
 
 
-                </div>
-            @endif
+            </div>
+
 
             <div class="content">
                 <div class="title m-b-md">

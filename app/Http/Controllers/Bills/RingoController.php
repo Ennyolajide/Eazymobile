@@ -16,12 +16,12 @@ class RingoController extends RingoTokenController
      */
     public function tvInternetMiscTopup($subProduct)
     {
-        return true;
+
         $meterId = json_encode(['meter' => (string) request()->cardNo]);
 
         $endPoint = 'billpay/dstv/' . $subProduct->product->product_id . '/' . $subProduct->code;
 
-        $response = true; //$endPoint ? $this->ringo($endPoint, 'post', $meterId) : false;
+        $response = $endPoint ? $this->ringo($endPoint, 'post', $meterId) : false;
 
         $response ? $response->response = true : false;
 
