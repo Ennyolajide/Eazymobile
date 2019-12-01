@@ -17,6 +17,7 @@ $unReadMessages = Auth::user()->messages->where('read',0)->sortByDesc('id');
             <span class="info-number bg-warning">{{ $unReadMessages->count() }}</sup>
         </a> &nbsp;&nbsp;
         <a class="text-bold text-white">@naira(Auth::user()->balance)</a>
+        <input type="hidden" id="unread" value="{{ $unReadMessages->count() }}">
     </div>
 	<!-- /.pull-right -->
 </div>

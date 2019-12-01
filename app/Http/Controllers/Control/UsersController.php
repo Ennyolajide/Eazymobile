@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Control;
 
 use App\User;
+use App\Payment;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
@@ -14,19 +15,30 @@ class UsersController extends ModController
 
     public function usersIndex()
     {
-        return view('control.users');
+        $users = User::orderBy('id', 'desc')->paginate(10);
+
+        return view('control.users', compact('users'));
     }
+
+    public function searchIndex()
+    {
+        return view('control.userSearch');
+    }
+
 
     public function searchUsers()
     {
         $this->validate(request(), ['user' => 'required|string|min:3']);
 
-        return User::where('name', 'like', '%' . request()->user . '%')->get();
+        return User::where('email', 'like', '%' . request()->user . '%')->get();
     }
 
     public function viewUser(User $user)
     {
-        return view('control.user', compact('user'));
+
+        $payments = Payment::where('user_id', $user->id)->get();
+
+        return view('control.user', compact('user', 'payments'));
     }
 
     /**
@@ -34,7 +46,6 @@ class UsersController extends ModController
      */
     public function setUserStatus(User $user)
     {
-        //validate request
         $this->validate(request(), ['action' => 'required|boolean']);
         $status = $user->update(['active' => request()->action]);
         $message = $status ? $this->successResponse : $this->failureResponse;
@@ -47,7 +58,6 @@ class UsersController extends ModController
      */
     public function alterUserBalance(User $user)
     {
-        //validate request
         $this->validate(request(), [
             'amount' => 'required|numeric',
             'dedit' => 'sometimes|boolean',
@@ -63,7 +73,6 @@ class UsersController extends ModController
 
     public function edit(RingoSubProductList $subProduct)
     {
-        //validate request
         $this->validate(request(), ['amount' => 'required|numeric|min:1']);
         $status = $subProduct->update(['selling_price' => request()->amount]);
         $message = $status ? $this->successResponse : $this->failureResponse;

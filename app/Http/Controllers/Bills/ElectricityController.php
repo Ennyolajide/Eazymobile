@@ -11,18 +11,23 @@ use Illuminate\Support\Facades\Auth;
 
 class ElectricityController extends BillController
 {
-
-    protected $successResponse = ' Topup successful';
-    protected $apiErrorResponse = 'Top failed, Pls try again later';
-    protected $failureResponse = 'Insuffient balance, Pls fund your account';
+    protected $invalidResponse = 'Invalid serviceId';
+    protected $apiErrorResponse = 'Top failed, Please try again later';
+    protected $failureResponse = 'Insuffient balance, Please fund your account';
+    protected $successResponse = ' Operation successful Please check Your inbox for your pin(s)';
 
 
     /**
      * Validate meter
      */
-    public function validateMeter()
+    public function validateMeter($serviceId)
     {
-        return $this->billValidation(request()->productId, request()->cardNo);
+        $this->validate(
+            request(),
+            ['serviceId' => 'numeric|min:1', 'meterId' => 'string|min:8']
+        );
+
+        return $this->electricityValidation($serviceId, request()->meterId);
     }
 
     /**
@@ -30,48 +35,52 @@ class ElectricityController extends BillController
      */
     public function store()
     {
-        //validate request()
-        $this->validate(request(), [
-            'email' => 'required|email',
-            'owner' => 'required|string',
-            'amount' => 'required|numeric',
-            'packageId' => 'required|numeric',
-            'phone' => 'required|string|min:10|max:13',
-            'cardNo' => 'required|string|min:10|max:18',
-        ]);
-
-        $status = $this->processElectricityTopup();
-
+        $this->requestValidation();
+        $uniqueReference = $this->getUniqueReference();
+        $this->charges = Charge::whereService('electricity')->first()->amount;
+        $status = $this->processElectricityTopup($uniqueReference);
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
     /**
-     * Proces Tv Topup
+     * Proces Electricity Topup
      */
-    protected function processElectricityTopup()
+    protected function processElectricityTopup($uniqueReference)
     {
-
         $product = RingoProduct::find(request()->packageId);
-
         $details['cardNo'] = $product ? request()->cardNo : false;
-
         $details['type'] = $product ? $product->name . ' Topup' : false;
-
         $details['amount'] = $product ? request()->amount : false;
-
         $details['product'] = $product ? ucwords(strtolower($product->name))  : false;
-
         $this->successResponse = $details['product'] . $this->successResponse;
 
-        if ($product && (Auth::user()->balance >= request()->amount)) {
-
-            $status = $product ? $this->topup($product, $details, true) : false;
-
-            $status ? $this->notify($this->tvTopupNotification($details)) : false;
+        if (Auth::user()->balance >= request()->amount) {
+            $status = $product ? $this->topup($product, $details, $uniqueReference, 'electricity') : false;
+            $status ? $this->notify($this->electricityTopupNotification($details, $uniqueReference, $this->responseObject, $this->charges)) : false;
 
             return $status;
         }
+        return false;
+    }
+
+    /**
+     * Validation
+     */
+    protected function requestValidation()
+    {
+        $this->validate(request(), [
+            'email' => 'required|email',
+            'owner' => 'required|string',
+            'phone' => 'required|string|min:10|max:13',
+            'cardNo' => 'required|string|min:10|max:18',
+            'amount' => ['required', 'numeric', 'min:1000', 'max:50000', function ($attribute, $value, $fail) {
+                ($value % 100 == 0) ? false : $fail(':attribute can only be a multiple of 100');
+            }],
+            'packageId' => ['required', 'numeric', 'min:1', 'max:5', function ($attribute, $value, $fail) {
+                in_array($value, RingoProduct::whereService('Electricity')->pluck('id')->toArray()) ? false : $fail('Invalid electricty :attribute');
+            }],
+        ]);
     }
 }

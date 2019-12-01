@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="\plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
     @endsection
 
-
     @section('content')
         <!-- Main content -->
         <div class="row small-spacing">
@@ -29,8 +28,8 @@
                             <tbody>
                                 @php
                                     function getStatus($status){
-                                        $array = ['Declined','Pending','Completed','Canceled'];
-                                        return $array[$status];
+                                        $array = ['Declined','Pending','Success','Canceled'];
+                                        return $status === NULL ? 'Pending' : $array[$status];
                                     }
                                 @endphp
 
@@ -61,11 +60,17 @@
                                 </tr>
                             </tfoot>
                         </table>
+                        <div class="col-md-12 col-xs-12">
+                            @php $paginator = $transactions; @endphp
+                            <span class="hidden-xs text-bold" style="font-size:16px;">
+                                {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
+                            </span>
+                            <span class="pull-right">
+                                @include('dashboard.layouts.pagination')
+                            </span>
+                        </div>
+                        @include('dashboard.layouts.errors')
                     </div>
-                    @php $elements = $transactions; @endphp
-                    @include('dashboard.layouts.paginate')
-
-                    @include('dashboard.layouts.errors')
                 </div>
                 <!-- /.box -->
             </div>
@@ -107,10 +112,10 @@
                                     <i class="fa fa-arrow-right fa-2x" style="height:40px;"></i>
                                 </div>
                                 <div class="col-md-4 col-xs-4">
-                                    <p class=""><b>{{ $transaction->class->bank->bank_name }}</b></p>
+                                    <p class=""><b>{{ $transaction->user->name }}</b></p>
                                     <span class="text-success text-bold">@naira($transaction->class->amount * $transaction->class->percentage / 100)</span>
-                                    <p class=""><b>{{ $transaction->class->bank->acc_no }}</b></p>
-                                    <p class="text-olive h4"><b> {{ $transaction->class->bank->acc_name }} </b></p>
+                                    <p class=""><b>Wallet</b></p>
+                                    <p class="text-olive h4"><b> user</b></p>
                                 </div>
                             @endif
 
@@ -187,22 +192,20 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        @if($transaction->class->transaction_type == 4)
-                            <form method="POST" action="{{ route('admin.airtimes.fundings',['trans' => $transaction->id] ) }}">
-                        @else
-                            <form method="POST" action="{{ route('admin.airtimes.edit',['trans' => $transaction->id] ) }}">
+                        @if($transaction->status == 1)
+                            @if($transaction->class->transaction_type == 4)
+                                <form method="POST" action="{{ route('admin.airtimes.fundings',['trans' => $transaction->id] ) }}">
+                            @else
+                                <form method="POST" action="{{ route('admin.airtimes.edit',['trans' => $transaction->id] ) }}">
+                            @endif
+                                @method('patch') @csrf
+                                <button type="submit" name="decline" class="btn btn-danger pull-left">Deline</button>
+                                <button type="submit" name="completed" class="btn btn-primary">Completed</button>
+                            </form>
                         @endif
-                            @method('patch') @csrf
-                            <button type="submit" name="decline" class="btn btn-danger pull-left">Deline</button>
-                            <button type="submit" name="completed" class="btn btn-primary">Completed</button>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Modal -->
     @endforeach
-
-    @section('scripts')
-
-    @endSection

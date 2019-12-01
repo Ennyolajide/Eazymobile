@@ -13,25 +13,23 @@ class DataController extends TransactionController
     protected $successResponse = 'Data Topup successful';
     protected $failureResponse = 'Insuffient balance, Pls fund your account';
 
-    public function index()
-    {
-        return view('dashboard.data.prices');
-    }
-
     public function create()
     {
-        $dataPlans = DataPlan::all();
-        $networks = DataPlan::orderBy('network_id', 'asc')->distinct()->get(['network', 'network_id']);
+        $networks = Dataplan::whereAvailable(true)->get()->mapToGroups(function ($item, $key) {
+            return [$item['network'] => $item];
+        });
 
-        return view('dashboard.data.buy', compact('dataPlans', 'networks'));
+        return view('dashboard.data.buy', compact('networks'));
     }
 
+    /**
+     * Entry Point for Data Topup
+     */
     public function store()
     {
-        //validate request
         $this->validate(request(), ['plan' => 'required|numeric|', 'phone' => 'required']);
 
-        $dataPlan = DataPlan::find(request()->plan)->first();
+        $dataPlan = DataPlan::whereId(request()->plan)->first();
 
         $status = $dataPlan ? $this->processDataPurchase($dataPlan) : false;
 
@@ -40,6 +38,9 @@ class DataController extends TransactionController
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
+    /**
+     * Process Data Purchase
+     */
     public function processDataPurchase($dataPlan)
     {
         if (Auth::user()->balance >= $dataPlan->amount) {
@@ -57,10 +58,11 @@ class DataController extends TransactionController
      */
     protected function topup($dataPlan)
     {
+        $reference = $this->getUniqueReference();
         $dataRecord = $this->storeTopup($dataPlan);
         $status = $dataRecord ? $this->debitWallet($dataPlan->amount) : false;
-        $status ? $this->notifyAdmin($dataPlan) : false;
-        $dataRecord ? $this->recordTransaction($dataRecord, $this->getUniqueReference(), false, true, false, false) : false;
+        $status ? $this->notifyAdmin($dataPlan, $reference) : false;
+        $dataRecord ? $this->recordTransaction($dataRecord, $reference, false, true, false, false) : false;
 
         return $status;
     }
@@ -68,14 +70,11 @@ class DataController extends TransactionController
     /**
      * This notify the admin Either by mail or Sms or Both depending on the admin settings
      */
-    protected function notifyAdmin($dataPlan)
+    protected function notifyAdmin($dataPlan, $reference)
     {
-        $subject = 'Data Order Notification';
-        $toEmail = $dataPlan->notification_email;
-        $toPhone = $dataPlan->notification_phone;
-        $content = $this->adminDataOrderNotification($dataPlan);
-        $dataPlan->phone_notification_status ? $this->notifyAdminViaSms($toPhone, $content) : false;
-        $dataPlan->email_notification_status ? $this->notifyAdminViaEmail($subject, $content, $toEmail) : false;
+        $content =  str_replace('number', request()->phone, $dataPlan->notification_content);
+        $dataPlan->phone_notification_status ? $this->notifyAdminViaSms($dataPlan->notification_phone, $content) : false;
+        $dataPlan->email_notification_status ? $this->notifyAdminViaEmail('Data Order Notification', $content, $dataPlan->notification_email) : false;
     }
 
     /**

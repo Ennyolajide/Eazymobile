@@ -29,9 +29,14 @@
                             </thead>
                             <tbody>
                                 @php
-                                    function getStatus($status){
+                                    function getStatus($transaction){
                                         $array = ['Declined','Pending','Success','Canceled'];
-                                        return $status ? $array[$status] : 'Decline';
+                                        $status = $transaction->status === NULL ? 'Pending' : $array[$transaction->status];
+                                        if($transaction->class->type == 'Data Topup'){
+                                            $status = $transaction->class->network == '9mobile Gifting' ? $status : str_replace('Pending', 'Success', $status);
+                                        }
+                                        return $status;
+
                                     }
                                 @endphp
 
@@ -42,7 +47,7 @@
                                         <td class="">@naira($transaction->amount)</td>
                                         <td><small>{{ $transaction->class->type }}</small></td>
 
-                                        <td>{{ getStatus($transaction->status) }}</td>
+                                        <td>{{ getStatus($transaction) }}</td>
                                         <td class="hidden-xs">{{ $transaction->created_at }}</td>
                                         <td>
                                         <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
@@ -55,9 +60,16 @@
 
 
                         </table>
+                        <div class="col-md-12 col-xs-12">
+                            @php $paginator = $transactions; @endphp
+                            <span class="hidden-xs text-bold" style="font-size:16px;">
+                                {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
+                            </span>
+                            <span class="pull-right">
+                                @include('dashboard.layouts.pagination')
+                            </span>
+                        </div>
                     </div>
-                    @php $elements = $transactions; @endphp
-                    @include('dashboard.layouts.paginate')
                 </div>
                 @include('dashboard.layouts.box-footer')
             </div>
@@ -82,16 +94,19 @@
                     <div class="modal-body">
                         <div class="row" style="font-size: 20px;">
                             <div class="col-md-5 col-xs-11  col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small>Transaction Reference :</small>
-                                <p class=""><b> {{ '7e38yrb8383hnfj8f8' }} </b></p>
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                                 <small>Transaction Type : </small>
-                                <p class=""><b> {{ $transaction->class->type }} </b></p>
-
+                                <p class=""><b> {{ $transaction->class->type }}  </b></p>
                             </div>
                             <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                            <small>Transaction Amount : </small>
+                                <small>Transaction {{ $transaction->class->type == 'Data Topup' ? 'Object' : 'Method' }} </small>
+                                <p class="">
+                                    <b>{{ $transaction->class->type == 'Data Topup'
+                                            ? $transaction->class->phone : $transaction->method }}
+                                    </b>
+                                </p>
+                            </div>
+                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                                <small>Transaction Amount : </small>
                                 <p class=""><b>@naira($transaction->amount) </b></p>
                             </div>
                             <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
@@ -104,9 +119,12 @@
                             </div>
                             <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                                 <small>Transaction Status </small>
-                                <p class=""><b> {{ getStatus($transaction->status) }} </b></p>
+                                <p class=""><b> {{ getStatus($transaction) }} </b></p>
                             </div>
-
+                            <div class="col-md-12 col-xs-12 text-center">
+                                <small>Transaction Reference </small>
+                                <p class="" style="font-size: 15px;"><b> {{ $transaction->reference }} </b></p>
+                            </div>
 
                         </div>
                     </div>

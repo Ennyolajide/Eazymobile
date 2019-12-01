@@ -1,133 +1,89 @@
 @extends('dashboard.layouts.master')
 
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h3>Airtime To Cash</h3>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Home</a>
-                    </li>
-                    <li class="active">Airtime To Cash</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
+    @section('title')
+        Airtime To Cash
     @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing" id="content">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Airtime To Cash</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
-                                <form id="airtime-swap-form" class="form-horizontal" method="post">
-                                    <br/> @csrf
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
-                                        <div class="col-sm-10 form-grouping">
-                                            <div class="row">
-                                                <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3" style="display:none;">
-                                                    <img class="img-responsive">
-                                                </div>
-                                                <div class="swap-from-network-image col-xs-4 col-sm-6 col-md-6 col-lg-6 text-center" style="display:none;">
-                                                    <br/><br/>
-                                                    <i class="fa fa-arrow-right fa-3x"></i>
-                                                </div>
-                                                <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3  pull-right" style="display:none;">
-                                                    <img class="img-responsive">
-                                                </div>
+                <div class="box-content">
+                    <h3 class="box_title">Airtime To Cash</h3>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                            <form id="airtime-swap-form" class="form-horizontal" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
+                                    <div class="col-sm-10 form-grouping">
+                                        <div class="row">
+                                            <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3" style="display:none;">
+                                                <img class="img-responsive">
+                                            </div>
+                                            <div class="swap-from-network-image col-xs-4 col-sm-6 col-md-6 col-lg-6 text-center" style="display:none;">
+                                                <br/><br/>
+                                                <i class="fa fa-arrow-right fa-3x"></i>
+                                            </div>
+                                            <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3  pull-right" style="display:none;">
+                                                <img class="img-responsive">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-xs-12 control-label" >Network</label>
-                                        <div class="col-sm-10 col-xs-12">
-                                            <div id="swap-from-network" data-networks="{{ $networks }}">
-                                                <select class="form-control" name="network" id="network">
-                                                    <option value="" disabled selected>Choose Network</option>
-                                                    @foreach ($networks as $network)
-                                                        <option value="{{ $network->id }}">
-                                                            {{ $network->network }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <p class="help-block">Select the network you want to swap airtime from.</p>
-                                            </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-xs-12 control-label" >Network</label>
+                                    <div class="col-sm-10 col-xs-12">
+                                        <div id="swap-from-network" data-networks="{{ $networks }}">
+                                            <select class="form-control" name="network" id="network">
+                                                <option value="" disabled selected>Choose Network</option>
+                                                @foreach ($networks as $network)
+                                                    <option value="{{ $network->id }}">
+                                                        {{ $network->network }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            <p class="help-block">Select the network you want to transfer airtime from.</p>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-xs-12 control-label">Phone Number</label>
-                                        <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" name="swapFromPhone">
-                                            <p class="help-block">The phone number you want to swap airtime from</p>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-xs-12 control-label">Phone Number</label>
+                                    <div class="col-sm-10 col-xs-12 form-grouping">
+                                        <input type="text" class="form-control" name="swapFromPhone">
+                                        <p class="help-block">The phone number you want to transfer airtime from</p>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 col-xs-12 control-label">Amount</label>
-                                        <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" id="amount" class="form-control" name="amount" disabled="true">
-                                            <p class="help-block">Enter amount you want to fund.</p>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-xs-12 control-label">Amount</label>
+                                    <div class="col-sm-10 col-xs-12 form-grouping">
+                                        <input type="text" id="amount" class="form-control" name="amount" disabled="true">
+                                        <label id="amount-info" style="font-size:15px; display:none;" class="text-primary" for="amount"></label>
+                                        <!--p class="help-block">Enter amount you want to fund.</p-->
                                     </div>
-                                    <div id="wallet-amount" class="form-group" style="display:none;">
-                                        <label class="col-sm-2 col-xs-12 control-label">Amount To Wallet</label>
-                                        <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" disabled="true">
-                                        </div>
+                                </div>
+                                <div id="wallet-amount" class="form-group" style="display:none;">
+                                    <label class="col-sm-2 col-xs-12 control-label">Amount To Wallet</label>
+                                    <div class="col-sm-10 col-xs-12 form-grouping">
+                                        <input type="text" class="form-control" disabled="true">
                                     </div>
-                                    <br/>
-                                    <div class="form-group bank" style="display:none;">
-                                        <label class="col-sm-2 col-xs-12 control-label" >Bank</label>
-                                        <div class="col-sm-10 col-xs-12">
-                                            <div id="swap-from-network" data-networks="{{ $networks }}">
-                                                <select class="form-control" name="bankId">
-                                                    <option value="" disabled selected>Choose Bank</option>
-                                                    @foreach ($banks as $bank)
-                                                        <option value="{{ $bank->id }}">
-                                                            {{ $bank->acc_name  }} {{ $bank->acc_no }} {{ $bank->bank_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                <p class="help-block">Select a bank account to receive your cash.  </p>
-                                            </div>
-                                        </div>
+                                </div>
+                                <br/>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-xs-12 control-label" ></label>
+                                    <div class="col-sm-10 col-xs-12">
+                                        <button id="submit" class="btn btn-rounded btn-success pull-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <a href="{{ route('user.profile') }}" class="btn bg-red btn-flat bank add-bank" style="display:none;">
-                                                <i class="fa fa-bank"></i>
-                                                Add {{ $banks->count() > 0 ? 'More' : 'New' }} Bank Account
-                                            </a>
-                                            <button id="submit" class="btn bg-purple btn-flat pull-right">Cash</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
-                        @include('dashboard.layouts.errors')
-                        <br/><br/>
                     </div>
-                    <!-- /.box-body -->
-                    @include('dashboard.layouts.box-footer')
-                    <!-- /.box-footer -->
+                    @include('dashboard.layouts.errors')
                 </div>
-                <!-- /.box -->
+                <!-- /.box-body -->
+                @include('dashboard.layouts.box-footer')
+                <!-- /.box-footer -->
             </div>
         </div>
     @endSection
@@ -168,12 +124,7 @@
                                 <p class="text-primary text-bold visible-xs">{{ session('modal')->transferCode }}</p>
                             </p>
                             <p class="h4 text-center text-danger">
-                                You will receive @naira(session('modal')->walletAmount) on
-                                {{ session('modal')->bankDetails->acc_no.'( '.session('modal')->bankDetails->bank_name.' )' }}
-                                within {{ session('modal')->processTime }} minutes
-                            </p>
-                            <p class="h4 text-center text-danger">
-                                Please use/click the Completed button only after you have transfered the airtime to avoid been baned
+                                Please use/click the Completed button only after you have transfered the airtime to avoid been barred
                             </p>
                         </section>
                     </div>
@@ -188,7 +139,7 @@
             </div>
         </div>
         <!-- /Modal -->
-        @endif
+    @endif
     @section('scripts')
 
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
@@ -205,8 +156,21 @@
                     }
                 });
 
-                $('.add-bank').click(function(){
-                    document.location.href="{{ route('user.profile') }}";
+
+
+                $('#network').change(function(){
+                    $('.networkList').remove();
+
+                    $('#amount').closest('.form-grouping').removeClass('has-error');
+                    $('#amount-error').hide();
+                    $('#amount').removeAttr('disabled');
+                    let network = $(this).val();
+                    let networks = @json($networks);
+                    network = networks.splice((network-1),1)[0];
+                    let fromNetwork = network.network.toLowerCase();
+                    $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetwork+'.png');
+                    $('#amount-info').text(`Minimum of ₦${network.airtime_to_cash_min}, Maximum of ₦${network.airtime_to_cash_max} for ${network.network}`).show();
+                    //$('#swapToNetworkImage').show().find('img').attr('src', '/images/networks/'+networkImage+'.png');
                 });
 
                 $('#amount').keyup(function(){
@@ -216,17 +180,10 @@
                     let returnAmount = networks[(network-1)].airtime_swap_percentage / 100 * amount;
                     amount.length > 2 ? $('#wallet-amount').show().find('input').val(returnAmount) : false;
                     amount.length > 2 ? $('.bank').show() : false;
+
                 });
 
-                $('#network').change(function(){
-                    $('.networkList').remove();
-                    $('#amount').removeAttr('disabled');
-                    let network = $(this).val();
-                    let networks = @json($networks);
-                    let fromNetwork = networks.splice((network-1),1)[0].network.toLowerCase();
-                    $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetwork+'.png');
-                    //$('#swapToNetworkImage').show().find('img').attr('src', '/images/networks/'+networkImage+'.png');
-                })
+
 
 
 
@@ -237,21 +194,25 @@
                             required : true
                         },
                         swapFromPhone: {
-                            required : true
+                            required : true,
+                            number :true
                         },
                         amount: {
-                            required : true
+                            required : true,
+                            number :true
                         }
                     },
                     messages: {
                         network: {
-                            required: "Pls select a network to swap from.",
+                            required: "Please select a network.",
                         },
                         swapFromPhone: {
-                            required: "Pls enter phone number to swap airtime from.",
+                            required: "Please enter phone number.",
+                            number : "Invalid Phone number"
                         },
                         amount: {
-                            required: "Pls enter swap amount",
+                            required: "Please enter amount",
+                            number : "Inavlid amount"
                         }
                     }
                 });

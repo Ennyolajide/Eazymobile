@@ -2,9 +2,13 @@
 
     @section('title')Data Topup @endsection
 
+    @section('js')
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
+        <div class="row small-spacing" id="content">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="box-content">
                     <h3 class="box_title">Buy Data</h3>
@@ -13,47 +17,41 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-12">
                                     <br/>
-                                    <img style="height: 60px; width:50px; display:none; margin-right:5px;" id="network-image" class="img-responsive pull-right">
+                                    <img v-if="networkImage" v-bind:src="networkImage" style="height: 60px; width:50px; margin-right:5px;" class="img-responsive pull-right">
                                 </div>
                             </div>
                             <form id="data-purchase-form" class="form-horizontal" action="{{ route('data.buy') }}" method="post">
                                 @csrf
                                 <br/>
                                 <div class="form-group" id="choose-wallet-type">
-                                    <label for="inputWallet" class="col-sm-2 col-xs-12 control-label">network</label>
+                                    <label for="inputWallet" class="col-sm-2 col-xs-12 control-label">Network</label>
 
                                     <div class="col-sm-10 col-xs-12 ">
-                                        <select class="form-control" id="network">
-                                            <option value="" disabled selected>Select network Type</option>
-                                            @foreach ($networks as $network)
-                                                <option value="{{ $network->network_id }}">
-                                                    {{ $network->network }}
-                                                </option>
-                                            @endforeach
+                                        <select class="form-control"  v-model="dataPlans"  v-on:change="showPlans">
+                                            <option value="" disabled>Select network Type</option>
+                                            <option v-for="network in networks" v-bind:value="network">
+                                                ${ network[0].network.toUpperCase() }
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <br/>
-                                <div id="other-fields" style="display:none;">
+                                <div id="other-fields">
                                     <div class="form-group" id="data-plan">
                                         <label class="col-sm-2 col-xs-12 control-label" >Choose data plan</label>
-                                        <div class="col-sm-10 col-xs-12 ">
-                                            @foreach ($networks as $network)
-                                                <select class="form-control plans {{ strtolower($network->network) }}" name="plan" style="display:none;">
-                                                    <option value="" disabled selected>Choose a data plan</option>
-                                                    @foreach ($network->plans as $plan)
-                                                        <option value="{{ $plan->id }}">
-                                                            {{ $plan->volume }} =  @naira($plan->amount)
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            @endforeach
+                                        <div class="col-sm-10 col-xs-12  form-grouping">
+                                            <select class="form-control" name="plan" v-model="dataPlan">
+                                                <option value="" disabled>Choose a data plan</option>
+                                                <option v-for="dataPlan in dataPlans" v-bind:value="dataPlan.id">
+                                                    ${ dataPlan.volume } = ₦ ${ dataPlan.amount }
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Phone Number</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" name="phone" placeholder="Pls Eneter Phone Number">
+                                            <input type="text" class="form-control" name="phone" placeholder="Please Eneter Phone Number">
                                         </div>
                                     </div>
                                     <br/>
@@ -68,8 +66,11 @@
                             <div class="form-grouping" id="network-images">
                                 <div class="row">
                                     @foreach ($networks as $network)
+                                        @if ($network[0]->addon)
+                                            @continue
+                                        @endif
                                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                            <img src="/images/networks/{{ strtolower($network->network) }}.png" class="img-responsive">
+                                            <img src="\images/networks/{{ strtolower($network[0]->network) }}.png" class="img-responsive">
                                         </div>
                                     @endforeach
                                 </div>
@@ -113,27 +114,49 @@
                     rules: {
                         phone: {
                             required: true,
-                            digit: true
+                            number: true
+                        },
+                        plan: {
+                            required: true,
                         }
                     },
                     messages: {
                         phone: {
-                            required: "Pls enter phone number.",
-                            digit:  "Phone numbers only "
+                            required: "Please enter phone number.",
+                            number:  "Phone numbers only "
+                        },
+                        plan: {
+                            required: "Please select a dataplan",
                         }
 
                     }
                 });
 
-                $('#network').change(function() {
-                    $('#network-images,#data-plan,.plans').hide();
-                    $('#other-fields,#network-image').show();
-                    let networks = @json($networks);
-                    let networkId = $('#network').val();
-                    let network = networks.splice((networkId-1),1)[0].network.toLowerCase();
-                    $('#data-plan,.'+network).show();
-                    $('#network-image').attr('src','/images/networks/'+network+'.png');
-                });
+            });
+
+            new Vue({
+                delimiters: ['${', '}'],
+                el : '#content',
+                data : {
+                    dataPlan : '',
+                    dataPlans : '',
+                    networkImage : false,
+                    networks: @json($networks),
+                },
+                methods : {
+                    showPlans : function () {
+                        if(this.dataPlans.length > 0){
+                            if(this.dataPlans[0].network == '9mobile Gifting') {
+                                this.networkImage = '/images/networks/9mobile.png';
+                            }else{
+                                this.networkImage = `/images/networks/${this.dataPlans[0].network.toLowerCase()}.png`;
+                                //console.log(this.networkImage);
+                            }
+                        }
+                    },
+
+
+                }
 
             });
 

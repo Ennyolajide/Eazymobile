@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'token', 'wallet_id', 'referrer', 'api_token', 'active', 'balance', 'facebook_id', 'avatar',
+        'name', 'email', 'number', 'password', 'facebook_id', 'avatar', 'token', 'wallet_id', 'referrer', 'api_token', 'active', 'balance', 'first_time_funding'
     ];
 
     /**
@@ -30,6 +30,11 @@ class User extends Authenticatable
     public function banks()
     {
         return $this->hasMany(Bank::class);
+    }
+
+    public function passwordResets()
+    {
+        return $this->hasMany(PasswordReset::class, 'email', 'email');
     }
 
     public function messages()
@@ -56,6 +61,27 @@ class User extends Authenticatable
     {
         return $this->hasMany(Withdrawal::class);
     }
+
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function myReferrer()
+    {
+        return $this->hasOne(User::class, 'id', 'referrer');
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referrer', 'id');
+    }
+
 
     /* public function data(){
         return $this->hasMany(Data::class);

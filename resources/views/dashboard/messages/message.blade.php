@@ -53,7 +53,7 @@
                         </div>
                         <div class="mailbox-read-message">
                             To : me <br/><br/><br/>
-                            {{ $message->content }}
+                            {!! $message->content !!}
                             <br/><br/><br/>
                         </div>
 

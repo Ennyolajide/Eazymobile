@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-    @section('title')Inbox @endsection
+    @section('title') Bulk Sms @endsection
 
     @section('content')
         <!-- Main content -->
@@ -44,13 +44,14 @@
                                     <label class="col-sm-2 col-xs-12 control-label">Sender Id</label>
                                     <div class="col-sm-8 col-xs-12 form-grouping">
                                         <input type="text" class="form-control" name="senderId" placeholder="Enter Sender Id" required>
+                                        <br/>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-xs-12 control-label">Recepient</label>
                                     <div class="col-sm-8 col-xs-12 form-grouping">
-                                        <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">07063637002</textarea>
+                                        <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
                                         <div class="">
                                             <p id="numbers" class="pull-left text-success" style="font-size:18px"></p>
                                         </div>
@@ -59,7 +60,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-xs-12  control-label">Message</label>
                                     <div class="col-sm-8 col-xs-12  form-grouping">
-                                        <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true">{{ $faker->paragraph(3) }}</textarea>
+                                        <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
                                         <div class="count">
                                             <p id="characters" class="pull-left text-success" style="font-size:18px"></p>
                                             <p id="pages" class="pull-right text-success" style="font-size:18px"></p>
@@ -100,7 +101,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X</span>
+                        <span class="text-danger"aria-hidden="true">X</span>
                     </button>
                     <h4 class="modal-title">Confirm</h4>
                 </div>
@@ -154,7 +155,6 @@
                                 </p>
                                 </fieldset>
                             </div>
-
                             @if(isset(session('modal')->realtime_dnd))
                                 <div class="col-md-11 col-xs-11 text-center">
                                     <small class="text-bold">DnD Numbers </small>
@@ -163,15 +163,12 @@
                                     </p>
                                 </div>
                             @endif
-
-                            @if(isset(session('modal')->invalid))
-                                <div class="col-md-11 col-xs-11 text-center">
-                                    <small class="text-bold">Invalid Numbers </small>
-                                    <p class="h6 text-bold text-dnager">
-                                        {{ session('modal')->invalid }}
-                                    </p>
-                                </div>
-                            @endif
+                            <div class="col-md-11 col-xs-11 text-center">
+                                <small class="text-bold">Invalid Numbers </small>
+                                <p class="h6 text-bold text-dnager">
+                                    {{ session('modal')->invalid }}
+                                </p>
+                            </div>
                             <div class="col-md-11 col-xs-11 text-center">
                                 <small class="text-bold">Transaction Reference :</small>
                                 <p class="h4"><b> {{ session('modal')->ref_id }} </b></p>
@@ -179,54 +176,50 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-rounded waves-effect waves-light pull-right" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Modal -->
     @else
-        @if(session('notification'))
+        <!-- Modal -->
+        <div id="info-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title text-orange text-bold">Important Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="font-size: 20px;">
+                            @foreach ($smsConfigs as $smsConfig)
+                                <div class="col-md-12 col-xs-12 ">
+                                    <p class="text-bold text-olive text-center">
+                                        <u>
+                                            @if($smsConfig->amount_per_unit > 0)
+                                                {{ $smsConfig->route }} @naira($smsConfig->amount_per_unit / 100)  / Sms / Page
+                                            @else
+                                                {{ str_replace('( DND and Non DND )',' ',$smsConfig->route) }} @naira($smsConfigs[0]->amount_per_unit / 100) for non DND |
+                                                @naira($smsConfigs[2]->amount_per_unit / 100) for DND  / Sms / Page
 
-        @else
-            <!-- Modal -->
-            <div id="info-modal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title text-orange text-bold">Important Info</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" style="font-size: 20px;">
-                                @foreach ($smsConfigs as $smsConfig)
-                                    <div class="col-md-12 col-xs-12 ">
-                                        <p class="text-bold text-olive text-center">
-                                            <u>
-                                                @if($smsConfig->amount_per_unit > 0)
-                                                    {{ $smsConfig->route }} @naira($smsConfig->amount_per_unit / 100)  / Sms / Page
-                                                @else
-                                                    {{ str_replace('( DND and Non DND )',' ',$smsConfig->route) }} @naira($smsConfigs[0]->amount_per_unit / 100) for non DND |
-                                                    @naira($smsConfigs[2]->amount_per_unit / 100) for DND  / Sms / Page
-
-                                                @endif
-                                            </u>
-                                        </p>
-                                        <p class="text-center"><small>{{ $smsConfig->description }}</small></p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default btn-rounded waves-effect waves-light" data-dismiss="modal">Close</button>
+                                            @endif
+                                        </u>
+                                    </p>
+                                    <p class="text-center"><small>{{ $smsConfig->description }}</small></p>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
+
             </div>
-            <!-- /Modal -->
-        @endif
+        </div>
+        <!-- /Modal -->
     @endif
 
     @section('scripts')
@@ -241,16 +234,16 @@
                     highlight: function(element) {
                         $(element)
                             .closest('.form-grouping')
-                            .addClass('has-error');
+                            .addClass('orange');
                     },
                     unhighlight: function(element) {
                         $(element)
                             .closest('.form-grouping')
-                            .removeClass('has-error');
+                            .removeClass('orange');
                     }
                 });
 
-                $('#misc-bill-form').validate({
+                $('#send-bulk-sms-form').validate({
                     rules: {
                         route: { required: true },
                         amount: { required: true },

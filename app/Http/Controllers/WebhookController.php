@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 
-class WebhookController extends Controller
+class WebhookController extends  PaystackController
 {
     //
-    public function paystack()
+    public function paystackHook()
     {
-
         // only a post with paystack signature header gets our attention
         $postRequestMethod = strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
         $validRequestSignature = array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER);
@@ -20,7 +19,7 @@ class WebhookController extends Controller
 
         // Retrieve the request's body
         $input = @file_get_contents("php://input");
-        define('PAYSTACK_SECRET_KEY', 'SECRET_KEY');
+        define('PAYSTACK_SECRET_KEY', config('constants.paystack.secretkey'));
 
         // validate event do all at once to avoid timing attack
         ($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY)) ? exit() : false;
@@ -33,8 +32,12 @@ class WebhookController extends Controller
         $event = json_decode($input);
 
         // check for counterfiet ip
-        //!in_array($event.,['52.31.139.75', '52.49.173.169', '52.214.14.220']) ? exit() : false;
+        //!in_array($event, ['52.31.139.75', '52.49.173.169', '52.214.14.220']) ? exit() : false;
+
         Log::info($event);
+        if ($event->event === 'charge.success') {
+            $event->data->status === 'success' ? '' : exit();
+        }
 
         // to be completed
 

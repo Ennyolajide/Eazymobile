@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.master')
 
     @section('title')
-        test
+        Dashbaord
     @endSection
 
     @section('css')
@@ -20,7 +20,7 @@
             <div class="col-lg-3 col-md-6 col-xs-12">
                 <div class="box-content bg-success text-white">
                     <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-diamond"></i>
+                        <i class="ico small fa fa-shopping-cart"></i>
                         <p class="text text-white">Transactions</p>
                         <h2 class="counter">{{ $transactions->count() }}</h2>
                     </div>
@@ -29,22 +29,22 @@
             </div>
             <!-- /.col-lg-3 col-md-6 col-xs-12 -->
             <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-info text-white">
+                <div class="box-content bg-danger text-white">
                     <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-download"></i>
-                        <p class="text text-white">DOWNLOAD</p>
-                        <h2 class="counter">6382</h2>
+                        <i class="ico small fa fa-evelope"></i>
+                        <p class="text text-white">Notifications</p>
+                        <h2 class="counter" id="unread_messages"></h2>
                     </div>
                 </div>
                 <!-- /.box-content -->
             </div>
             <!-- /.col-lg-3 col-md-6 col-xs-12 -->
             <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-danger text-white">
+                <div class="box-content bg-info text-white">
                     <div class="statistics-box with-icon">
                         <i class="ico small fa fa-envelope"></i>
-                        <p class="text text-white">Notification</p>
-                        <h2 class="counter">{{--$unReadMessages->count() --}}</h2>
+                        <p class="text text-white">Referrals</p>
+                        <h2 class="counter">{{ Auth::user()->referrals->count() }}</h2>
                     </div>
                 </div>
                 <!-- /.box-content -->
@@ -53,9 +53,9 @@
             <div class="col-lg-3 col-md-6 col-xs-12">
                 <div class="box-content bg-warning text-white">
                     <div class="statistics-box with-icon">
-                        <i class="ico small">₦</i>
+                        <i class="ico small fa fa-money"></i>
                         <p class="text text-white">Balance</p>
-                        <h2 class="counter">{{ Auth::user()->balance }}</h2>
+                        <h2 class="counter">@naira(Auth::user()->balance)</h2>
                     </div>
                 </div>
                 <!-- /.box-content -->
@@ -202,7 +202,9 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="text-danger"aria-hidden="true">X</span>
+                        </button>
                     <h4 class="modal-title">View transaction</h4>
                     </div>
                     <div class="modal-body">
@@ -264,6 +266,11 @@
                 $('#toast-container').hide();
             }, 7000);
         </script>
+
+        <script>
+            $('#unread_messages').html($('#unread').val());
+        </script>
+
     @endsection
 
     @if(session('alert'))

@@ -9,30 +9,44 @@ use App\Http\Controllers\Controller;
 
 class AirtimesController extends ModController
 {
+    protected $errorResponse = 'Invalid Operation';
     protected $failureResponse = 'Operation Failed';
     protected $successResponse = 'Operation Successful';
 
     public function show()
     {
-        $transactions = Transaction::where('class_type', 'App\Airtime')->whereStatus(!NULL)->orderBy('id', 'desc')->paginate(20);
+        $transactions = Transaction::where('class_type', 'App\Airtime')->orderBy('id', 'desc')->paginate(20);
 
         return view('control.airtimes', compact('transactions'));
     }
 
     public function edit(Transaction $trans)
     {
-        $status = request()->has('decline') || request()->has('completed') ? true : false;
-        $transactionStatus = ['status' => request()->has('completed') ? 2 : 0];
-        $status ? $trans->class->update($transactionStatus) : false;
-        $status ? $trans->update($transactionStatus) : false;
-        $message = $status ? $this->successResponse : $this->failureResponse;
+        $creditAmout = $trans->class->amount * $trans->class->percentage / 100;
+        if (request()->has('completed')) {
+            $transactionStatus = ['status' =>  2];
+            $trans->class->update($transactionStatus);
+            $trans->update(['status' =>  2, 'balance_after' => ($trans->user->balance + $creditAmout)]);
+            $status = $this->creditUserWallet($trans->user_id, $creditAmout);
+            $status ? $trans->update($transactionStatus) : false;
+            $status ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;
+            $message = $status ? $this->successResponse : $this->failureResponse;
+        } else if (request()->has('decline')) {
+            $transactionStatus = ['status' =>  0];
+            $status = $trans->update($transactionStatus);
+            $status ? $status = $this->failureResponse : false;
+            $message = $status ? $this->successResponse : false;
+        } else {
+            $status = false;
+            $message = $this->errorResponse;
+        }
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
     public function settings()
     {
-        $networks = AirtimePercentage::all();
+        $networks = AirtimePercentage::whereAddon(false)->get();
 
         return view('control.airtime', compact('networks'));
     }
@@ -64,13 +78,22 @@ class AirtimesController extends ModController
     public function funding(Transaction $trans)
     {
         $creditAmout = $trans->class->amount * $trans->class->percentage / 100;
-        $status = request()->has('decline') || request()->has('completed') ? true : false;
-        $transactionStatus = ['status' => request()->has('completed') ? 2 : 0];
-        $status ? $trans->class->update($transactionStatus) : false;
-        $status = $status ? $this->creditWallet($creditAmout) : false;
-        $status ? $trans->update($transactionStatus) : false;
-        $status ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;
-        $message = $status ? $this->successResponse : $this->failureResponse;
+        if (request()->has('completed')) {
+            $transactionStatus = ['status' =>  2];
+            $trans->class->update($transactionStatus);
+            $status = $this->creditUserWallet($trans->user->id, $creditAmout);
+            $status ? $trans->update($transactionStatus) : false;
+            $status ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;
+            $message = $status ? $this->successResponse : $this->failureResponse;
+        } else if (request()->has('decline')) {
+            $transactionStatus = ['status' =>  0];
+            $status = $trans->class->update($transactionStatus);
+            $status ? $trans->update($transactionStatus) : false;
+            $message = $status ? $this->successResponse : $this->failureResponse;
+        } else {
+            $status = false;
+            $message = $this->errorResponse;
+        }
 
         return back()->withNotification($this->clientNotify($message, $status));
     }

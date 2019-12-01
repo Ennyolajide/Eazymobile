@@ -17,31 +17,34 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLogin()
+    public function index()
     {
-        $app = $this->getAppDetails();
-        return view('users/login', compact('app'));
+        $referrer = null;
+
+        return view('users/login', compact('referrer'));
     }
+
 
     public function login()
     {
-        $userData = $this->validate(request(), [
-            'password'  => 'required|min:5',
-            'email'     => 'required|exists:users|email|min:5|max:40',
+        $invalidResponse = 'Invalid Username/Password';
+        $inactiveResponse = 'Account Inactive, please check your email inbox or email spam ';
+        $inactiveResponse .= 'folder to verify email and complete registration.';
 
+        $userData = $this->validate(request(), [
+            'email'     => 'required|exists:users|email|min:5|max:40',
+            'password'  => 'required|min:5',
+            //'active'    => true
         ]);
 
-        $userData['active'] = true;
+        if (Auth::attempt($userData, request()->has('remember'))) {
 
-        $status = Auth::attempt($userData, request()->has('remember'));
+            return redirect('/dashboard');
+        } else {
+            $user = User::whereEmail(request()->email)->first();
 
-        $route = $status ? Auth::user()->route : false;
-
-        $user = $status ? false : User::whereEmail($userData['email'])->first();
-
-        $response = (object) ['status' => $status, 'active' => $status ? false : $user->active];
-
-        return $status ? redirect($route) : back()->withResponse($response);
+            return back()->withResponse($user->active ? $invalidResponse : $inactiveResponse);
+        }
     }
 
 

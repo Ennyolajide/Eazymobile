@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Twilio\Rest\Client;
 use Faker\Generator as Faker;
 use App\Mail\OrderNotification;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Exception;
 use Illuminate\Support\Facades\Mail;
-//use Illuminate\Mail\Mailable;
+use function GuzzleHttp\json_decode;
 
-
-
-class NotificationController extends HomeController
+class NotificationController extends  DashboardController
 {
     protected function creditNotification($amount, $method)
     {
@@ -65,6 +65,17 @@ class NotificationController extends HomeController
         return $notification;
     }
 
+    protected function dataPurchaseDeclineNotification($trans)
+    {
+        $notification['subject'] = 'Credit Notification';
+        $notification['content'] = 'Your wallet has been credited with ';
+        $notification['content'] .= $this->naira($trans->class->amount) . ' for data topup( ' . $trans->class->phone . ' ) ';
+        $notification['content'] .= 'reversal as a result of technical timeout <br/>';
+        $notification['content'] .= 'We apologize for any inconvenience this may have caused';
+
+        return $notification;
+    }
+
     /**
      * notification for airtimeSwap
      */
@@ -90,22 +101,54 @@ class NotificationController extends HomeController
         return $notification;
     }
 
-    protected function tvTopupNotification($details)
+    protected function tvTopupNotification($details, $uniqueReference, $responseObject)
     {
+        $responseObject = $responseObject->original;
         $notification['subject'] = 'Debit Notification';
         $notification['content'] = 'Your wallet has been debited with ';
         $notification['content'] .= $this->naira($details['amount']) . ' for ' . $details['type'];
-        $notification['content'] .= ' Topup to ' . request()->owner . ' ' . $details['product'] . ' decoder';
+        $notification['content'] .= ' Topup to ' . request()->owner . ' ' . $details['product'] . ' decoder .... Reference : ' . $uniqueReference;
 
         return $notification;
     }
 
-    protected function miscTopupNotification($details)
+    protected function electricityTopupNotification($details, $uniqueReference, $responseObject, $charges)
     {
+        $responseObject = $responseObject->original;
         $notification['subject'] = 'Debit Notification';
-        $notification['content'] = 'Your wallet has been debited with ' . $this->naira($details['amount']);
-        $notification['content'] .= ' for ' . $details['product'] . '(' . $details['type'] . ')';
+        $notification['content'] = 'Your wallet has been debited with ';
+        $notification['content'] .= $this->naira($details['amount'] + $charges) . ' for ';
+        $notification['content'] .= request()->has('owner') ? request()->owner : '' . $details['product'] . ' Meter Topup.<br/>';
+        $notification['content'] .= 'Reference : ' . $uniqueReference . '<br/>';
+        $notification['content'] .= $responseObject->pin_based ? '<br/><pre>' . $responseObject->pin_code . '</pre><br/>' : '';
+        $notification['content'] .= $details['product'] . ' message : ' . $responseObject->pin_option1;
 
+        return $notification;
+    }
+
+    protected function internetTopupNotification($details, $uniqueReference, $responseObject)
+    {
+        $responseObject = $responseObject->original;
+        $notification['subject'] = 'Debit Notification';
+        $notification['content'] = 'Your wallet has been debited with ' . $this->naira($details['amount']) . ' for ' . $details['type'];
+        $notification['content'] .= ' Topup ' . request()->has('owner') ? 'to ' . request()->owner . ' ' . $details['product'] : '';
+        $notification['content'] .= ' .... Reference : ' . $uniqueReference;
+        $notification['content'] .= isset($responseObject['pin_based']) ? '<br/><br/><pre>' . $responseObject['pins'] . '</pre>' : '';
+
+        return $notification;
+    }
+
+    protected function miscTopupNotification($details, $uniqueReference, $responseObject)
+    {
+        try {
+            $responseObject = $responseObject->original;
+            $notification['subject'] = 'Debit Notification';
+            $notification['content'] = 'Your wallet has been debited with ' . $this->naira($details['amount']);
+            $notification['content'] .= ' for ' . $details['product'] . '(' . $details['type'] . ') .... Reference : ' . $uniqueReference;
+            $notification['content'] .= $responseObject->pin_based ? '<br/><br/><pre>' . json_encode($responseObject->pins[0]) . '</pre>' : '';
+        } catch (\Exception $e) {
+            Log::info('Cound not Format Misc Topup Notification');
+        }
         return $notification;
     }
 
@@ -119,18 +162,26 @@ class NotificationController extends HomeController
         return $notification;
     }
 
-
-
-    /* public function sendSms($to, $content) //$to, $content)
+    protected function referralBonusNotification($user, $amount)
     {
-        $client = new Client(env('TWILIO_SID'), env('TWILIO_TOKEN'));
-        $message = $client->messages->create($to, [
-            'from' => env('TWILIO_NUMBER'),
-            'body' => $content,
-        ]);
+        $notification['subject'] = 'Credit Notification';
+        $notification['content'] = 'Your wallet has been Credit with with ';
+        $notification['content'] .= $this->naira($amount) . ' As referral bonus for the referred user ' . $user->name;
 
-        return $message;
-    } */
+        return $notification;
+    }
+
+    /**
+     * Notify Client of something that happend
+     */
+    public function clientNotify($message, $status = false)
+    {
+        return (object) [
+            'message' => $message,
+            'status' => $status ? $status : false,
+        ];
+    }
+
 
     /* Control Notification */
 
@@ -143,33 +194,34 @@ class NotificationController extends HomeController
         return $notification;
     }
 
-    /**
-     * Admin Data Order Notification
-     */
-    protected function adminDataOrderNotification($dataPlan)
-    {
-        return request()->phone . ' ordered for ' . $dataPlan->network . ' ' . $dataPlan->volume;
-    }
 
     /**
      * Notify Admin Via Email
      */
     protected function notifyAdminViaEmail($subject, $content, $toEmail)
     {
-        Mail::to($toEmail)->send(new OrderNotification($subject, $content));
+        try {
+            Mail::to($toEmail)->send(new OrderNotification($subject, $content));
+        } catch (\Exception $e) {
+            Log::info('Cound not send Admin Notification Email');
+        }
     }
 
     /**
      * Notify Admin Via Sms
      */
-    protected function notifyAdminViaSms($message, $to)
+    protected function notifyAdminViaSms($to, $message)
     {
-        $client = new \GuzzleHttp\Client();
-        $client->post(\config('constants.url.smartsmssolutions') . '?json', [
-            'form_params' => [
-                'sender' => env('SITE_SMS_SENDER_ID'), 'message' => $message, 'to' => $to,
-                'type' => '0', 'routing' => 3, 'token' => env('SMARTSMSSOLUTION_TOKEN')
-            ]
-        ]);
+        try {
+            $client = new \GuzzleHttp\Client(['http_errors' => false]);
+            $client->post(\config('constants.url.smartsmssolutions') . '?json', [
+                'form_params' => [
+                    'sender' => \config('constants.site.sms.sender'), 'message' => $message, 'to' => $to,
+                    'type' => '0', 'routing' => 3, 'token' => \config('constants.smartsmssolutions.token')
+                ]
+            ]);
+        } catch (\Exception $e) {
+            Log::info('Cound not send Admin Notification Sms');
+        }
     }
 }

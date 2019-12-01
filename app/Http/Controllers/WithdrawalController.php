@@ -11,21 +11,22 @@ use Illuminate\Support\Facades\Auth;
 class  WithdrawalController extends TransactionController
 {
     protected $failureResponse = 'Insuffient balance, Pls fund your account';
-    protected $successResponse = 'Withdraw request successful <br/> Please wait while your request is been proccess';
+    protected $successResponse = 'Withdrawal request successful <br/> Please wait while your request is been proccess';
 
     /**
      * Display Withdraw (if at least one bank account is connected )else( redirect to profile page)
      */
     public function index()
     {
-        $banks = User::where('id', Auth::user()->id)->first()->banks;
+
+        $banks = User::find(Auth::user()->id)->banks;
 
         if ($banks->count()) {
             $charge = Charge::whereService('withdrawals')->first()->amount;
-            return view('dashboard/wallet/withdraw', compact('banks', 'charge'));
+            return view('dashboard.wallet.withdraw', compact('banks', 'charge'));
         } else {
-            $message = 'Pls Add at least one Bank to your Profile';
-            return redirect(route('user.profile', 'bank'))->withNotification($this->clientNotify($message, false));
+            $message = 'Please Add at least one Bank to your Profile';
+            return redirect(route('user.profile') . '#mybanks')->withNotification($this->clientNotify($message, false));
         }
     }
 
@@ -34,7 +35,6 @@ class  WithdrawalController extends TransactionController
      */
     public function store()
     {
-        //validation
         $this->validate(request(), [
             'amount'  => 'required|numeric',
             'bankId'  => 'required|numeric'

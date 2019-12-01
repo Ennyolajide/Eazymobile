@@ -1,7 +1,7 @@
 @extends('users.layouts.master')
 
     @section('title')
-        {{ $app['name'] }} | Login
+        {{ config('constants.site.name') }} | Login
     @endsection
 
     @section('content')
@@ -9,7 +9,9 @@
             <form method="post" action="{{ route('user.login') }}" class="frm-single">
                 @csrf
                 <div class="inside">
-                    <div class="title"><strong>{{ $app['name'] }}</strong></div>
+                    <div class="title">
+                        <strong><a href="{{ route('index') }}"><img src="{{ config('constants.site.logo') }}" class="img-fluid"></a></strong>
+                    </div>
                     <!-- /.title -->
                     <div class="frm-title">Login</div>
                     <!-- /.frm-title -->
@@ -18,15 +20,9 @@
                     @if(session('response'))
                         <div class="alert alert-danger" role="alert">
                             <h4 class="alert-heading text-center">
-                                <i class="{{ session('response')->status ? 'fa fa-check' : 'fa-exclamation-triangle' }}"></i>
-                                {{ session('response')->active ? 'Invalid Username/Password' : 'Login failed' }}
+                                <i class="fa-exclamation-triangle"></i>
+                                {{ session('response') }}
                             </h4>
-                            @if(session('response')->status == false)
-                                <p class="text-center">
-                                    Account Inactive, please check your email inbox or spam folder to verify email and complete registration.
-                                </p>
-                            @endif
-                            {{-- <p class="mb-0">pxxxl dhdgudd doidoudugugddi</p>--}}
                         </div>
                     @endif
                     <div class="frm-input"><input type="text" placeholder="Username/email" name="email" class="frm-inp"><i class="fa fa-user frm-ico"></i></div>
@@ -39,7 +35,7 @@
                             <!-- /.checkbox -->
                         </div>
                         <!-- /.pull-left -->
-                        <div class="pull-right"><a href="{{ route('show.passwordReset') }}" class="a-link"><i class="fa fa-unlock-alt"></i>Forgot password?</a></div>
+                        <div class="pull-right"><a href="{{ route('user.password.reset') }}" class="a-link"><i class="fa fa-unlock-alt"></i>Forgot password?</a></div>
                         <!-- /.pull-right -->
                     </div>
                     <!-- /.clearfix -->
@@ -56,8 +52,8 @@
                         <!-- /.col-sm-6 -->
                     </div>
                     <!-- /.row -->
-                    <a href="{{ route('show.register') }}" class="a-link"><i class="fa fa-key"></i>New to {{ $app['name'] }}? Register.</a>
-                    <div class="frm-footer text-center">{{ $app['name'] }} © {{ $app['year'] }}.</div>
+                    <a href="{{ route('user.register') }}" class="a-link"><i class="fa fa-key"></i>New to {{ config('constants.site.name') }}? Register.</a>
+                    <div class="frm-footer text-center">{{ config('constants.site.name') }} © {{ config('constants.site.year') }}.</div>
                     <!-- /.footer -->
                 </div>
                 <!-- .inside -->

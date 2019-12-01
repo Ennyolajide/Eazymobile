@@ -103,3 +103,10 @@
     width: 50px;
 }
 
+.form-group {
+    margin-bottom: unset !important;
+}
+
+.help-block {
+    margin-top: 3px !important;
+}

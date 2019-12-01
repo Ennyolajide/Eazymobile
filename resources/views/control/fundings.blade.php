@@ -1,71 +1,72 @@
 @extends('dashboard.layouts.master')
 
-    @section('title') Fundings @endsection
-
-    @section('css')
-        <!-- Data Tables -->
-        <link rel="stylesheet" href="\plugins/datatables/media/css/dataTables.bootstrap.min.css">
-        <link rel="stylesheet" href="\plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
-    @endsection
-
+    @section('title') Fundings Request @endsection
 
     @section('content')
         <!-- Main content -->
         <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="box-content">
-                    <h3 class="box-title">Fundings</h3>
+                    <h3 class="box-title">Funding Requests</h3>
                     <div class="row">
-                        <table id="transactions-table" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="hidden-xs">Reference</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="hidden-xs">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    function getStatus($status){
-                                        $array = ['Declined','Pending','Success','Canceled'];
-                                        return $array[$status];
-                                    }
-                                @endphp
-
-                                @foreach ($transactions as $transaction)
+                        <div class="table-responsive">
+                            <table id="transactions-table" class="table table-bordered table-striped">
+                                <thead>
                                     <tr>
-                                        <td class="hidden-xs">{{ $transaction->reference }}</td>
-                                        <td>{{ $transaction->amount }}</td>
-                                        <td>{{ $transaction->class->type }}</td>
-
-                                        <td>{{ getStatus($transaction->status) }}</td>
-                                        <td class="hidden-xs">{{ $transaction->created_at }}</td>
-                                        <td>
-                                            <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
-                                                <i class="fa fa-eye"></i>view
-                                            </a>
-                                        </td>
+                                        <th class="hidden-xs">Reference</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th class="hidden-xs">Date</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th class="hidden-xs">Reference</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="hidden-xs">Date</th>
-                                    <th >Action</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    @php $elements = $transactions; @endphp
-                    @include('dashboard.layouts.paginate')
+                                </thead>
+                                <tbody>
+                                    @php
+                                        function getStatus($status){
+                                            $array = ['Declined','Pending','Success','Canceled'];
+                                            return $status === NULL ? 'Pending' : $array[$status];
+                                        }
+                                    @endphp
 
-                    @include('dashboard.layouts.errors')
+                                    @foreach ($transactions as $transaction)
+                                        <tr>
+                                            <td class="hidden-xs">{{ $transaction->reference }}</td>
+                                            <td>{{ $transaction->amount }}</td>
+                                            <td>{{ $transaction->class->type }}</td>
+
+                                            <td>{{ getStatus($transaction->status) }}</td>
+                                            <td class="hidden-xs">{{ $transaction->created_at }}</td>
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
+                                                    <i class="fa fa-eye"></i>view
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="hidden-xs">Reference</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th class="hidden-xs">Date</th>
+                                        <th >Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="col-md-12 col-xs-12">
+                                @php $paginator = $transactions; @endphp
+                                <span class="hidden-xs text-bold" style="font-size:16px;">
+                                    {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
+                                </span>
+                                <span class="pull-right">
+                                    @include('dashboard.layouts.pagination')
+                                </span>
+                            </div>
+                            @include('dashboard.layouts.errors')
+                        </div>
+                    </div>
                 </div>
                 <!-- /.box -->
             </div>
@@ -78,7 +79,9 @@
         <!-- Modal -->
         <div id="{{ $transaction->id }}" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
+                @php
+                    $details = json_decode($transaction->class->details,true);
+                @endphp
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -119,7 +122,16 @@
                                 <small> Status </small>
                                 <p class=""><b> {{ getStatus($transaction->status) }} </b></p>
                             </div>
+                            <div class="col-md-5 col-xs-5 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                                <small> Reference : </small>
+                                <p class=""><b> {{ $details['reference'] }} </b></p>
+                            </div>
+                            <div class="col-md-5 col-xs-6 col-sm-offset-1 col-md-offset-1">
+                                <small> Remarks </small>
+                                <p class=""><b> {{ $details['remarks'] }} </b></p>
+                            </div>
                             <div class="col-md-11 col-xs-11 text-center">
+                                <p class="text-bold">Depositor : {{ $details['depositor'] }}</p>
                                 <small class="text-bold">Transaction Reference :</small>
                                 <p class="h4"><b> {{ $transaction->reference }} </b></p>
                             </div>
@@ -127,19 +139,17 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <form method="POST" action="{{ route('admin.fundings.edit',['trans' => $transaction->id] ) }}">
-                            @method('patch')
-                            @csrf
-                            <button type="submit" name="decline" class="btn btn-danger pull-left">Deline</button>
-                            <button type="submit" name="completed" class="btn btn-primary">Completed</button>
-                        </form>
+                        @if($transaction->status == 1)
+                            <form method="POST" action="{{ route('admin.fundings.edit',['trans' => $transaction->id] ) }}">
+                                @method('patch')
+                                @csrf
+                                <button type="submit" name="decline" class="btn btn-danger pull-left">Deline</button>
+                                <button type="submit" name="completed" class="btn btn-primary">Completed</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
         <!-- /Modal -->
     @endforeach
-
-    @section('scripts')
-
-    @endSection

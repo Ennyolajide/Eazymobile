@@ -62,6 +62,7 @@
                                             </select>
                                             <p class="help-block text-olive">Bank to transfer to</p>
                                         </div>
+
                                         <div class="col-sm-9 col-sm-offset-3 col-xs-12 ">
                                             <div class="radio" style="display:none; border: 2px solid #605ca8;">
                                                 <p class="text-center well no-shadow" style="margin:-6px 0px 0px 0px; padding: 2px 7px;">
@@ -71,8 +72,8 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <br/>
                                     </div>
+                                    <br/>
                                     <div class="form-group">
                                         <label class="col-sm-3 col-xs-12 control-label">Reference (optional)</label>
                                         <div class="col-sm-9 col-xs-12 form-grouping">
@@ -128,18 +129,9 @@
                                     </div>
                                 </div>
 
-                                <div id="ecard-form" style="display:none;">
-                                    <div class="form-group">
-                                        <label class="col-sm-3 col-xs-12 control-label">Voucher Pin</label>
-                                        <div class="col-sm-9 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" name="voucher">
-                                            {{-- <p class="help-block text-olive">Enter the Voucher Pin</p> --}}
-                                        </div>
-                                    </div>
-                                </div>
                                 <br/>
                                 <div class="form-group">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 col-xs-12">
                                         <button id="submit" class="btn bg-primary btn-rounded pull-right">Continue</button>
                                     </div>
                                 </div>
@@ -154,7 +146,7 @@
     @endSection
 
     @if(session('modal'))
-        <!-- Modal -->
+    <!-- Modal -->
         @if(session('modal')->name == 'AirtimeFunding')
             <!-- AirtimeToWallet-Modal -->
             @php $imgSrc = "\images/networks/".session('modal')->swapFromNetwork.".png"; @endphp
@@ -198,8 +190,8 @@
                         <div class="modal-footer">
                             <form action="{{ route('airtime.cash.completed', ['airtimeRecord' => session('modal')->airtimeRecordId ]) }}" method="post">
                                 @csrf @method('patch')
-                                <button type="button" class="btn btn-default btn-rounded pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary btn-rounded">Completed</button>
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Completed</button>
                             </form>
                         </div>
                     </div>
@@ -253,8 +245,8 @@
                         <div class="modal-footer">
                             <form action="{{ route('wallet.fund.bank.completed', ['bankTransferRecord' => session('modal')->record->id ]) }}" method="post">
                                 @csrf @method('patch')
-                                <button type="button" class="btn btn-default btn-rounded pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary btn-rounded">Completed</button>
+                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Completed</button>
                             </form>
                         </div>
                     </div>
@@ -271,7 +263,7 @@
             $(document).ready(function(){
 
                 $.validator.setDefaults({
-                    errorClass: 'help-block text-olive',
+                    errorClass: 'help-block',
                     highlight: function (element) {
                         $(element)
                             .closest('.form-grouping')
@@ -287,8 +279,51 @@
                 $('#gateway').change(function() {
                     var gateway = $('#gateway').val();
                     console.log(gateway);
-                    if(gateway == 1){//airtime
-                        $('#fund-wallet-form').attr('action',"{{ route('wallet.fund.airtime')}}");
+                    if(gateway == 1){
+                        $('#ecard-form,#airtime-form,#bank-transfer').hide();
+                        $('#atmBankBitcoin-form,#amount-field').show();
+                        $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
+
+                        $('#submit').click(function() {
+                            $('#fund-wallet-form').validate({
+                                rules: {
+                                    amount: {
+                                        required: true,
+                                        range: [ {{ config('constants.fundings.paystack.min') }}, {{ config('constants.fundings.paystack.max') }}]
+                                    }
+                                },
+                                messages: {
+                                    amount: {
+                                        required: "Please enter amount.",
+                                        range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
+                                    }
+
+                                }
+                            });
+                        });
+                    }else if(gateway == 2){
+                        $('#ecard-form,#airtime-form').hide();
+                        $('#atmBankBitcoin-form,#amount-field,#bank-transfer').show();
+                        $('#submit').click(function() {
+                            $('#fund-wallet-form').validate({
+                                rules: {
+                                    amount: {
+                                        required: true,
+                                        range: [1000, 50000]
+                                    }
+                                },
+                                messages: {
+                                    amount: {
+                                        required: "Please enter amount.",
+                                        range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
+                                    }
+
+                                }
+                            });
+                        });
+                        $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}').attr('novalidate',true);
+                    }else if(gateway == 3){//airtime
+                        //$('#fund-wallet-form').attr('action',"{{-- route('wallet.fund.airtime') --}}");
                         $('#amount-field,#ecard-form,#bank-transfer').hide();
                         $('#airtime-form').show();
                         $('#airtimeAmount').keyup(function(){
@@ -302,14 +337,6 @@
                             }
                         });
 
-                    }else if(gateway == 2){
-                        $('#ecard-form,#airtime-form,#bank-transfer').hide();
-                        $('#atmBankBitcoin-form,#amount-field').show();
-                        $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
-                    }else if(gateway == 3){
-                        $('#ecard-form,#airtime-form').hide();
-                        $('#atmBankBitcoin-form,#amount-field,#bank-transfer').show();
-                        $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}');
                     }else if(gateway == 4){
                         $('#ecard-form,#airtime-form').hide();
                         $('#atmBankBitcoin-form,#amount-field').show();
@@ -317,7 +344,7 @@
                     }else if(gateway == 5){//ecard
                         $('#amount-field,#airtime-form').hide();
                         $('#ecard-form').show();
-                        $('#fund-wallet-form').attr('action','{{ route("wallet.fund.voucher") }}');
+                        //$('#fund-wallet-form').attr('action','{{-- route("wallet.fund.voucher") --}}');
                     }else{
 
 
@@ -325,25 +352,7 @@
 
                 });
 
-                $('#submit').click(function() {
-                    $('#fund-wallet-form').validate({
-                        rules: {
-                            voucher: {
-                                required: true,
-                                minlength: 16,
-                                maxlength: 20
-                            }
-                        },
-                        messages: {
-                            voucher: {
-                                required: "Pls enter the Voucher pin.",
-                                minlength: jQuery.validator.format("Minimum of {0} characters required."),
-                                maxlength: jQuery.validator.format("Maximum {0} characters.")
-                            }
 
-                        }
-                    });
-                });
 
                 $('#chooseBank').change(function(){
                     let banks = @json($banks);

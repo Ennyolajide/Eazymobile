@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <h3 class="text-primary text-center"><strong> {{ $product->name }} </strong></h3>
-                                    {{-- <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3> --}}
+                                    <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3  pull-right">
                                     <br/>
@@ -148,7 +148,7 @@
                         phone: { required: true, minlength: 10, maxlength: 13 }
                     },
                     messages: {
-                        package: { required: 'Pls choose your prefered package' },
+                        package: { required: 'Please choose your prefered package' },
                         cardNo: { equired: 'Card number cannot be blank' },
                         amount: { required: 'Bill amount cannot be blank' },
                         email: {
@@ -176,10 +176,8 @@
                     let timeOut = setTimeout(function(){ notifyError(); },10000);
                     $.ajax({
                         type:'POST',
-                        url:'{{ route("bills.tv.validate") }}',
-                        data:{
-                            cardNo : $('#cardNo').val(), amount : $('#amount').val(), email : $('#email').val(),
-                            phone : $('#phone').val() , productId : '{{ $product->id }}', product : package.code },
+                        url:'{{ route("bills.tv.validate",["provider" => $product->name ]) }}',
+                        data:{ cardNo : $('#cardNo').val() },
                         success:function(data){
                             console.log(data);
                             clearTimeout(timeOut);

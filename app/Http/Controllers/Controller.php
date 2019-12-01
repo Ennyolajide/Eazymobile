@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Message;
+use App\Http\Controllers\Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -14,26 +16,30 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-
-
     public function notify($notification = null)
     {
-        Message::create([
-            'user_id' => Auth::user()->id,
-            'subject' => $notification['subject'],
-            'content' => $notification['content'],
-        ]);
+        try {
+            Message::create([
+                'user_id' => Auth::user()->id,
+                'subject' => $notification['subject'],
+                'content' => $notification['content'],
+            ]);
+        } catch (\Exception $e) {
+            Log::info('Cound not Notify User( ' . Auth::user()->email . ')');
+        }
     }
 
-    /**
-     * Notify Client of something that happend
-     */
-    public function clientNotify($message, $status = false)
+    public function notifyUser($userId, $notification = null)
     {
-        return (object) [
-            'message' => $message,
-            'status' => $status ? $status : false,
-        ];
+        try {
+            Message::create([
+                'user_id' => $userId,
+                'subject' => $notification['subject'],
+                'content' => $notification['content'],
+            ]);
+        } catch (\Exception $e) {
+            Log::info('Cound not Notify User( ' . $userId . ')');
+        }
     }
 
     public function naira($amount)
@@ -43,36 +49,51 @@ class Controller extends BaseController
 
     public function creditWallet($amount)
     {
-        $user = User::find(Auth::user()->id);
-        $user->balance = Auth::user()->balance + $amount;
-        $user->save();
+        try {
+            $user = User::find(Auth::user()->id);
+            $user->balance = Auth::user()->balance + $amount;
+            $user->save();
+        } catch (\Exception $e) {
+            Log::info('Cound not credit User( ' . Auth::user()->email . ' ) Wallet with N' . $amount);
+        }
+
         return true;
     }
 
     public function creditUserWallet($userId, $amount)
     {
-        $user = User::find($userId);
-        $user->balance = $user->balance + $amount;
-        $user->save();
+        try {
+            $user = User::find($userId);
+            $user->balance = $user->balance + $amount;
+            $user->save();
+        } catch (\Exception $e) {
+            Log::info('Cound not credit User( ' . $userId . ' ) Wallet with N' . $amount);
+        }
 
         return true;
     }
 
     public function debitWallet($amount)
     {
-        $user = User::find(Auth::user()->id);
-        $newBalance = $user->balance - $amount;
-        $status = $user->update(['balance' => $newBalance >= 0 ? $newBalance : 0]);
-
+        try {
+            $user = User::find(Auth::user()->id);
+            $newBalance = $user->balance - $amount;
+            $status = $user->update(['balance' => $newBalance >= 0 ? $newBalance : 0]);
+        } catch (\Exception $e) {
+            Log::info('Cound not Dedit User( ' . Auth::user()->email . ' ) Wallet with N' . $amount);
+        }
         return $status;
     }
 
     public function debitUserWallet($userId, $amount)
     {
-        $user = User::find($userId);
-        $newBalance = $user->balance - $amount;
-        $status = $user->update(['balance' => $newBalance >= 0 ? $newBalance : 0]);
-
+        try {
+            $user = User::find($userId);
+            $newBalance = $user->balance - $amount;
+            $status = $user->update(['balance' => $newBalance >= 0 ? $newBalance : 0]);
+        } catch (\Exception $e) {
+            Log::info('Cound not credit User( ' . $userId . ' ) Wallet with N' . $amount);
+        }
         return $status;
     }
 
@@ -86,11 +107,6 @@ class Controller extends BaseController
      */
     protected function getUniqueReference()
     {
-        return md5(env('APP_REFERENCE') . time() . rand(1, 10000));
-    }
-
-    protected function getAppDetails()
-    {
-        return \config('constants.site');
+        return md5(env('APP_NAME') . time() . rand(1, 10000));
     }
 }

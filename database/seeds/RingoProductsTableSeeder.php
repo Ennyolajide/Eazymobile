@@ -11,13 +11,6 @@ class RingoProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-
-        /* $table->string('product_id');
-        $table->string('services');
-        $table->integer('min_amount');
-        $table->integer('max_amount'); */
-
         /**
          * Electricity
          */
@@ -26,7 +19,7 @@ class RingoProductsTableSeeder extends Seeder
             'product_id' => 'BPE-NGEK-OR',
             'service' => 'Electricity',
             'service_id' => 'electricity',
-            'min_amount' => 50,
+            'min_amount' => 1000,
             'max_amount' => 50000,
             'validation' => true,
             'logo' => 'electricity/ekedc.png',
@@ -88,7 +81,7 @@ class RingoProductsTableSeeder extends Seeder
             'service_id' => 'electricity',
             'min_amount' => 1000,
             'max_amount' => 50000,
-            'validation' => true,
+            'validation' => false,
             'logo' => 'electricity/phedc.png',
             'route' => 'electricity.phedc.postpaid'
         ]);
@@ -126,10 +119,9 @@ class RingoProductsTableSeeder extends Seeder
             'product_id' => 'BPD-NGCA-AWA',
             'service' => 'Tv',
             'service_id' => 'dstv',
-            'min_amount' => 1000,
-            'max_amount' => 50000,
-            'multichoice' => true,
             'validation' => true,
+            'multichoice' => true,
+            'product_list' => true,
             'logo' => 'tv/startimes.png',
             'route' => 'tv/startimes'
         ]);
@@ -158,7 +150,8 @@ class RingoProductsTableSeeder extends Seeder
             'max_amount' => 50000,
             'multichoice' => true,
             'logo' => 'internet/smile.png',
-            'route' => 'internet/smile.recharge'
+            'route' => 'internet/smile.recharge',
+            'status' => false,
         ]);
 
         DB::table('ringo_products')->insert([
@@ -184,6 +177,34 @@ class RingoProductsTableSeeder extends Seeder
             'product_list' => true,
             'logo' => 'misc/waec.png',
             'route' => 'internet/waec'
+        ]);
+
+
+        /**
+         * Electricity
+         */
+        DB::table('ringo_products')->insert([
+            'name' => 'Kano Prepaid',
+            'product_id' => 'BPE-NGCAAVB-OR',
+            'service' => 'Electricity',
+            'service_id' => 'electricity',
+            'min_amount' => 100,
+            'max_amount' => 50000,
+            'validation' => true,
+            'logo' => 'electricity/kano.png',
+            'route' => 'electricity.kano'
+        ]);
+
+        DB::table('ringo_products')->insert([
+            'name' => 'Abuja Prepaid',
+            'product_id' => 'BPE-NGCABABA-OR',
+            'service' => 'Electricity',
+            'service_id' => 'electricity',
+            'min_amount' => 100,
+            'max_amount' => 50000,
+            'validation' => true,
+            'logo' => 'electricity/abuja.png',
+            'route' => 'electricity.abuja'
         ]);
     }
 }

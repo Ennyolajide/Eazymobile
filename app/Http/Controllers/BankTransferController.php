@@ -10,8 +10,9 @@ use function GuzzleHttp\json_encode;
 
 class BankTransferController extends WalletController
 {
-    protected $successResponse = 'Pls wait while we confirm process your transaction';
     protected $failureResponse = '';
+    protected $successResponse = 'Please wait while we confirm process your transaction';
+
 
     public function store()
     {
@@ -25,10 +26,9 @@ class BankTransferController extends WalletController
 
         $status = $this->bankTransfer() ? true : false;
 
-        return $status ? back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
+        return $status ?
+            back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
     }
-
-
 
     /**
      *  Execute AirtimeToCash

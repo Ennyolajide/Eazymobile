@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Bank;
+use App\Charge;
 use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,12 @@ class ProfileController extends PaystackController
      */
     public function profileIndex()
     {
-        return view('dashboard.profile.index');
+        $banks = $this->bankList()->data; //get the list of all available banks
+        $myBanks = Bank::where('user_id', Auth::user()->id)->get();  //get User's bank List
+        $addBankCharges = Charge::whereService('addbank')->first()->amount;
+        $messages = Message::where('user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(10);
+
+        return view('dashboard.profile.index', compact('banks', 'myBanks', 'addBankCharges', 'messages'));
     }
 
     /**
@@ -27,7 +33,6 @@ class ProfileController extends PaystackController
      */
     public function editPassword(Request $request)
     {
-        //validate Request
         $this->validate(request(), ['password' => 'required|confirmed', 'currentPassword' => 'required']);
         $isValidCurrentPassword = password_verify($request->currentPassword, Auth::user()->password); //Verify current password
         $status = $isValidCurrentPassword ? User::find(Auth::user()->id)->update(['password' => bcrypt($request->password)]) : false; //update password
@@ -36,16 +41,6 @@ class ProfileController extends PaystackController
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
-    /**
-     * Edit/Change user passwordd
-     */
-    public function editProfile(Request $request)
-    {
-        //validate Request
-        $this->validate(request(), ['name' => 'required|string|min:5|max:35', 'phone' => 'required|string|min:10|max:15']);
-        $status = User::find(Auth::user()->id)->update(['name' => $request->name, 'number' => $request->phone]) ? true : false; //update profile info
-        $message = $status ? 'successful' : 'failed';
-
-        return back()->withNotification($this->clientNotify('Profile update ' . $message, $status));
-    }
+    public function uploadAvatar()
+    { }
 }

@@ -20,7 +20,6 @@ class CreateDataTable extends Migration
             $table->string('phone');
             $table->string('class')->default('App\Data');
             $table->string('type')->default('Data Topup');
-            //$table->unsignedTinyInteger('transaction_type')->default(5);
             $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });

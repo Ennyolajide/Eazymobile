@@ -152,7 +152,7 @@
                     unhighlight: function(element) {
                         $(element)
                             .closest('.form-grouping')
-                            .removeClass('has-error');
+                            .removeClass('has-eror');
                     }
                 });
 
@@ -165,7 +165,7 @@
                         phone: { required: true, minlength: 10, maxlength: 13 }
                     },
                     messages: {
-                        package: { required: 'Pls choose your prefered package' },
+                        package: { required: 'Please choose your prefered package' },
                         cardNo: { equired: 'Card number cannot be blank' },
                         amount: { required: 'Bill amount cannot be blank' },
                         email: {
@@ -201,10 +201,8 @@
                     let timeOut = setTimeout(function(){ notifyError(); },20000);
                     $.ajax({
                         type:'POST',
-                        url:'{{ route("bills.tv.validate") }}',
-                        data:{
-                            cardNo : $('#cardNo').val(), amount : $('#amount').val(), email : $('#email').val(),
-                            phone : $('#phone').val() , productId : '{{ $product->id }}', product : package.code },
+                        url:'{{ route("bills.tv.validate",["provider" => $product->name ]) }}',
+                        data:{ cardNo : $('#cardNo').val() },
                         success:function(data){
                             console.log(data);
                             clearTimeout(timeOut);
@@ -219,8 +217,8 @@
                     }
 
                     function notifyError(){
-                        $('.overlay').hide();
                         $('#error-modal').modal('show');
+                        $('.overlay').hide();
                     }
                 });
 

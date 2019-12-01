@@ -1,16 +1,15 @@
 @extends('users.layouts.master')
 
     @section('title')
-        {{ $app['name'] }} | Register
+        {{ config('constants.site.name') }} | Register
     @endsection
-
 
     @section('content')
         <div id="single-wrapper">
             <form action="{{ route('user.register') }}" class="frm-single" method="POST">
                 @csrf
                 <div class="inside">
-                    <div class="title"><strong>{{ $app['name'] }}</strong></div>
+                    <div class="title"><strong>{{ config('constants.site.name') }}</strong></div>
                     <!-- /.title -->
                     <div class="frm-title">Register</div>
                     @include('dashboard.layouts.errors')
@@ -26,6 +25,19 @@
                             {{-- <p class="mb-0">pxxxl dhdgudd doidoudugugddi</p>--}}
                         </div>
                     @endif
+
+                    @if($referrer)
+                        <div class="frm-input">
+                            <input type="text" value="Referred By {{ ucwords($referrer->name) }}" class="frm-inp"  disabled="true"><i class="fa fa-user frm-ico"></i>
+                            <input type="hidden" name="referrerId" value="{{ $referrer->wallet_id }}" class="frm-inp"><i class="fa fa-users frm-ico"></i>
+                        </div>
+                    @else
+                        <div class="frm-input">
+                            <input type="text" name="referrerId" placeholder="Referrer Wallet Id" class="frm-inp"><i class="fa fa-users frm-ico"></i>
+                        </div>
+                    @endif
+                    <!-- /.frm-input -->
+                    <div class="frm-input"><input type="email" name="email" placeholder="Email" class="frm-inp"><i class="fa fa-envelope frm-ico"></i></div>
                     <!-- /.frm-title -->
                     <div class="frm-input"><input type="text" name="name" placeholder="Fullname" class="frm-inp"><i class="fa fa-user frm-ico"></i></div>
                     <!-- /.frm-input -->
@@ -55,8 +67,8 @@
                         <!-- /.col-sm-6 -->
                     </div>
                     <!-- /.row -->
-                    <a href="{{ route('show.login') }}" class="a-link"><i class="fa fa-sign-in"></i>Already have account? Login.</a>
-                    <div class="frm-footer text-center">{{ $app['name'] }} © {{ $app['year'] }}.</div>
+                    <a href="{{ route('user.login') }}" class="a-link"><i class="fa fa-sign-in"></i>Already have account? Login.</a>
+                    <div class="frm-footer text-center">{{ config('constants.site.name') }} © {{ config('constants.site.year') }}.</div>
                     <!-- /.footer -->
                 </div>
                 <!-- .inside -->

@@ -10,18 +10,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-
         //Message Seeder
-        factory(App\Message::class, 50)->create();
+        //factory(App\Message::class, 50)->create();
 
         //Tansaction Seeder
-        factory(App\Transaction::class, 5)->create();
+        //factory(App\Transaction::class, 5)->create();
 
         $this->call(UsersTableSeeder::class);
         $this->call(BanksTableSeeder::class);
         factory(App\Bank::class, 5)->create();
-        $this->call(BitcoinsTableSeeder::class); //First time Run
         $this->call(ChargesTableSeeder::class);
         $this->call(DataPlansTableSeeder::class); //First time Run
 

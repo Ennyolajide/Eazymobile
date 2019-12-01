@@ -32,6 +32,8 @@
         <!-- Custom styles -->
         @yield('style')
 
+        @yield('js')
+
         <!--Start of Tawk.to Script-->
         <script type="text/javascript">
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -74,17 +76,19 @@
                 <!-- Main content -->
                 @yield('content')
                 <!-- /.content  -->
-                @include('dashboard.layouts.footer')
+
             </div>
+
             <!-- /.main-content -->
         </div>
+        @include('dashboard.layouts.footer')
 
         <!-- Notifier -->
         {{-- simple modal without header and footer to display response form server to client --}}
         @include('dashboard.layouts.notifier')
         <!-- /.Notifier -->
 
-        @yield('modals');
+        @yield('modals')
 
         <!-- jQuery -->
         <script src="\js/jquery.min.js"></script>

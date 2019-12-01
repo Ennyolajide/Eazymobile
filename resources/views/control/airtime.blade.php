@@ -1,51 +1,19 @@
 @extends('dashboard.layouts.master')
 
-    @section('css')
-        <!-- iCheck -->
-        <link rel="stylesheet" href="\plugins/iCheck/square/blue.css">
-        <!-- switchery -->
-        <link href="\plugins/switchery/dist/switchery.min.css" rel="stylesheet">
-        <!-- DataTables -->
-        <link rel="stylesheet" href="\bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-    @endsection
-
-    @section('content-header')
-        <div class="page-title">
-            <div class="title_left">
-                <h3>Airtime Settings</h3>
-            </div>
-            <div class="pull-right">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"><i class="fa fa-dashboard"></i> Configuration</a>
-                    </li>
-                    <li class="active">Settings</li>
-                </ol>
-            </div>
-        </div>
-        <div class="clearfix"></div>
+    @section('title')
+        Airtime Settings
     @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row">
+        <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Airtime Setings</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="x_content">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            @include('dashboard.layouts.errors')
-                            <table id="transactons-table" class="table table-striped table-hover table-bordered table-responsive">
+                <div class="box-content">
+                    <h3 class="box-title">Airtime Setings</h3>
+                    <div class="row">
+                        @include('dashboard.layouts.errors')
+                        <div class="table-responsive">
+                            <table class="table table-small-font table-bordered table-striped">
                                 <thead class="bg-green">
                                     <tr>
                                         <th class="hidden-xs">id</th>
@@ -98,17 +66,19 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6 col-xs-6">
+
                                     <label>
                                         Swap
-                                        <input type="checkbox" name="swapStatus" class="js-switch" {{ $item->airtime_swap_percentage_status ? 'checked' : '' }} data-switchery="true" style="display: none;">
+                                        <div class="switch pink"><input type="checkbox" name="swapStatus" {{ $item->airtime_swap_percentage_status ? 'checked' : '' }} id="switch-8"><label for="switch-8"></label></div>
                                     </label>
                                 </div>
                                 <div class="col-md-5 col-sm-6 col-xs-6">
-                                    <label>
+                                    <label class="pull-right">
                                         Cash
-                                        <input type="checkbox" name="cashStatus" class="js-switch" {{ $item->airtime_to_cash_percentage_status ? 'checked' : '' }} data-switchery="true" style="display: none;">
+                                        <div class="switch purple"><input type="checkbox" name="cashStatus" {{ $item->airtime_to_cash_percentage_status ? 'checked' : '' }} id="switch-9"><label for="switch-9"></label></div>
                                     </label>
                                 </div>
+
                             </div>
                             <br/>
 
@@ -147,8 +117,8 @@
                                 @foreach (json_decode($item->airtime_to_cash_phone_numbers) as $swapNumber)
                                     <div class="col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <label class="col-sm-4 col-xs-12 control-label">Swap Number {{ $loop->iteration }}</label>
-                                            <div class="col-sm-6 col-xs-12 form-grouping">
+                                            <label class="col-sm-3 col-xs-12 control-label"><small>Swap Number {{ $loop->iteration }}</small></label>
+                                            <div class="col-sm-8 col-xs-12 form-grouping">
                                                 <input type="text" class="form-control" name="swapNumber{{ $loop->iteration }}" value="{{ $swapNumber }}" {{ $loop->first ? 'required' : '' }}">
                                             </div>
                                         </div>
@@ -179,39 +149,3 @@
         <!-- /Modal -->
     @endforeach
 
-
-
-
-    @section('scripts')
-        <script src="\plugins/switchery/dist/switchery.min.js"></script>
-        <script>
-            $(function () {
-              $('#transactions-table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : false,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : false
-              })
-            })
-        </script>
-
-        <!-- iCheck -->
-        <script src="\plugins/iCheck/icheck.min.js"></script>
-        <script>
-            $(function () {
-                $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-                });
-            });
-        </script>
-
-        <script>
-
-
-        </script>
-
-    @endSection

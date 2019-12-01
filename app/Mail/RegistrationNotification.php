@@ -11,7 +11,9 @@ class RegistrationNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
+    public $content;
+    public $logo;
+    public $subject;
     public $link;
 
     /**
@@ -19,9 +21,12 @@ class RegistrationNotification extends Mailable
      *
      * @return void
      */
-    public function __construct($name, $link)
+    public function __construct($content, $subject = null, $link = null)
     {
-        $this->name = ucwords($name);
+        //
+        $this->content = $content;
+        $this->logo = \config('constants.site.url') . '/home/img/logo.jpg';
+        $this->subject = $subject;
         $this->link = $link;
     }
 
@@ -32,8 +37,8 @@ class RegistrationNotification extends Mailable
      */
     public function build()
     {
-        return $this->from(env('APP_EMAIL'), env('APP_NAME'))
-            ->subject('Welcome to ' . env('APP_NAME'))
-            ->view('emails.welcome');
+        return $this->from(\config('constants.site.emails.sender.noreply'), strtoupper(\config('constants.site.name')))
+            ->subject($this->subject)
+            ->view('emails.main');
     }
 }

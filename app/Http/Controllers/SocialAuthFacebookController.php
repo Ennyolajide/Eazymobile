@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Socialite;
-use App\Mail\Main;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -64,15 +64,30 @@ class SocialAuthFacebookController extends Controller
         $this->token = md5(uniqid());
 
         $user = User::create([
-            'active' => true, 'token'  => $this->token,
-            'name'  => $socialUser->name, 'email' => $socialUser->email,
+            'active' => true,
+            'token'  => $this->token,
+            'name'  => $socialUser->name,
+            'email' => $socialUser->email,
             'facebook_id' => $socialUser->id,
             'avatar' => $socialUser->avatar_original,
             'password' => Hash::make(Str::random(8)),
+            'wallet_id' => strtoupper(Str::random(2)) . rand(1, 10) . strtoupper(Str::random(1)) . rand(1, 100) . strtoupper(Str::random(2)),
         ]);
 
-        $link = $user ? url('users/verify/' . $user->email . '/' . $this->token) : false;
-        $user ? Mail::to($user->email)->send(new RegistrationNotification($user->name, $link)) : false;
+        if ($user) {
+            $user->update(['avatar' => $socialUser->avatar_original]);
+            try {
+
+                $subject = 'Email Verification';
+                $link = url('users/verify/' . $user->email . '/' . $this->token);
+                $message = 'Please complete your registration by verifing your email, ';
+                $message .= 'follow link below to verify your email ' . $link;
+
+                Mail::to(request()->email)->send(new RegistrationNotification($message, $subject, $link));
+            } catch (\Exception $e) {
+                Log::info('Cound not send Registration Email');
+            }
+        }
 
         $user ? Auth::login($user) : false;
 

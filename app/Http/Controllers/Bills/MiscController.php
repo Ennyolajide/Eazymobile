@@ -10,25 +10,24 @@ use Illuminate\Support\Facades\Auth;
 
 class MiscController extends BillController
 {
-    protected $successResponse = ' pin purchase successful';
+
     protected $apiErrorResponse = 'Top failed, Pls try again later';
     protected $failureResponse = 'Insuffient balance, Pls fund your account';
+    protected $successResponse = ' Operation successful Pls check Your inbox for your pin(s)';
 
     /**
      * Topup Tv( Dstv|Gotv|Startime)
      */
     public function store()
     {
-
-        //validate request()
         $this->validate(request(), [
             'email' => 'required|email',
             'package' => 'required|json',
             'phone' => 'required|string|min:10|max:13',
         ]);
 
-        $status = $this->processMiscTopup();
-
+        $uniqueReference = $this->getUniqueReference();
+        $status = $this->processMiscTopup($uniqueReference);
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
@@ -37,7 +36,7 @@ class MiscController extends BillController
     /**
      * Proces Tv Topup
      */
-    protected function processMiscTopup()
+    protected function processMiscTopup($uniqueReference)
     {
         $packageId = json_decode(request()->package, true);
 
@@ -57,11 +56,12 @@ class MiscController extends BillController
 
         if ($subProduct && (Auth::user()->balance >= $subProduct->selling_price)) {
 
-            $status = $subProduct ? $this->topup($subProduct, $details) : false;
+            $status = $subProduct ? $this->topup($subProduct, $details, $uniqueReference, 'misc') : false;
 
-            $status ? $this->notify($this->miscTopupNotification($details)) : false;
+            $status ? $this->notify($this->miscTopupNotification($details, $uniqueReference, $this->responseObject)) : false;
 
             return $status;
         }
+        return false;
     }
 }

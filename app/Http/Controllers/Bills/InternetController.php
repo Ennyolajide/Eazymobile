@@ -11,33 +11,33 @@ use Illuminate\Support\Facades\Auth;
 class InternetController extends BillController
 {
     protected $successResponse = ' Topup successful';
-    protected $apiErrorResponse = 'Top failed, Pls try again later';
-    protected $failureResponse = 'Insuffient balance, Pls fund your account';
+    protected $apiErrorResponse = 'Top failed, Please try again later';
+    protected $failureResponse = 'Insuffient balance, Please fund your account';
 
     /**
-     * Topup Tv( Dstv|Gotv|Startime)
+     * Topup Internet
      */
     public function store()
     {
-        //validate request()
         $this->validate(request(), [
             'email' => 'required|email',
             'package' => 'required|json',
             'phone' => 'required|string|min:10|max:13',
             'cardNo' => 'required|string|min:10|max:18',
         ]);
-
-        $status = $this->processInternetTopup();
-
+        /*
+        $uniqueReference = $this->getUniqueReference();
+        $status = $this->processInternetTopup($uniqueReference);
         $message = $status ? $this->successResponse : $this->failureResponse;
+        */
 
-        return back()->withNotification($this->clientNotify($message, $status));
+        return back()->withNotification($this->clientNotify('Try again later', false));
     }
 
     /**
-     * Proces Tv Topup
+     * Proces Internet Topup
      */
-    protected function processInternetTopup()
+    protected function processInternetTopup($uniqueReference)
     {
         $packageId = json_decode(request()->package, true);
 
@@ -57,9 +57,9 @@ class InternetController extends BillController
 
         if ($subProduct && (Auth::user()->balance >= $subProduct->selling_price)) {
 
-            $status = $subProduct ? $this->topup($subProduct, $details) : false;
+            $status = $subProduct ? $this->topup($subProduct, $details, $uniqueReference, 'internet') : false;
 
-            $status ? $this->notify($this->tvTopupNotification($details)) : false;
+            $status ? $this->notify($this->tvTopupNotification($details, $uniqueReference, $this->responseObject)) : false;
 
             return $status;
         }

@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer bg-white">
     <ul class="list-inline">
         <li>2019 © Test.</li>
         <li><a href="#">Privacy</a></li>

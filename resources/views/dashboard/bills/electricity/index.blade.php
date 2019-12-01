@@ -15,7 +15,7 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                     <h3 class="text-primary text-center"><strong> {{ $product->name }} </strong></h3>
-                                    {{-- <h4 class="text-danger text-center"><strong>Charges @naira(0) Apply </strong></h3> --}}
+                                    <h4 class="text-danger text-center"><strong>Charges @naira($charge) Apply </strong></h3>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3  pull-right">
                                     <br/>
@@ -30,7 +30,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Meter id</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" id="cardNo" class="form-control" name="cardNo" value="{{ old('cardNo') }}" placeholder="Pls Eneter Meter ID">
+                                            <input type="text" id="cardNo" class="form-control" name="cardNo" value="{{ old('cardNo') }}" placeholder="Please Enter Meter ID">
                                         </div>
                                     </div>
                                     <div class="form-group" id="nameDiv" style="display:none;">
@@ -43,7 +43,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Amount</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" id="amount" class="form-control" name="amount" value="10" placeholder="Pls Eter Amount">
+                                            <input type="text" id="amount" class="form-control" name="amount" value="10" placeholder="Please Enter Amount">
                                         </div>
                                     </div>
                                     <br/>
@@ -137,12 +137,12 @@
                         required: true,
                         digit : true,
                         minlength: 10,
-                        maxlength: 18
+                        maxlength: 18,
                     },
                     amount: {
                         required: true,
                         integer : true,
-                        range: [ '{{ $product->min_amount }}','{{ $product->max_amount }}']
+                        range: [ '{{ $product->min_amount }}','{{ $product->max_amount }}'],
                     },
                     email: {
                         required: true,
@@ -153,7 +153,7 @@
                     phone: {
                         required: true,
                         minlength: 10,
-                        maxlength: 13
+                        maxlength: 13,
 
                     }
                 },
@@ -161,20 +161,20 @@
                     meterId: {
                         required: 'Meter id cannot be blank',
                         minlength: $.validator.format("Minimum of {0} characters required."),
-                        maxlength: $.validator.format("Maximum {0} characters.")
+                        maxlength: $.validator.format("Maximum {0} characters."),
                     },
                     amount: {
                         required: 'Bill amount cannot be blank',
                         integer : 'Invalid bill amount',
-                        range: $.validator.format("Minimum of ₦{0}, Maximum ₦{1}.")
+                        range: $.validator.format("Minimum of ₦{0}, Maximum ₦{1}."),
                     },
                     email: {
                         minlength: $.validator.format("Minimum of {0} characters required."),
-                        maxlength: $.validator.format("Maximum {0} characters.")
+                        maxlength: $.validator.format("Maximum {0} characters."),
                     },
                     phone: {
                         minlength: $.validator.format("Minimum of {0} characters required."),
-                        maxlength: $.validator.format("Maximum {0} characters.")
+                        maxlength: $.validator.format("Maximum {0} characters."),
                     }
 
                 }
@@ -188,13 +188,10 @@
                 $('.overlay').show();
                 let timeOut = setTimeout(function(){ notifyError(); },10000);
                 $.ajax({
-                type:'POST',
-                url:'{{ route("bills.electricity.validate") }}',
-                data:{
-                    cardNo : $('#cardNo').val(), amount : $('#amount').val(), email : $('#email').val(),
-                    phone : $('#phone').val(), productId : '{{ $product->id  }}' },
+                    type:'POST',
+                    url:'{{ route("bills.electricity.validate",['serviceId' => $product->id ]) }}',
+                    data:{meterId : $('#cardNo').val() },
                     success:function(data){
-                        console.log(data);
                         clearTimeout(timeOut);
                         data.response ? finalizeBill(data) : notifyError();
                     }

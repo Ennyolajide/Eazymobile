@@ -16,43 +16,37 @@ class DatasController extends ModController
     public function show()
     {
 
-        $transactions = Transaction::where('class_type', 'App\Data')->whereStatus(1)->orderBy('id', 'desc')->paginate(20);
+        $transactions = Transaction::where('class_type', 'App\Data')->orderBy('id', 'desc')->paginate(20);
 
         return view('control.datas', compact('transactions'));
     }
 
     public function edit(Transaction $trans)
     {
-        $declined = request()->has('decline');
-        $completed = request()->has('completed');
-        $transStatus = $trans->class->status && $trans->status;
-        $declined = $declined && $transStatus ? $this->declineAndRefund($trans) : false;
-        $completed =  $completed && $transStatus ? $this->markOrderAsComplete($trans) : false;
-        $status = $declined || $completed ? true : false;
-        $message = $status ? $this->successResponse : $this->failureResponse;
+        if (request()->has('completed')) {
+            $transactionStatus = ['status' =>  2];
+            $status = $trans->class->update($transactionStatus);
+            $status ? $trans->update($transactionStatus) : false;
+            $message = $status ? $this->successResponse : $this->failureResponse;
+        } else if (request()->has('decline')) {
+            $transactionStatus = ['status' =>  0];
+            $status = $trans->class->update($transactionStatus);
+            $status ? $trans->update($transactionStatus) : false;
+            $status ? $this->creditUserWallet($trans->user->id, $trans->class->amount) : false;
+            $status ? $this->notifyUser($trans->user->id, $this->dataPurchaseDeclineNotification($trans)) : false;
+            $message = $status ? $this->successResponse : $this->failureResponse;
+        } else {
+            $status = false;
+            $message = $this->errorResponse;
+        }
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
-    protected function markOrderAsComplete($trans)
+
+    public function settings($network)
     {
-        $status = $trans->update(['status' => 2]);
-        return $status ? $trans->class->update(['status' => 2]) : false;
-    }
-
-    protected function declineAndRefund($trans)
-    {
-        $user = $trans->user;
-        $newBalance = $user->balance + $trans->amount;
-        $refundStatus = $user->update(['balance' => $newBalance]);
-        $status = $refundStatus ? $trans->update(['status' => 0]) : false;
-
-        return $status ? $trans->class->update(['status' => 0]) : false;
-    }
-
-
-    public function settings(DataPlan $network)
-    {
+        $network = DataPlan::where('network_id', $network)->first();
         $plans = $network->plans;
 
         return view('control.data', compact('plans', 'network'));
@@ -60,11 +54,19 @@ class DatasController extends ModController
 
     public function editDataPlan(Dataplan $network)
     {
-        //validate request
-        $this->validate(request(), [
-            'amount' => 'required|numeric', 'volume' => 'required|string'
+        $status = $network->update([
+            'volume' => request()->volume,
+            'amount' => request()->amount,
+            'notification_content' => request()->notification
         ]);
-        $status = $network->update(['volume' => request()->volume, 'amount' => request()->amount]);
+        $message = $status ? $this->successResponse : $this->failureResponse;
+
+        return back()->withNotification($this->clientNotify($message, $status));
+    }
+
+    public function deleteDataPlan(Dataplan $plan)
+    {
+        $status = $plan->delete();
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
@@ -73,12 +75,17 @@ class DatasController extends ModController
     public function newDataPlan(Dataplan $network)
     {
         //validate request
-        $this->validate(request(), ['amount' => 'required|numeric', 'volume' => 'required|string']);
+        $this->validate(request(), [
+            'amount' => 'required|numeric',
+            'volume' => 'required|string',
+            'notification' => 'required|string'
+        ]);
         $status = Dataplan::create([
             'volume' => request()->volume,
             'amount' => request()->amount,
             'network' => $network->network,
             'network_id' => $network->network_id,
+            'notification_content' => request()->notification,
             'notification_phone' => $network->notification_phone,
         ]);
         $message = $status ? $this->successResponse : $this->failureResponse;
@@ -90,13 +97,17 @@ class DatasController extends ModController
     {
         //validate request
         $this->validate(request(), [
+            'availabilityStatus' => 'sometimes|string',
             'email' => 'sometimes|email', 'emailNotificationStatus' => 'sometimes|string',
             'phone' => 'sometimes|string', 'phoneNotificationStatus' => 'sometimes|string',
         ]);
         // get and instance of the data plan
         $dataPlan = DataPlan::where('network_id', $network->network_id);
+        $planIds = $dataPlan->pluck('id');
+
         //update the instance of the dataplan
-        $status = $dataPlan->update([
+        $status = Dataplan::whereIn('id', $planIds)->update([
+            'available' => request()->has('availabilityStatus'),
             'phone_notification_status' => request()->has('phoneNotificationStatus'),
             'email_notification_status' => request()->has('emailNotificationStatus'),
             'notification_phone' => request()->phone ?? $dataPlan->first()->notification_phone,

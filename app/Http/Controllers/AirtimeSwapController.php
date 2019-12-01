@@ -20,7 +20,7 @@ class AirtimeSwapController extends TransactionController
 
     public function index()
     {
-        $networks = AirtimePercentage::where('airtime_swap_percentage_status', true)->get();
+        $networks = AirtimePercentage::where('airtime_to_cash_percentage_status', true)->whereAddon(false)->get();
 
         return view('dashboard.airtime.swap', compact('networks'));
     }
@@ -30,7 +30,6 @@ class AirtimeSwapController extends TransactionController
      */
     public function store()
     {
-        //validation
         $this->validate(request(), [
             'amount'  => 'required|numeric',
             'network' => 'required|numeric',

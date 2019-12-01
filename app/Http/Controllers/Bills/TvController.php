@@ -15,9 +15,11 @@ class TvController extends BillController
     /**
      * validate Tv SmartCard
      */
-    public function validateSmartCard()
+    public function validateSmartCard($provider)
     {
-        return $this->billValidation(request()->productId, request()->cardNo);
+        $validation = 'required|string|min:8|max:13';
+        $this->validate(request(), ['cardNo' => $validation]);
+        return $this->tvSmartCardValidation($provider, request()->cardNo);
     }
 
     /**
@@ -25,17 +27,16 @@ class TvController extends BillController
      */
     public function store()
     {
-        //validate request()
         $this->validate(request(), [
-            'email' => 'required|email',
-            'owner' => 'required|string',
-            'package' => 'required|json',
-            'phone' => 'required|string|min:10|max:13',
             'cardNo' => 'required|string|min:10|max:18',
+            'email' => 'required|email',
+            'package' => 'required|json',
+            'owner' => 'required|string',
+            'phone' => 'required|string|min:10|max:13',
         ]);
 
-        $status = $this->processTvTopup();
-
+        $uniqueReference = $this->getUniqueReference();
+        $status = $this->processTvTopup($uniqueReference);
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
@@ -44,7 +45,7 @@ class TvController extends BillController
     /**
      * Proces Tv Topup
      */
-    protected function processTvTopup()
+    protected function processTvTopup($uniqueReference)
     {
         $packageId = json_decode(request()->package, true);
 
@@ -64,9 +65,9 @@ class TvController extends BillController
 
         if ($subProduct && (Auth::user()->balance >= $subProduct->selling_price)) {
 
-            $status = $subProduct ? $this->topup($subProduct, $details) : false;
+            $status = $subProduct ? $this->topup($subProduct, $details, $uniqueReference, 'tv') : false;
 
-            $status ? $this->notify($this->tvTopupNotification($details)) : false;
+            $status ? $this->notify($this->tvTopupNotification($details, $uniqueReference, $this->responseObject)) : false;
 
             return $status;
         }

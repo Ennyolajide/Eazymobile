@@ -18,6 +18,9 @@ class CreateDataPlansTable extends Migration
             $table->unsignedTinyInteger('network_id');
             $table->string('network');
             $table->string('volume');
+            $table->boolean('addon')->default(false);
+            $table->boolean('available')->default(true);
+            $table->string('notification_content')->default('*127*57*number#');
             $table->string('notification_phone')->default('07063637002');
             $table->boolean('phone_notification_status')->default(false);
             $table->string('notification_email')->default('test@test.com');

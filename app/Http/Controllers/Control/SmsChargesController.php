@@ -23,7 +23,7 @@ class SmsChargesController extends ModController
     public function editSmsConfig(BulkSmsConfig $route)
     {
         //validate request
-        $this->validate(request(), ['amount' => 'required|numeric|min:1|max:2']);
+        $this->validate(request(), ['amount' => 'required|numeric|min:1|max:10']);
         $status = $route->update(['amount_per_unit' => request()->amount * 100]);
         $message = $status ? $this->successResponse : $this->failureResponse;
 
@@ -33,7 +33,7 @@ class SmsChargesController extends ModController
     public function editChargesConfig(Charge $service)
     {
         //validate request
-        $this->validate(request(), ['amount' => 'required|numeric|min:1']);
+        $this->validate(request(), ['amount' => 'required|numeric']);
         $status = $service->update(['amount' => request()->amount]);
         $message = $status ? $this->successResponse : $this->failureResponse;
 

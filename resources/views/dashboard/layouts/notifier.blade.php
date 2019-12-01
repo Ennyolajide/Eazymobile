@@ -15,8 +15,8 @@
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-2">
                             <h4 class="text-right text-danger">
-                                <button type="button" class="text-danger" data-dismiss="modal" aria-label="Close">
-                                    <i class="fa fa-close text-right"></i>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span class="text-danger">X</span>
                                 </button>
                             </h4>
                         </div>
