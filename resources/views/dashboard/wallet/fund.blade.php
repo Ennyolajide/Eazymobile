@@ -278,7 +278,6 @@
 
                 $('#gateway').change(function() {
                     var gateway = $('#gateway').val();
-                    console.log(gateway);
                     if(gateway == 1){
                         $('#ecard-form,#airtime-form,#bank-transfer').hide();
                         $('#atmBankBitcoin-form,#amount-field').show();

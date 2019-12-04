@@ -46,7 +46,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="info">
-                                        <form id="change-info-form" class="form-horizontal" action="{{-- route('user.profile.edit') --}}" method="post">
+                                        <form id="change-info-form" class="form-horizontal" action="{{ route('user.profile.edit') }}" method="post">
                                             @csrf @method('patch')
                                             <br/>
                                             <div class="form-group">
@@ -76,7 +76,6 @@
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" class="btn btn-danger btn-rounded">Submit</button>
-
                                                 </div>
                                             </div>
                                         </form>
@@ -219,7 +218,7 @@
                 </div>
             </div>
 
-            <div class="clearfix"></div>
+
         </div>
 
     @endsection
@@ -231,14 +230,14 @@
         <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal"><span class="text-danger text-bold">X</span></button>
                     <h4 class="modal-title">My Referral Link</h4>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center"><a href="{{ route('user.register',['referrer' => Auth::user()->wallet_id]) }}#signup"><span class="h3">{{ route('user.register',['referrer' => Auth::user()->wallet_id]) }}#signup</span></a></p>
+                    <p class="text-center"><a href="{{ route('user.register',['referrer' => Auth::user()->wallet_id]) }}"><span class="h3">{{ route('user.register',['referrer' => Auth::user()->wallet_id]) }}#signup</span></a></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default btn-rounded" data-dismiss="modal">Close</button>
                 </div>
             </div>
 

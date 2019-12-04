@@ -50,10 +50,9 @@ Route::get('/dashboard', 'HomeController@dashboardIndex')->name('dashboard.index
 Route::get('/dashboard/profile', 'ProfileController@profileIndex')->name('user.profile');
 Route::post('/dashboard/bank/add', 'BankController@storeBank')->name('user.bank.store');
 Route::patch('/dashboard/bank/{bank}/delete', 'BankController@deleteBank')->name('user.bank.delete');
+Route::patch('/dashboard/profile/edit', 'ProfileController@editProfile')->name('user.profile.edit');
 Route::post('/dashboard/bank/details', 'BankController@resolveBankDetails')->name('paystack.bankDetails');
 Route::post('/dashboard/profile/password/edit', 'ProfileController@editPassword')->name('user.password.edit');
-
-
 
 //Message
 Route::get('/dashboard/inbox', 'MessageController@messageIndex')->name('messages.inbox');

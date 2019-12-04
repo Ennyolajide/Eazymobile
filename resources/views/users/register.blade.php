@@ -36,8 +36,6 @@
                             <input type="text" name="referrerId" placeholder="Referrer Wallet Id" class="frm-inp"><i class="fa fa-users frm-ico"></i>
                         </div>
                     @endif
-                    <!-- /.frm-input -->
-                    <div class="frm-input"><input type="email" name="email" placeholder="Email" class="frm-inp"><i class="fa fa-envelope frm-ico"></i></div>
                     <!-- /.frm-title -->
                     <div class="frm-input"><input type="text" name="name" placeholder="Fullname" class="frm-inp"><i class="fa fa-user frm-ico"></i></div>
                     <!-- /.frm-input -->
@@ -50,7 +48,7 @@
                      <div class="frm-input"><input type="password" name="password_confirmation" placeholder="Confirm Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i></div>
                     <!-- /.frm-input -->
                     <div class="clearfix margin-bottom-20">
-                        <div class="checkbox primary"><input type="checkbox" name="terms" id="accept"><label for="accept">I accept Terms and Conditions</label></div>
+                        <div class="checkbox primary"><input type="checkbox" name="terms" id="accept" required><label for="accept">I accept Terms and Conditions</label></div>
                         <!-- /.checkbox -->
                     </div>
                     <!-- /.clearfix -->
@@ -78,5 +76,56 @@
     @endSection
 
     @section('scripts')
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                const characterPerPage = 160;
+
+                $.validator.setDefaults({
+                    errorClass: 'help-block',
+                    highlight: function(element) {
+                        $(element)
+                            .closest('.frm-input')
+                            .addClass('has-error');
+                    },
+                    unhighlight: function(element) {
+                        $(element)
+                            .closest('.frm-input')
+                            .removeClass('has-error');
+                    }
+                });
+
+                $('#send-bulk-sms-form').validate({
+                    rules: {
+                        name: { required: true, minlength: 7, maxlength: 50 },
+                        email: { required: true, email: true, minlength: 7, maxlength: 50 },
+                        phone: { required: true, minlength: 11, maxlength: 13},
+                        password: { required: true },
+                        password_confirmation: { equalTo: "#password" },
+                        terms: { required: true }
+                    },
+                    messages: {
+                        name: {
+                            minlength: $.validator.format("Minimum of {0} characters required."),
+                            maxlength: $.validator.format("Maximum {0} characters.")
+                        },
+                        email: {
+                            minlength: $.validator.format("Minimum of {0} characters required."),
+                            maxlength: $.validator.format("Maximum {0} characters.")
+                        },
+                        phone: {
+                            minlength: $.validator.format("Minimum of {0} characters required."),
+                            maxlength: $.validator.format("Maximum {0} characters.")
+                        },
+                        password_confirmation: {
+                            equalTo: 'Password does not match',
+                        },
+
+                    }
+                });
+
+            });
+        </script>
 
     @endsection
+

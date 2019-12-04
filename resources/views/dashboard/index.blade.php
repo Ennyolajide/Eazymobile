@@ -189,65 +189,62 @@
             <div>
         </div>
         <!-- /page content -->
-
     @endSection
 
-    @section('modals')
 
-        @foreach ($transactions as $transaction)
-            <!-- Modal -->
-            <div id="{{ $transaction->id }}" class="modal fade" role="dialog">
-                <div class="modal-dialog">
+    @foreach ($transactions as $transaction)
+        <!-- Modal -->
+        <div id="{{ $transaction->id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span class="text-danger"aria-hidden="true">X</span>
-                        </button>
-                    <h4 class="modal-title">View transaction</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row" style="font-size: 20px;">
-                            <div class="col-md-5 col-xs-11  col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small>Transaction Reference :</small>
-                                <p class=""><b> {{ '7e38yrb8383hnfj8f8' }} </b></p>
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small>Transaction Type : </small>
-                                <p class=""><b> {{ $transaction->class->type }} </b></p>
-
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                            <small>Transaction Amount : </small>
-                                <p class=""><b>@naira($transaction->amount) </b></p>
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small> Before : </small>
-                                <p class=""><b>@naira($transaction->balance_before) </b></p>
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small>Balance After : </small>
-                                <p class=""><b>@naira($transaction->balance_after)</b></p>
-                            </div>
-                            <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
-                                <small>Transaction Status </small>
-                                <p class=""><b> {{ getStatus($transaction->status) }} </b></p>
-                            </div>
-
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="text-danger"aria-hidden="true">X</span>
+                    </button>
+                <h4 class="modal-title">View transaction</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="font-size: 20px;">
+                        <div class="col-md-5 col-xs-11  col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                            <small>Transaction Reference :</small>
+                            <p class=""><b><small> {{ $transaction->reference }}</small></b></p>
+                        </div>
+                        <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                            <small>Transaction Type : </small>
+                            <p class=""><b> {{ $transaction->class->type }} </b></p>
 
                         </div>
-                    </div>
-                    <!--div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div-->
-                </div>
+                        <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                        <small>Transaction Amount : </small>
+                            <p class=""><b>@naira($transaction->amount) </b></p>
+                        </div>
+                        <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                            <small> Before : </small>
+                            <p class=""><b>@naira($transaction->balance_before) </b></p>
+                        </div>
+                        <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                            <small>Balance After : </small>
+                            <p class=""><b>@naira($transaction->balance_after)</b></p>
+                        </div>
+                        <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
+                            <small>Transaction Status </small>
+                            <p class=""><b> {{ getStatus($transaction->status) }} </b></p>
+                        </div>
 
+
+                    </div>
                 </div>
+                <!--div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div-->
             </div>
-            <!-- /Modal -->
-        @endforeach
-    @endsection
+
+            </div>
+        </div>
+        <!-- /Modal -->
+    @endforeach
 
 
     @section('scripts')

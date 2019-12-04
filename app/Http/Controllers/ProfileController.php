@@ -29,6 +29,21 @@ class ProfileController extends PaystackController
     }
 
     /**
+     * Edit/Change user Phone Number
+     */
+    public function editProfile()
+    {
+        $this->validate(request(), [
+            'name' => 'required|string|min:5|max:25',
+            'phone' => 'required|string|nullable|min:11|max:13'
+        ]);
+        $status = Auth::user()->update(['number' => request()->phone, 'name' => request()->name]);
+        $message = $status ? 'Operation Successful' : 'Operation failed';
+
+        return back()->withNotification($this->clientNotify($message, $status));
+    }
+
+    /**
      * Edit/Change user passwordd
      */
     public function editPassword(Request $request)

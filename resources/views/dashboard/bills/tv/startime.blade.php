@@ -65,6 +65,7 @@
                                         <label class="col-sm-2 col-xs-12 control-label">Name</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
                                             <input style="border: 1.5px solid green; color:blue;" type="text" id="name" class="form-control" name="owner">
+                                            <br/>
                                         </div>
                                     </div>
                                     <div id="amountDiv" class="form-group" style="display:none;">
