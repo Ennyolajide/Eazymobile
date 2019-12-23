@@ -40,7 +40,7 @@ class RegisterController extends Controller
             'email'     => 'required|string|email|max:255|unique:users',
         ]);
 
-        User::create([
+        $status = User::create([
             'token'         => $token,
             'email'         => request()->email,
             'number'        => request()->phone,
@@ -62,9 +62,6 @@ class RegisterController extends Controller
             Log::info('Cound not send Registration Email');
         }
 
-        $response = 'Registration Successful, please check your email inbox or email spam ';
-        $response .= 'folder to verify email and complete registration.';
-
-        return back()->withResponse($response);
+        return back()->withResponse($status);
     }
 }

@@ -91,6 +91,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row" style="font-size: 20px;">
+                            <h2>{{ $transaction->class->transaction_type }}</h2>
                             @if($transaction->class->transaction_type == 1)
                                 <div class="col-md-5 col-xs-6 col-sm-offset-1 col-md-offset-1">
                                     <small>Network : </small>

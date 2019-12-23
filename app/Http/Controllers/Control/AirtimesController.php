@@ -20,16 +20,18 @@ class AirtimesController extends ModController
         return view('control.airtimes', compact('transactions'));
     }
 
+
     public function edit(Transaction $trans)
     {
-        $creditAmout = $trans->class->amount * $trans->class->percentage / 100;
+        $isSwap = $trans->class->transaction_type == 3 ? true  : false;
+        $creditAmout =  $isSwap ? 0 : ($trans->class->amount * $trans->class->percentage / 100);
         if (request()->has('completed')) {
             $transactionStatus = ['status' =>  2];
             $trans->class->update($transactionStatus);
             $trans->update(['status' =>  2, 'balance_after' => ($trans->user->balance + $creditAmout)]);
-            $status = $this->creditUserWallet($trans->user_id, $creditAmout);
+            $status = $isSwap ? true : $this->creditUserWallet($trans->user_id, $creditAmout); //
             $status ? $trans->update($transactionStatus) : false;
-            $status ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;
+            $status && !$isSwap ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;
             $message = $status ? $this->successResponse : $this->failureResponse;
         } else if (request()->has('decline')) {
             $transactionStatus = ['status' =>  0];

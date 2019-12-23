@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <title>@yield('title')</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
+  <meta content="Data Topup, Bulk sms, Airtime topups, bill payments, dstv, gotv, startimes, ikeja Electric, Ibadan Electricity destribution company, airtime to cash, airtime swap" name="keywords">
+  <meta content="Eniseyin Olajide" name="author">
   <meta content="" name="description">
 
   <!-- Favicons -->
@@ -171,8 +172,8 @@
                 </div>
                 <!-- layer 3 -->
                 <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
-                  <a class="ready-btn right-btn page-scroll" href="#services">See Services</a>
-                  <a class="ready-btn page-scroll" href="#about">Learn More</a>
+                  <a class="ready-btn right-btn page-scroll" href="{{ 'user.register' }}">Register</a>
+                  <a class="ready-btn page-scroll" href="{{ 'user.login' }}">Login</a>
                 </div>
               </div>
             </div>
@@ -224,7 +225,7 @@
                     <div class="well-left">
                         <div class="single-well">
                             <a href="#">
-                                <img src="img/about/1.jpg" alt="">
+                                <img src="\home/img/bills.png" alt="">
                             </a>
                         </div>
                     </div>
@@ -234,12 +235,10 @@
                     <div class="well-middle">
                         <div class="single-well">
                             <a href="#">
-                                <h4 class="sec-head">project Maintenance</h4>
+                                <h4 class="sec-head">Services</h4>
                             </a>
                             <p>
-                                Redug Lagre dolor sit amet, consectetur adipisicing elit. Itaque quas officiis iure aspernatur sit
-                                adipisci quaerat unde at nequeRedug Lagre dolor sit amet, consectetur adipisicing elit. Itaque quas
-                                officiis iure
+                                We offer a wid range of services which include
                             </p>
                             <ul>
                                 <li>
@@ -454,7 +453,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="faq-details">
             <div class="panel-group" id="accordion">
               <!-- Panel Default -->
@@ -462,14 +461,27 @@
                 <div class="panel-heading">
                   <h4 class="check-title">
                         <a data-toggle="collapse" class="active" data-parent="#accordion" href="#check1">
-                            <span class="acc-icons"></span>Consectetur adipisicing elit.
+                            <span class="acc-icons"></span>How can I fund my Wallet? .
                         </a>
                     </h4>
                 </div>
                 <div id="check1" class="panel-collapse collapse in">
                   <div class="panel-body">
                     <p>
-                      Redug Lefes dolor sit amet, consectetur adipisicing elit. Aspernatur, tempore, commodi quas mollitia dolore magnam quidem repellat, culpa voluptates laboriosam maiores alias accusamus recusandae vero
+                        You can fund your wallet using any of our available payment options.
+                        <ol>
+                            <li> Online Payment with your ATM card details</li>
+                            <li> via Pay stack Payment Gateway</li>
+                            <li>. Bank payment.</li>
+                            <li>. Payment with airtime.(Using the Airtime To Cash form)</li>
+                        </ol>
+                            <br/>
+                        <ul>
+                            <li>STEP 1 : Log In to your account(Create an account if you haven't)</li>
+                            <li>STEP 2 : Click on the toggle menu at the Top Left corner.</li>
+                            <li>STEP 3 : Click on "Fund Wallet".</li>
+                            </li>STEP 4 : Select your Payment Method and fill in the necessary details.</li>
+                        </ul>
                     </p>
                   </div>
                 </div>
@@ -479,15 +491,22 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="check-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#check2">
-                                                <span class="acc-icons"></span> Dolore magnam quidem repellat.
-											</a>
-										</h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check2">
+                        <span class="acc-icons"></span> How can I purchase/Vend Data? .
+                    </a>
+                  </h4>
                 </div>
                 <div id="check2" class="panel-collapse collapse">
                   <div class="panel-body">
                     <p>
-                      Redug Lefes dolor sit amet, consectetur adipisicing elit. Aspernatur, tempore, commodi quas mollitia dolore magnam quidem repellat, culpa voluptates laboriosam maiores alias accusamus recusandae vero aperiam sint nulla beatae eos.
+                        STEP 1: Fund your wallet(If your balance is not sufficient enough)
+                        <br/><br/>
+
+                        STEP 2: Go to the Toggle Menu and select "Buy Data".
+                        <br/><br>
+
+                        STEP 3: Select Network Type and fill the data order form, proceed to purchase.
+                        <br/><br/>
                     </p>
                   </div>
                 </div>
@@ -497,15 +516,36 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="check-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#check3">
-                                                <span class="acc-icons"></span>Redug Lefes dolor sit.
-											</a>
-										</h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check3">
+                        <span class="acc-icons"></span>Can I share the data I buy from you with another line?
+
+                    </a>
+                </h4>
                 </div>
                 <div id="check3" class="panel-collapse collapse ">
                   <div class="panel-body">
                     <p>
-                      Redug Lefes dolor sit amet, consectetur adipisicing elit. Aspernatur, tempore, commodi quas mollitia dolore magnam quidem repellat, culpa voluptates laboriosam maiores alias accusamus recusandae vero aperiam sint nulla beatae eos.
+                        You can only share Glo data plans.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+
+
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check4">
+                        <span class="acc-icons"></span>How can I be your agent?
+                    </a>
+                </h4>
+                </div>
+                <div id="check4" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        You can become our Agent, by retailing our products to others. Thereby, making profit.
                     </p>
                   </div>
                 </div>
@@ -515,24 +555,209 @@
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="check-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#check4">
-                                                <span class="acc-icons"></span>Maiores alias accusamus
-											</a>
-										</h4>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check5">
+                        <span class="acc-icons"></span>Can I send airtime to you for data bundle?
+                    </a>
+                </h4>
                 </div>
-                <div id="check4" class="panel-collapse collapse">
+                <div id="check5" class="panel-collapse collapse">
                   <div class="panel-body">
                     <p>
-                      Redug Lefes dolor sit amet, consectetur adipisicing elit. Aspernatur, tempore, commodi quas mollitia dolore magnam quidem repellat, culpa voluptates laboriosam maiores alias accusamus recusandae vero aperiam sint nulla beatae eos.
+                        Yes, you can, by simply funding your account with airtime using the airtime payment option. Kindly fill the "Airtime To Cash" form.- "Charges Apply"
                     </p>
                   </div>
                 </div>
               </div>
               <!-- End Panel Default -->
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check6">
+                        <span class="acc-icons"></span>Are your data plans legit?
+                    </a>
+                </h4>
+                </div>
+                <div id="check6" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        Our data plans are absolutely legitimate! We partner with major Telecommunications Companies to make services available to you.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check7">
+                        <span class="acc-icons"></span>Is your data plan compatible with all devices?
+                    </a>
+                </h4>
+                </div>
+                <div id="check7" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        Yes, it is compatible with all devices.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check8">
+                        <span class="acc-icons"></span>How do I check data balance?
+                    </a>
+                </h4>
+                </div>
+                <div id="check8" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        Data balance code:
+                        <br/>
+                        MTN => *461*4#
+                        <br/>
+                        9mobile[SME] => *917*9# or *229*9#
+                        <br/>
+                        9mobile[Gifting] => *228#
+                        <br/>
+                        Glo=> *127*0#
+                        <br/>
+                        Airtel=> *140#
+                        <br/>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check9">
+                        <span class="acc-icons"></span>Does the data get exhausted quickly or disappear?
+                    </a>
+                </h4>
+                </div>
+                <div id="check9" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        Our data plans are sourced from Network providers. Therefore, consumption rate is similar to the data you get directly from them(i.e data charges are based on usage).
+                    </p>
+                    <p>
+                        We suggest you kindly do the following to avoid unnecessary data depletion:
+                    </p>
+                    <ul>
+                        <li>Restrict background data</li>
+                        <li>Use data saving browser</li>
+                        <li>Compress videos before streaming</li>
+                        <li>Turn off data when not in use</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+              <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check10">
+                        <span class="acc-icons"></span>How am I sure you that I won't be swindled (scammed)?
+                    </a>
+                </h4>
+                </div>
+                <div id="check10" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        We've render legitimate services for not less than five years and have made reputation from our happy clients. We love to keep feedbacks. Hence, you can check our testimonials page for people's comment about us.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+
+            <!-- Panel Default -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check11">
+                        <span class="acc-icons"></span>What if my order has been approved, but not yet received?
+                    </a>
+                </h4>
+                </div>
+                <div id="check11" class="panel-collapse collapse">
+                    <div class="panel-body">
+                    <p>
+                        Sincere apologies about that. We regret the inconvenience caused. Kindly reach out to us on Call/SMS/WhatsApp via 08137540652 or email support@modelc.com.ng with the order details.
+                    </p>
+                    </div>
+                </div>
+            </div>
+                <!-- End Panel Default -->
+                                            <!-- Panel Default -->
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h4 class="check-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#check12">
+                        <span class="acc-icons"></span>What are the products/services you offer?
+                    </a>
+                </h4>
+                </div>
+                <div id="check12" class="panel-collapse collapse">
+                  <div class="panel-body">
+                    <p>
+                        We offer the best deals in Internet Data Plans, Airtime To cash, VTU, Electricity Bill Payment, GOtv, DStv & Startimes Subscriptions, Bulk SMS amongst others.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- End Panel Default -->
+            <!-- Panel Default -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="check-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#check13">
+                            <span class="acc-icons"></span>What's your working period?
+                        </a>
+                    </h4>
+                </div>
+                <div id="check13" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>
+                            All our products are available 24/7, but our customer support is available as follows: Mon -Saturday : 8am - 8pm, Sunday: 1pm-8pm.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Panel Default -->
+
+            <!-- Panel Default -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="check-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#check14">
+                            <span class="acc-icons"></span>Can I communicate with you in case I have any enquiry?
+                        </a>
+                    </h4>
+                </div>
+                <div id="check14" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>
+                            Yes, you can reach out to us on call/sms/whatsapp via 08137540652 or email support@modelc.com.ng
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- End Panel Default -->
+
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        {{-- <div class="col-md-6 col-sm-6 col-xs-12">
           <div class="tab-menu">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -588,7 +813,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
       <!-- end Row -->
     </div>
@@ -606,7 +831,7 @@
               <div class="well-text text-center">
                 <h2>Welcome To {{ config('constants.site.name') }}</h2>
                 <p>
-                  Busuness Lorem ipsum dolor sit amet, consectetur adipiscing elit.luctus est eget congue.
+                  Get connected with with updates from us
                 </p>
                 <div class="subs-feilds">
                   <div class="suscribe-input">
@@ -626,7 +851,7 @@
 
 
 
-  <!-- Start reviews Area -->
+{{--   <!-- Start reviews Area -->
   <div class="reviews-area hidden-xs">
     <div class="work-us">
       <div class="work-left-text">
@@ -641,7 +866,7 @@
       </div>
     </div>
   </div>
-  <!-- End reviews Area -->
+  <!-- End reviews Area --> --}}
 
 {{--   <!-- Start portfolio Area -->
   <div id="portfolio" class="portfolio-area area-padding fix">
@@ -803,7 +1028,7 @@
                         <span class="saleon">Promo</span>
                         <h6 class="category"></h6>
                         <h1 class="block-caption">
-                            <img class="logo" src="\images/networks/{{ strtolower($networks[0]->network) }}.png">
+                            <img class="logo  text-center" src="\images/networks/{{ strtolower($networks[0]->network) }}.png">
                         </h1>
                         <ul>
                             @foreach ($networks as $plan)
@@ -1000,7 +1225,7 @@
   <div id="contact" class="contact-area">
     <div class="contact-inner area-padding">
       <div class="contact-overly"></div>
-      <div class="container ">
+      <div class="container">
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="section-headline text-center">
@@ -1100,7 +1325,9 @@
                   <h2>{{ config('constants.site.name') }}</h2>
                 </div>
 
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.</p>
+                <p>
+                    Modelc Global Enterprise offers cheapest yet legitimate services which include but not limited to Internet Data Subscriptions, Airtime To Cash, Airtime(VTU), CableTV (DStv, GOtv & Startimes), Electricity Bill Payemnt.
+                </p>
                 <div class="footer-icons">
                   <ul>
                     <li>
@@ -1126,10 +1353,11 @@
               <div class="footer-head">
                 <h4>information</h4>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                    Have enquiries? Please contact us.
+
                 </p>
                 <div class="footer-contacts">
-                  <p><span>Tel:</span> {{ config('constants.site.phome') }}</p>
+                  <p><span>Tel:</span> {{ config('constants.site.phone') }}</p>
                   <p><span>Email:</span> {{ config('constants.site.email') }}</p>
                   <p><span>Working Hours:</span> 9am-5pm</p>
                 </div>

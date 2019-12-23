@@ -15,7 +15,6 @@
 Route::get('/', 'HomeController@index')->name('index');
 Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/contact', 'HomeController@contact')->name('contact');
-
 */
 
 //Authetication
@@ -44,7 +43,7 @@ Route::patch('users/reset/{email}/{token}', 'PasswordResetController@change')->n
 
 //
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'HomeController@dashboardIndex')->name('dashboard.index');
+Route::get('/dashboard', 'DashboardController@dashboardIndex')->name('dashboard.index');
 
 //Profile
 Route::get('/dashboard/profile', 'ProfileController@profileIndex')->name('user.profile');

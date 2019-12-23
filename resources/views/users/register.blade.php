@@ -6,7 +6,7 @@
 
     @section('content')
         <div id="single-wrapper">
-            <form action="{{ route('user.register') }}" class="frm-single" method="POST">
+            <form action="{{ route('user.register.create') }}" class="frm-single" method="POST">
                 @csrf
                 <div class="inside">
                     <div class="title"><strong>{{ config('constants.site.name') }}</strong></div>
@@ -14,12 +14,12 @@
                     <div class="frm-title">Register</div>
                     @include('dashboard.layouts.errors')
                     @if(session('response'))
-                        <div class="alert alert-{{ session('response')->status ? 'success' : 'danger' }}" role="alert">
+                        <div class="alert alert-{{ session('response') ? 'success' : 'danger' }}" role="alert">
                             <h4 class="alert-heading text-center">
-                                <i class="{{ session('response')->status ? 'fa fa-check' : 'fa-exclamation-triangle' }}"></i>
-                                Registration {{ session('response')->status ? 'successful' : 'failed' }}
+                                <i class="{{ session('response') ? 'fa fa-check' : 'fa-exclamation-triangle' }}"></i>
+                                Registration {{ session('response') ? 'successful' : 'failed' }}
                             </h4>
-                            @if(session('response')->status)
+                            @if(session('response'))
                                 <p>Please check your email inbox or spamfolder to verify email and complete registration.</p>
                             @endif
                             {{-- <p class="mb-0">pxxxl dhdgudd doidoudugugddi</p>--}}

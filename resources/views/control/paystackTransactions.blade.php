@@ -10,7 +10,6 @@
                 <div class="box-content">
                     <h3 class="box-title">Withdrawals</h3>
                     <div class="row">
-
                         <div class="table-responsive">
                             <br/>
                             <form action="{{ route('paystack.transaction.query') }}" method="POST">
