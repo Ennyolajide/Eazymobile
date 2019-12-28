@@ -109,4 +109,41 @@ class Controller extends BaseController
     {
         return md5(env('APP_NAME') . time() . rand(1, 10000));
     }
+
+    /**
+     * Notify Client of something that happend
+     */
+    public function clientNotify($message, $status = false)
+    {
+        return (object) [
+            'message' => $message,
+            'status' => $status ? $status : false,
+        ];
+    }
+
+    /**
+     * Add Referral Bonus
+     */
+    public function addReferrerBonus($user)
+    {
+        $myReferrer = $user->myReferrer->id;
+        $bonus = \config('constants.bonuses.referral');
+        $status = $this->creditUserWallet($myReferrer, $bonus);
+        $status ? $this->notifyUser($myReferrer, $this->referralBonusNotification($user, $bonus)) : false;
+        $status = $status ? $user->update(['first_time_funding' => false]) : false;
+
+        return $status ? $bonus : 0;
+    }
+
+    /**
+     * Referral Bonus Notification
+     */
+    protected function referralBonusNotification($user, $amount)
+    {
+        $notification['subject'] = 'Credit Notification';
+        $notification['content'] = 'Your wallet has been Credit with with ';
+        $notification['content'] .= $this->naira($amount) . ' As referral bonus for the referred user ' . $user->name;
+
+        return $notification;
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use function GuzzleHttp\json_decode;
 
 class WebhookController extends  PaystackController
 {
@@ -22,7 +22,7 @@ class WebhookController extends  PaystackController
         define('PAYSTACK_SECRET_KEY', config('constants.paystack.secretkey'));
 
         // validate event do all at once to avoid timing attack
-        ($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY)) ? exit() : false;
+        //($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY)) ? exit() : false;
 
 
         http_response_code(200);
@@ -31,16 +31,29 @@ class WebhookController extends  PaystackController
         // Do something - that will not take long - with $event
         $event = json_decode($input);
 
-        // check for counterfiet ip
-        //!in_array($event, ['52.31.139.75', '52.49.173.169', '52.214.14.220']) ? exit() : false;
+        $event->event === 'charge.success' ? '' : exit();
 
-        Log::info($event);
-        if ($event->event === 'charge.success') {
-            $event->data->status === 'success' ? '' : exit();
-        }
+        $tranx = $this->verifyTranx($event->data->reference);
 
-        // to be completed
+        isset($tranx['data']['status'])  ? '' : exit();
+
+        $tranx['data']['status']  === 'success' ? '' : exit();
+
+        $status = $this->fundUserWallet($tranx['data']);
+
+        $status ? Log::info('Webhook Report :' . $input) : '';
+
+        return response()->json([
+            'status' => $status, 'message' => $status ? 'Success' : 'Failed'
+        ], 200);
+
 
         exit();
+    }
+
+    protected function verifyTranx($reference)
+    {
+        $response = $this->getPaystack('transaction/verify/' . $reference);
+        return $response ? json_decode($response, true) : $response;
     }
 }

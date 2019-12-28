@@ -30,7 +30,7 @@ class OrderNotification extends Mailable
      */
     public function build()
     {
-        return $this->from('exmaple@test.com', 'Testing 123')
+        return $this->from(\config('constants.site.emails.sender.noreply'), strtoupper(\config('constants.site.name')))
             ->subject($this->subject)
             ->view('emails.admin.notify');
     }

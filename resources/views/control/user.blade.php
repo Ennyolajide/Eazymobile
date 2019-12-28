@@ -43,24 +43,22 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="balance">
-                                        <div class="table-responsive">
                                             <br/><br/>
                                             <form action="{{ route('admin.alter.user.balance', ['user' => $user->id]) }}" method="POST">
                                                 @method('patch') @csrf
                                                 <div class="col-sm-9 col-xs-12  text-default">
-                                                    <div class="input-group" style="color:aliceblue;">
+                                                    <div class="input-group">
                                                         <span class="input-group-btn">
-                                                            <button type="submit" name="debit" value="1" class="btn btn-danger btn-rounded"><small>Debit User</small></button>
+                                                            <button type="submit" name="debit" value="1" class="btn btn-danger btn-rounded"><small>Debit</small></button>
                                                         </span>
                                                         <input type="text" name="amount" class="form-control">
                                                         <span class="input-group-btn">
-                                                            <button type="submit" name="credit" value="1" class="btn btn-success btn-rounded"><small>Credit User</small></button>
+                                                            <button type="submit" name="credit" value="1" class="btn btn-success btn-rounded"><small>Credit</small></button>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </form>
                                             <br/><br/>
-                                        </div>
                                     </div>
                                     <div class="tab-pane" id="payments">
                                         <br/>

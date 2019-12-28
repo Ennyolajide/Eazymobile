@@ -40,7 +40,7 @@
             (function(){
             var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
             s1.async=true;
-            s1.src='https://embed.tawk.to/5cb5be96c1fe2560f3ff1308/default';
+            s1.src="{{ config('constants.livechat.tawk') }}";
             s1.charset='UTF-8';
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
@@ -52,7 +52,9 @@
     <body>
         <div class="main-menu">
             <header class="header">
-                <a href="index.html" class="logo"><i class="ico ti-rocket"></i>ModelC</a>
+                <a href="{{ route('index') }}" class="logo">
+                    <img src="\images/logo-white.png" height="40px" width="230px" alt="" class="img-auto" title="modelc">
+                </a>
                 <button type="button" class="button-close fa fa-times js__menu_close"></button>
             </header>
             <!-- /.header -->

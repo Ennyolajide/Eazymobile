@@ -9,8 +9,8 @@
   <meta content="" name="description">
 
   <!-- Favicons -->
-  <link href="\home/img/favicon.png" rel="icon">
-  <link href="\home/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="\favicon.png" rel="icon">
+  <link href="\apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
@@ -36,12 +36,19 @@
   <link href="\home/css/responsive.css" rel="stylesheet">
   <link href="\home/css/pricing.css" rel="stylesheet">
 
-  <!-- =======================================================
-    Theme Name: eBusiness
-    Theme URL: https://bootstrapmade.com/ebusiness-bootstrap-corporate-template/
-    Author: BootstrapMade.com
-    License: https://bootstrapmade.com/license/
-  ======================================================= -->
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                s1.async=true;
+                s1.src="{{ config('constants.livechat.tawk') }}";
+                s1.charset='UTF-8';
+                s1.setAttribute('crossorigin','*');
+                s0.parentNode.insertBefore(s1,s0);
+            })();
+    </script>
+    <!--End of Tawk.to Script-->
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example">
@@ -67,10 +74,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <!-- Brand -->
-                    <a class="navbar-brand page-scroll sticky-logo" href="index.html">
-                        <h1>{{ strtoupper(config('constants.site.name')) }}</h1>
+                    <a class="navbar-brand page-scroll sticky-logo" href="{{ route('index') }}">
+                        {{-- <h1>{{ strtoupper(config('constants.site.name')) }}</h1> --}}
                         <!-- Uncomment below if you prefer to use an image logo -->
-                        <!-- <img src="img/logo.png" alt="" title=""> -->
+                        <img src="\images/logo-white.png" height="40px" width="230px" alt="" class="img-auto" title="modelc">
                     </a>
                     </div>
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -129,7 +136,9 @@
         <img src="\home/img/slider/slider2.jpg" alt="" title="#slider-direction-2" />
         <img src="\home/img/slider/slider3.jpg" alt="" title="#slider-direction-3" />
         <img src="\home/img/slider/slider4.jpg" alt="" title="#slider-direction-4" />
+        <img src="\home/img/slider/slider5.jpg" alt="" title="#slider-direction-5" />
       </div>
+
 
       <!-- direction 1 -->
       <div id="slider-direction-1" class="slider-direction slider-one">
@@ -139,11 +148,11 @@
               <div class="slider-content">
                 <!-- layer 1 -->
                 <div class="layer-1-1 hidden-xs wow slideInDown" data-wow-duration="2s" data-wow-delay=".2s">
-                  <h2 class="title1">The Best Business Information </h2>
+                  <h4 class="title1"> &nbsp;</h4>
                 </div>
                 <!-- layer 2 -->
                 <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
-                  <h1 class="title2">We're In The Business Of Helping You Start Your Business</h1>
+                  <h1 class="title2">Earn amazingly as you refer</h1>
                 </div>
                 <!-- layer 3 -->
                 <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
@@ -164,11 +173,11 @@
               <div class="slider-content text-center">
                 <!-- layer 1 -->
                 <div class="layer-1-1 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
-                  <h2 class="title1">The Best Business Information </h2>
+                  <h4 class="title1">&nbsp;</h4>
                 </div>
                 <!-- layer 2 -->
                 <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
-                  <h1 class="title2">We're In The Business Of Get Quality Business Service</h1>
+                  <h1 class="title2">We made conversion of airtime to cash easier</h1>
                 </div>
                 <!-- layer 3 -->
                 <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
@@ -189,7 +198,7 @@
               <div class="slider-content">
                 <!-- layer 1 -->
                 <div class="layer-1-1 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
-                  <h2 class="title1">The Best business Information </h2>
+                  <h4 class="title1">&nbsp; </h4>
                 </div>
                 <!-- layer 2 -->
                 <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
@@ -197,8 +206,57 @@
                 </div>
                 <!-- layer 3 -->
                 <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
-                  <a class="ready-btn right-btn page-scroll" href="#services">See Services</a>
-                  <a class="ready-btn page-scroll" href="#about">Learn More</a>
+                    <a class="ready-btn right-btn page-scroll" href="{{ 'user.register' }}">Register</a>
+                    <a class="ready-btn page-scroll" href="{{ 'user.login' }}">Login</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- direction 4 -->
+       <div id="slider-direction-4" class="slider-direction slider-two">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="slider-content text-center">
+                <!-- layer 1 -->
+                <div class="layer-1-1 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
+                  <h2 class="title1"></h2>
+                </div>
+                <!-- layer 2 -->
+                <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                  <h1 class="title2">Cheapest yet legitimate</h1>
+                </div>
+                <!-- layer 3 -->
+                <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
+                  <a class="ready-btn right-btn page-scroll" href="{{ 'user.register' }}">Register</a>
+                  <a class="ready-btn page-scroll" href="{{ 'user.login' }}">Login</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- direction 5 -->
+      <div id="slider-direction-5" class="slider-direction slider-two">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="slider-content text-center">
+                <!-- layer 1 -->
+                <div class="layer-1-1 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
+                  <h4 class="title1">&nbsp;</h4>
+                </div>
+                <!-- layer 2 -->
+                <div class="layer-1-2 wow slideInUp" data-wow-duration="2s" data-wow-delay=".1s">
+                  <h1 class="title2">We got you covered for paying your TV Subscriptions</h1>
+                </div>
+                <!-- layer 3 -->
+                <div class="layer-1-3 hidden-xs wow slideInUp" data-wow-duration="2s" data-wow-delay=".2s">
+                  <a class="ready-btn right-btn page-scroll" href="{{ 'user.register' }}">Register</a>
+                  <a class="ready-btn page-scroll" href="{{ 'user.login' }}">Login</a>
                 </div>
               </div>
             </div>
@@ -1318,7 +1376,7 @@
     <div class="footer-area">
       <div class="container">
         <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
                 <div class="footer-logo">
@@ -1348,7 +1406,7 @@
             </div>
           </div>
           <!-- end single footer -->
-          <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
                 <h4>information</h4>
@@ -1365,7 +1423,7 @@
             </div>
           </div>
           <!-- end single footer -->
-          <div class="col-md-4 col-sm-4 col-xs-12">
+          {{-- <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="footer-content">
               <div class="footer-head">
                 <h4>Instagram</h4>
@@ -1380,7 +1438,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
     <div class="footer-area-bottom">

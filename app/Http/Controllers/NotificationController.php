@@ -162,14 +162,6 @@ class NotificationController extends  DashboardController
         return $notification;
     }
 
-    protected function referralBonusNotification($user, $amount)
-    {
-        $notification['subject'] = 'Credit Notification';
-        $notification['content'] = 'Your wallet has been Credit with with ';
-        $notification['content'] .= $this->naira($amount) . ' As referral bonus for the referred user ' . $user->name;
-
-        return $notification;
-    }
 
     /**
      * Notify Client of something that happend

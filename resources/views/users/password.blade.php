@@ -8,7 +8,7 @@
 
         <div id="single-wrapper">
             <form method="post" action="{{ route('user.password.reset.change', ['email' => $email, 'token' => $token ]) }}" class="frm-single">
-                @csrf
+                @csrf @method('patch')
                 <div class="inside">
                     <div class="title">
                         <strong><a href="{{ route('index') }}"><img src="{{ config('constants.site.logo') }}" class="img-fluid"></a></strong>

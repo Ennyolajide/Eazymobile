@@ -19,7 +19,7 @@ class PaystackController extends PaymentController
     /**
      * Auth Headers for Paystack
      */
-    protected function headers()
+    protected function paystackHeaders()
     {
         return [
             'Content-Type' => 'application/json',
@@ -69,17 +69,6 @@ class PaystackController extends PaymentController
         return json_decode($this->getPaystack('bank'));
     }
 
-    /**
-     * Make a paystack call
-     */
-    protected function getPaystack($query)
-    {
-        $endPoint = \config('constants.url.paystack') . $query;
-        $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $request = $client->get($endPoint, ['headers' => $this->headers()]);
-        $status = $request->getStatusCode() == '200' ? true : false;
-        return $status ? $request->getBody()->getContents() : false;
-    }
 
     public function queryPaysackTransaction()
     {
@@ -87,5 +76,18 @@ class PaystackController extends PaymentController
         $query = '?trxref=' . request()->reference . '&reference=' . request()->reference;
 
         return redirect(route('paystack.callback') . $query);
+    }
+
+
+    /**
+     * Make a paystack call
+     */
+    protected function getPaystack($query)
+    {
+        $endPoint = \config('constants.url.paystack') . $query;
+        $client = new \GuzzleHttp\Client(['http_errors' => false]);
+        $request = $client->get($endPoint, ['headers' => $this->paystackHeaders()]);
+        $status = $request->getStatusCode() == '200' ? true : false;
+        return $status ? $request->getBody()->getContents() : false;
     }
 }

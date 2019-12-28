@@ -1,6 +1,6 @@
 <footer class="footer bg-white">
     <ul class="list-inline">
-        <li>2019 © Test.</li>
+        <li>2019 © {{ config('constants.site.name') }}.</li>
         <li><a href="#">Privacy</a></li>
         <li><a href="#">Terms</a></li>
         <li><a href="#">Help</a></li>

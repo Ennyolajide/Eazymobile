@@ -2,73 +2,66 @@
 
     @section('title')Transactions @endsection
 
-    @section('css')
-        <!-- Data Tables -->
-        <link rel="stylesheet" href="\plugins/datatables/media/css/dataTables.bootstrap.min.css">
-        <link rel="stylesheet" href="\plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
-    @endsection
-
-
      @section('content')
         <!-- Main content -->
         <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">My Transcations</h2>
-                    <div>
-                        <table id="transactions-table" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th class="hidden-xs">Reference</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="hidden-xs">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    function getStatus($transaction){
-                                        $array = ['Declined','Pending','Success','Canceled'];
-                                        $status = $transaction->status === NULL ? 'Pending' : $array[$transaction->status];
-                                        if($transaction->class->type == 'Data Topup'){
-                                            $status = $transaction->class->network == '9mobile Gifting' ? $status : str_replace('Pending', 'Success', $status);
-                                        }
-                                        return $status;
+                <h3 class="box-title">My Transcations</h2>
 
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th class="hidden-xs">Reference</th>
+                                <th><small>Amount</small></th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th class="hidden-xs">Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                function getStatus($transaction){
+                                    $array = ['Declined','Pending','Success','Canceled'];
+                                    $status = $transaction->status === NULL ? 'Pending' : $array[$transaction->status];
+                                    if($transaction->class->type == 'Data Topup'){
+                                        $status = $transaction->class->network == '9mobile Gifting' ? $status : str_replace('Pending', 'Success', $status);
                                     }
-                                @endphp
+                                    return $status;
 
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <th scope="row">{{ $loop->iteration }}</th>
-                                        <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
-                                        <td class="">@naira($transaction->amount)</td>
-                                        <td><small>{{ $transaction->class->type }}</small></td>
+                                }
+                            @endphp
 
-                                        <td>{{ getStatus($transaction) }}</td>
-                                        <td class="hidden-xs">{{ $transaction->created_at }}</td>
-                                        <td>
-                                        <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
-                                                <i class="fa fa-eye"></i>view
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                            @foreach ($transactions as $transaction)
+                                <tr>
+                                    <th scope="row"><small>{{ $loop->iteration }}</small></th>
+                                    <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
+                                    <td class=""><small>@naira($transaction->amount)</small></td>
+                                    <td><small>{{ $transaction->class->type }}</small></td>
+
+                                    <td><small>{{ getStatus($transaction) }}</small></td>
+                                    <td class="hidden-xs">{{ $transaction->created_at }}</td>
+                                    <td>
+                                    <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
+                                            <i class="fa fa-eye"></i>view
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
 
 
-                        </table>
-                        <div class="col-md-12 col-xs-12">
-                            @php $paginator = $transactions; @endphp
-                            <span class="hidden-xs text-bold" style="font-size:16px;">
-                                {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
-                            </span>
-                            <span class="pull-right">
-                                @include('dashboard.layouts.pagination')
-                            </span>
-                        </div>
+                    </table>
+                    <div class="col-md-12 col-xs-12">
+                        @php $paginator = $transactions; @endphp
+                        <span class="hidden-xs text-bold" style="font-size:16px;">
+                            {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
+                        </span>
+                        <span class="pull-right">
+                            @include('dashboard.layouts.pagination')
+                        </span>
                     </div>
                 </div>
                 @include('dashboard.layouts.box-footer')
