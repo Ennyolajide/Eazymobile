@@ -52,7 +52,7 @@
     <body>
         <div class="main-menu">
             <header class="header">
-                <a href="{{ route('index') }}" class="logo">
+                <a href="{{ route('dashboard.index') }}" class="logo">
                     <img src="\images/logo-white.png" height="40px" width="230px" alt="" class="img-auto" title="modelc">
                 </a>
                 <button type="button" class="button-close fa fa-times js__menu_close"></button>

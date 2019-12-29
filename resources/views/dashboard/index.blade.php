@@ -79,7 +79,7 @@
                                 <!-- /.date -->
                                 <div class="text text-bold">
                                     <img src="\images/networks/mtn.png"  class="inline img-icon">
-                                    MTN >> *461*2*3*1#
+                                    MTN >> *461*4#
                                 </div>
                                 <!-- /.text -->
                             </div>
@@ -96,8 +96,14 @@
                                 <div class="date">9mobile</div>
                                 <!-- /.date -->
                                 <div class="text text-bold">
-                                    <img src="\images/networks/9mobile.png"  class="inline img-icon">
-                                    9mobile >> *228#
+                                    <img src="\images/networks/9mobile.png"  class="inline img-icon pull-left">
+                                    <div class="inline">
+                                    9mobile >> *229*9(SME)
+                                        <br/>
+                                    9mobile >> *228#(GIFTING)
+
+                                    </div>
+
                                 </div>
                                 <!-- /.text -->
                             </div>

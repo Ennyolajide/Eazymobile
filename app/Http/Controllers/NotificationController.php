@@ -153,14 +153,7 @@ class NotificationController extends  DashboardController
     }
 
 
-    protected function addBankDetailsNotification($charges)
-    {
-        $notification['subject'] = 'Debit Notification';
-        $notification['content'] = 'Your wallet has been debited with ';
-        $notification['content'] .= $this->naira($charges) . ' for adding a new bank account to your profile';
 
-        return $notification;
-    }
 
 
     /**
