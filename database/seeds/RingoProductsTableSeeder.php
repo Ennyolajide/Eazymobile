@@ -179,6 +179,17 @@ class RingoProductsTableSeeder extends Seeder
             'route' => 'internet/waec'
         ]);
 
+        DB::table('ringo_products')->insert([
+            'name' => 'JAMB',
+            'product_id' => 'BPM-NGXP-JAMB',
+            'service' => 'Misc',
+            'service_id' => 'misc',
+            'multichoice' => true,
+            'product_list' => true,
+            'logo' => 'misc/jamb.png',
+            'route' => 'internet/jamb'
+        ]);
+
 
         /**
          * Electricity

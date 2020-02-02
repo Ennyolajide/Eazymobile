@@ -13,7 +13,7 @@
                     <h3 class="box_title">Airtime Swap</h3>
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-                            <form id="airtime-swap-form" class="form-horizontal" method="post" action="{{ route('airtime.swap') }}">
+                            <form id="airtime-swap-form" class="form-horizontal form-prevent-multiple-submits" method="post" action="{{ route('airtime.swap') }}">
                                 @csrf
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button id="submit" class="btn btn-rounded btn-success pull-right">Swap</button>
+                                        <button id="submit" class="btn btn-rounded btn-success form-prevent-multiple-submits pull-right">Swap</button>
                                     </div>
                                 </div>
                             </form>

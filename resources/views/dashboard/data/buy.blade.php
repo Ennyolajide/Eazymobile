@@ -20,7 +20,7 @@
                                     <img v-if="networkImage" v-bind:src="networkImage" style="height: 60px; width:50px; margin-right:5px;" class="img-responsive pull-right">
                                 </div>
                             </div>
-                            <form id="data-purchase-form" class="form-horizontal" action="{{ route('data.buy') }}" method="post">
+                            <form id="data-purchase-form" class="form-horizontal form-prevent-multiple-submits" action="{{ route('data.buy') }}" method="post">
                                 @csrf
                                 <br/>
                                 <div class="form-group" id="choose-wallet-type">
@@ -57,7 +57,7 @@
                                     <br/>
                                     <div class="form-group">
                                         <div class="col-x-12">
-                                            <button id="submit" class="btn bg-primary btn-rounded btn-flat pull-right">Submit</button>
+                                            <button  class="btn bg-primary btn-rounded btn-flat pull-right button-prevent-multiple-submits">Submit</button>
                                         </div>
                                     </div>
                                 </div>

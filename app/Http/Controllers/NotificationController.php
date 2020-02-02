@@ -141,12 +141,14 @@ class NotificationController extends  DashboardController
     protected function miscTopupNotification($details, $uniqueReference, $responseObject)
     {
         try {
+            $amount = $this->naira($details['amount']);
             $responseObject = $responseObject->original;
             $notification['subject'] = 'Debit Notification';
-            $notification['content'] = 'Your wallet has been debited with ' . $this->naira($details['amount']);
-            $notification['content'] .= ' for ' . $details['product'] . '(' . $details['type'] . ') .... Reference : ' . $uniqueReference;
-            $notification['content'] .= $responseObject->pin_based ? '<br/><br/><pre>' . json_encode($responseObject->pins[0]) . '</pre>' : '';
-        } catch (\Exception $e) {
+            $notification['content'] = 'Your wallet has been debited with ' . $amount;
+            $notification['content'] .= ' for ' . $details['product'] . '(' . $details['type'] . ')';
+            $notification['content'] .= 'Transaction Reference : <span class="text-primary">' . $uniqueReference.'</span><br/><br/>';
+            $notification['content'] .= $responseObject->pin_based ? '<pre class="text-success">'.json_encode($responseObject->pins).'</pre>' : '';
+        } catch (Exception $e) {
             Log::info('Cound not Format Misc Topup Notification');
         }
         return $notification;

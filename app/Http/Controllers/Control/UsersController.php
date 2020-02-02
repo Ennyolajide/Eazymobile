@@ -30,7 +30,7 @@ class UsersController extends ModController
     {
         $this->validate(request(), ['user' => 'required|string|min:3']);
 
-        return User::where('email', 'like', '%' . request()->user . '%')->get();
+        return User::where('email', 'like', '%' . request()->user . '%')->orWhere('name', 'like', '%' . request()->user . '%')->get();
     }
 
     public function viewUser(User $user)

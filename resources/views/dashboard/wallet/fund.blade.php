@@ -52,14 +52,15 @@
                                     <div class="form-group" id="chooseBank">
                                         <label class="col-sm-3 col-xs-12 control-label">Bank</label>
                                         <div class="col-sm-9 col-xs-12 ">
-                                            <select class="form-control" id="bank" name="bankId" required>
+                                            <select class="form-control" id="bank" required>
                                                 <option value="" disabled selected>Select Our Bank </option>
                                                 @foreach ($banks as $item)
-                                                    <option value="{{ $item->id }}">
+                                                    <option value="{{ $loop->index }}">
                                                         {{ $item->bank_name }}
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <input type="hidden" id="bankId" name="bankId"/>
                                             <p class="help-block text-olive">Bank to transfer to</p>
                                         </div>
 
@@ -138,6 +139,7 @@
                             </form>
                         </div>
                     </div>
+                    <br/>
                     @include('dashboard.layouts.errors')
                 </div>
                 @include('dashboard.layouts.box-footer')
@@ -278,48 +280,16 @@
 
                 $('#gateway').change(function() {
                     var gateway = $('#gateway').val();
+                    let Limit;
                     if(gateway == 1){
                         $('#ecard-form,#airtime-form,#bank-transfer').hide();
                         $('#atmBankBitcoin-form,#amount-field').show();
                         $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
-
-                        $('#submit').click(function() {
-                            $('#fund-wallet-form').validate({
-                                rules: {
-                                    amount: {
-                                        required: true,
-                                        range: [ {{ config('constants.fundings.paystack.min') }}, {{ config('constants.fundings.paystack.max') }}]
-                                    }
-                                },
-                                messages: {
-                                    amount: {
-                                        required: "Please enter amount.",
-                                        range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
-                                    }
-
-                                }
-                            });
-                        });
+                        limit = [{{ config('constants.fundings.paystack.min') }},{{ config('constants.fundings.paystack.max') }}];
                     }else if(gateway == 2){
+                        limit = [1000, 50000];
                         $('#ecard-form,#airtime-form').hide();
                         $('#atmBankBitcoin-form,#amount-field,#bank-transfer').show();
-                        $('#submit').click(function() {
-                            $('#fund-wallet-form').validate({
-                                rules: {
-                                    amount: {
-                                        required: true,
-                                        range: [1000, 50000]
-                                    }
-                                },
-                                messages: {
-                                    amount: {
-                                        required: "Please enter amount.",
-                                        range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
-                                    }
-
-                                }
-                            });
-                        });
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}').attr('novalidate',true);
                     }else if(gateway == 3){//airtime
                         //$('#fund-wallet-form').attr('action',"{{-- route('wallet.fund.airtime') --}}");
@@ -349,13 +319,32 @@
 
                     }
 
+                    $('#submit').click(function() {
+                        $('#fund-wallet-form').validate({
+                            rules: {
+                                amount: {
+                                    required: true,
+                                    range: limit
+                                }
+                            },
+                            messages: {
+                                amount: {
+                                    required: "Please enter amount.",
+                                    range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
+                                }
+
+                            }
+                        });
+                    });
+
                 });
 
 
 
                 $('#chooseBank').change(function(){
                     let banks = @json($banks);
-                    let bankDetails = banks[ $('#bank').val() - 1 ];
+                    let bankDetails = banks[ $('#bank').val() ];
+                    $('#bankId').val(bankDetails.id);
                     $('.radio').find('.bankName').text(bankDetails.bank_name);
                     $('.radio').find('.accNo').text(bankDetails.acc_no);
                     $('.radio').find('.accName').text(bankDetails.acc_name);

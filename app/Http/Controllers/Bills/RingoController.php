@@ -6,6 +6,7 @@ use App\Token;
 use App\RingoProduct;
 use App\RingoSubProductList;
 use Illuminate\Support\Facades\Log;
+use function GuzzleHttp\json_decode;
 use App\Http\Controllers\Controller;
 
 
@@ -43,7 +44,7 @@ class RingoController extends RingoTokenController
 
         $response ? $response->response = true : false;
 
-        return  response()->json($response ? $response : ['response' => false]);
+        return response()->json($response ? $response : ['response' => false]);
     }
 
     /**
@@ -57,7 +58,11 @@ class RingoController extends RingoTokenController
 
         $response = $endPoint ? $this->ringo($endPoint, 'post', $meterId) : false;
 
-        return $response;
+        $response ? $response->response = true : false;
+
+        Log::info('Refernce : Misc -> Response Object' . $this->responseObject);
+
+        return response()->json($response ? $response : ['response' => false]);
     }
 
 
@@ -139,5 +144,25 @@ class RingoController extends RingoTokenController
         $status = ($request->getStatusCode() == '200' || $request->getStatusCode() == '201') ? true : false;
 
         return $status ? json_decode($request->getBody()->getContents()) : false;
+    }
+
+
+    /**
+     * Test cases Consume a Ringo Api
+     */
+    protected function testRingo()
+    {
+        $endPoint = 'https://dd51926c.ngrok.io/api/waec';
+
+        $client = new \GuzzleHttp\Client([
+            'debug' => false,
+            'http_errors' => false, 'timeout' => 50, 'connect_timeout' => 50
+        ]);
+        $request = $client->post($endPoint, ['headers' => ['Content-Type' => 'application/json']]);
+
+        $status = ($request->getStatusCode() == '200' || $request->getStatusCode() == '201') ? true : false;
+
+        return $status ? json_decode($request->getBody()->getContents()) : false;
+
     }
 }

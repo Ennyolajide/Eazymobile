@@ -7,7 +7,8 @@
         <div class="row small-spacing">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="box-content">
-                    <h3 class="box-title">Daily Recap Report</h3>
+                    <h3 class="box-title">Daily Recap Report
+                        <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.transaction.search.index') }}" class="btn btn-rounded btn-info pull-right">Search</a></span></h3>
                     <div class="row">
                         <div class="table-responsive">
                             <table class="table table-small-font table-bordered table-striped">

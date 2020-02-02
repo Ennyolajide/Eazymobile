@@ -43,7 +43,7 @@ return [
     'fundings' => [
         'paystack' => [
             'min' =>  500,
-            'max' =>  50000,
+            'max' =>  2499,
         ]
     ],
 

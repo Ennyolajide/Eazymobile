@@ -12,7 +12,7 @@ class PaystackController extends PaymentController
 {
     public $url;
 
-    protected $failureResponse = 'Payment failed';
+    protected $failureResponse = 'Funding Complete';
     protected $successResponse = 'Wallet funding successful';
 
 
@@ -34,6 +34,11 @@ class PaystackController extends PaymentController
      */
     public function redirectToGateway()
     {
+        $this->validate(request(), [
+            'email' =>  'required|string',
+            'amount'  => 'required|numeric|min:'.config("constants.fundings.paystack.min").'|max:'.config("constants.fundings.paystack.max"),
+        ]);
+
         $charges = \config('constants.charges.paystack');
         $charge = $charges['chargePercentage'] / 100 * request()->amount;
         $charge = request()->amount < 2500 ? $charge : ($charge + $charges['addtionalCharge']);
@@ -56,9 +61,9 @@ class PaystackController extends PaymentController
         $message = $status ? $this->successResponse : $this->failureResponse;
         if (Auth::user()->role == 'admin') {
             $message = $status ? 'Wallet funded' : 'Transaction has been completed';
-            return redirect()->route('admin.paystack.transactions')->withNotification($this->clientNotify($message, $status));
+            return redirect()->route('admin.paystack.transactions')->withNotification($this->clientNotify($message, true));
         }
-        return redirect(route('wallet.fund'))->withNotification($this->clientNotify($message, $status));
+        return redirect(route('wallet.fund'))->withNotification($this->clientNotify($message, true));
     }
 
     /**

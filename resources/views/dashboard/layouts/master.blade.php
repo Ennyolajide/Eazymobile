@@ -120,6 +120,12 @@
 
         @yield('scripts')
 
+        <script>
+            $('.form-prevent-multiple-submits').on('submit', function(){
+                $('.button-prevent-multiple-submits').attr('disabled', true);
+            });
+        </script>
+
         <!-- Custom Theme Scripts -->
         <script src="\js/main.min.js"></script>
     </body>

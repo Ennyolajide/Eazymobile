@@ -47,11 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, 'sender_id', 'id');
     }
 
-    public function vouchers()
+    /*  public function vouchers()
     {
         return $this->hasMany(Voucher::class);
     }
-
+ */
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
@@ -62,10 +62,10 @@ class User extends Authenticatable
         return $this->hasMany(Withdrawal::class);
     }
 
-    public function testimonials()
+    /* public function testimonials()
     {
         return $this->hasMany(Testimonial::class);
-    }
+    } */
 
     public function payments()
     {

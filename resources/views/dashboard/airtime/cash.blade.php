@@ -12,7 +12,7 @@
                     <h3 class="box_title">Airtime To Cash</h3>
                     <div class="row">
                         <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-                            <form id="airtime-swap-form" class="form-horizontal" method="post">
+                            <form id="airtime-swap-form" class="form-horizontal form-prevent-multiple-submits" method="post">
                                 @csrf
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 col-xs-12 control-label" ></label>
                                     <div class="col-sm-10 col-xs-12">
-                                        <button id="submit" class="btn btn-rounded btn-success pull-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        <button id="submit" class="btn btn-rounded btn-success button-prevent-multiple-submits pull-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                     </div>
                                 </div>
                             </form>

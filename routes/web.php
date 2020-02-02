@@ -131,6 +131,9 @@ Route::namespace('Control')->middleware('admin')->group(function () {
     // Controllers Within The "App\Http\Controllers\Control" Namespace
     Route::get('control', 'ModController@index')->name('admin.index');
     Route::get('control/transactions', 'TransactionsController@show')->name('admin.transactions');
+    Route::get('control/transaction/{transaction}', 'TransactionsController@showTransaction')->name('admin.transaction');
+    Route::post('control/transactions', 'TransactionsController@searchTransactions')->name('admin.transaction.search');
+    Route::get('control/transactions/search', 'TransactionsController@searchIndex')->name('admin.transaction.search.index');
     Route::get('control/transactions/user/{user}', 'TransactionsController@userTransactions')->name('admin.user.transactions');
 
     //Airtime Dashbaord

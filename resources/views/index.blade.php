@@ -1417,7 +1417,7 @@
                 <div class="footer-contacts">
                   <p><span>Tel:</span> {{ config('constants.site.phone') }}</p>
                   <p><span>Email:</span> {{ config('constants.site.email') }}</p>
-                  <p><span>Working Hours:</span> 9am-5pm</p>
+                  <p><span>Working Hours:</span> 24/7</p>
                 </div>
               </div>
             </div>

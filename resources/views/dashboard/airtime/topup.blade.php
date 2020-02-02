@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <br />
-                            <form id="airtime-topup-form" class="form-horizontal" action="{{ route('airtime.topup') }}" method="post">
+                            <form id="airtime-topup-form" class="form-horizontal form-prevent-multiple-submits" action="{{ route('airtime.topup') }}" method="post">
                                 @csrf
                                 <div class="form-group" id="choose-wallet-type">
                                     <label for="inputWallet" class="control-label col-md-2 col-sm-2 col-xs-12">Network </label>
@@ -54,7 +54,7 @@
                                 <br/>
                                 <div class="form-group">
                                     <div class="col-xs-12">
-                                        <button id="submit" class="btn btn-primary btn-rounded pull-right">&nbsp;&nbsp;&nbsp;&nbsp;Topup&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                        <button id="submit" class="btn btn-primary btn-rounded pull-right button-prevent-multiple-submits">&nbsp;&nbsp;&nbsp;&nbsp;Topup&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                     </div>
                                 </div>
                             </form>
