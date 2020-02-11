@@ -59,9 +59,11 @@ class PaystackController extends PaymentController
         $paymentDetails = Paystack::getPaymentData();
         $status = $this->fundUserWallet($paymentDetails['data']);
         $message = $status ? $this->successResponse : $this->failureResponse;
-        if (Auth::user()->role == 'admin') {
-            $message = $status ? 'Wallet funded' : 'Transaction has been completed';
-            return redirect()->route('admin.paystack.transactions')->withNotification($this->clientNotify($message, true));
+        if(isset(Auth::user()->role)){
+            if (Auth::user()->role == 'admin') {
+                $message = $status ? 'Wallet funded' : 'Transaction has been completed';
+                return redirect()->route('admin.paystack.transactions')->withNotification($this->clientNotify($message, true));
+            }
         }
         return redirect(route('wallet.fund'))->withNotification($this->clientNotify($message, true));
     }

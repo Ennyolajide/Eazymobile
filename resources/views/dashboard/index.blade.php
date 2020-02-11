@@ -55,7 +55,7 @@
                     <div class="statistics-box with-icon">
                         <i class="ico small fa fa-money"></i>
                         <p class="text text-white">Balance</p>
-                        <h2 class="counter">@naira(Auth::user()->balance)</h2>
+                        <h3 class="counter">@naira(Auth::user()->balance)</h3>
                     </div>
                 </div>
                 <!-- /.box-content -->

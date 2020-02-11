@@ -13,8 +13,8 @@ class WebhookController extends  PaystackController
     {
         // only a post with paystack signature header gets our attention
         $postRequestMethod = strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
-        //$validRequestSignature = array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER);
-        //!$postRequestMethod || !$validRequestSignature ? exit() : false;
+        $validRequestSignature = array_key_exists('HTTP_X_PAYSTACK_SIGNATURE', $_SERVER);
+        !$postRequestMethod || !$validRequestSignature ? exit() : false;
 
 
         // Retrieve the request's body
@@ -22,7 +22,7 @@ class WebhookController extends  PaystackController
         define('PAYSTACK_SECRET_KEY', config('constants.paystack.secretkey'));
 
         // validate event do all at once to avoid timing attack
-        //($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY)) ? exit() : false;
+        ($_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] !== hash_hmac('sha512', $input, PAYSTACK_SECRET_KEY)) ? exit() : false;
 
 
         http_response_code(200);
@@ -31,7 +31,6 @@ class WebhookController extends  PaystackController
         // Do something - that will not take long - with $event
         $event = json_decode($input);
 
-        return $input;
 
         $event->event === 'charge.success' ? '' : exit();
 

@@ -47,7 +47,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 col-xs-12 control-label">Amount</label>
                                         <div class="col-sm-10 col-xs-12 form-grouping">
-                                            <input type="text" class="form-control" name="amount" placeholder="Pls Enter Phone Number">
+                                            <input type="text" class="form-control" name="amount" placeholder="Pls Enter Topup Amount">
                                         </div>
                                     </div>
                                 </div>
