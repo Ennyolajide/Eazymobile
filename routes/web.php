@@ -17,9 +17,17 @@ Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 */
 
-//Authetication
+
+
 Route::get('/', 'HomeController@index')->name('index');
 
+Route::get('/faq', 'HomeController@faq')->name('faq');
+Route::get('/buy-sell', 'HomeController@bitcoin')->name('buy-sell');
+Route::get('/contact', 'HomeController@contact')->name('contact-us');
+
+
+
+//Authetication
 Route::get('/users/login', 'LoginController@index')->name('user.login');
 Route::post('/users/login', 'LoginController@login')->name('user.login');
 Route::get('/users/logout', 'LoginController@logout')->name('user.logout');
@@ -40,6 +48,7 @@ Route::get('users/reset', 'PasswordResetController@index')->name('user.password.
 Route::post('users/password/reset', 'PasswordResetController@reset')->name('user.password.reset.request');
 Route::get('users/reset/{email}/{token}', 'PasswordResetController@verify')->name('user.password.reset.verify');
 Route::patch('users/reset/{email}/{token}', 'PasswordResetController@change')->name('user.password.reset.change');
+
 
 //
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -67,16 +76,36 @@ Route::get('/dashboard/data/buy', 'DataController@create')->name('data.buy');
 Route::post('/dashboard/data/buy', 'DataController@store')->name('data.buy');
 
 //Airtime
-//Route::get('dashboard/airtime/cash', 'AirtimeController@cash')->name('airtime.toCash');
-//Route::post('dashboard/airtime/cash', 'AirtimeController@airtime2cash')->name('airtime.toCash');
-
-
 Route::get('dashboard/airtime/swap', 'AirtimeSwapController@index')->name('airtime.swap');
 Route::post('dashboard/airtime/swap', 'AirtimeSwapController@store')->name('airtime.swap');
 Route::patch('dashboard/airtime/swap/{airtimeRecord}', 'AirtimeSwapController@completed')->name('airtime.swap.completed');
 Route::get('dashboard/airtime/cash', 'AirtimeToCashController@index')->name('airtime.cash');
 Route::post('dashboard/airtime/cash', 'AirtimeToCashController@store')->name('airtime.cash');
 Route::patch('dashboard/airtime/cash/{airtimeRecord}', 'AirtimeToCashController@completed')->name('airtime.cash.completed');
+
+Route::get('dashboard/test/1', 'CurrencyConverterController@test');
+
+
+//Airtime Funding
+Route::post('dashboard/wallet/fund/airtime', 'AirtimeFundingController@store')->name('wallet.fund.airtime');
+Route::patch('dashboard/wallet/fund/airtime/{airtimeRecord}', 'AirtimeFundingController@completed')->name('wallet.fund.airtime.completed');
+
+//Bitcoin
+Route::namespace('Bitcoin')->group(function () {
+
+    Route::get('dashboard/bitcoin', 'CoinsController@index')->name('bitcoin.index');
+    Route::get('dashboard/bitcoin/buy', 'CoinsController@buy')->name('bitcoin.buy');
+    Route::get('dashboard/bitcoin/sell', 'CoinsController@sell')->name('bitcoin.sell');
+
+    Route::post('dashboard/bitcoin/buy', 'CoinsController@purchaseCoin')->name('bitcoin.purchase');
+    Route::post('dashboard/bitcoin/sellout', 'CoinsController@getPaymentUrl')->name('bitcoin.sellout');
+
+    Route::post('gateways/coinpayment/ipn', 'IpnController@ipn')->name('coinpayment.ipn');
+    Route::post('dashboard/wallet/fund/bitcoin', 'CoinsController@getPaymentUrl')->name('wallet.fund.bitcoin');
+
+});
+
+
 
 //Wallet
 Route::get('dashboard/wallet/fund', 'WalletController@index')->name('wallet.fund');
@@ -85,6 +114,9 @@ Route::post('dashboard/wallet/fund', 'WalletController@store')->name('wallet.fun
 //Bank Transfer
 Route::post('dashboard/wallet/fund/bank', 'BankTransferController@store')->name('wallet.fund.bank');
 Route::patch('dashboard/wallet/fund/bank/{bankTransferRecord}', 'BankTransferController@completed')->name('wallet.fund.bank.completed');
+
+//Ecard
+Route::post('dashboard/wallet/fund/voucher', 'VoucherController@store')->name('wallet.fund.voucher');
 
 //withdrawals
 Route::get('dashboard/wallet/withdraw', 'WithdrawalController@index')->name('wallet.withdraw');
@@ -141,6 +173,12 @@ Route::namespace('Control')->middleware('admin')->group(function () {
     Route::patch('control/airtimes/{trans}/edit', 'AirtimesController@edit')->name('admin.airtimes.edit');
     Route::get('control/airtimes', 'AirtimesController@show')->name('admin.airtimes');
 
+    //Bitcoin Dashboard
+    Route::get('control/bitcoins', 'BitcoinsController@show')->name('admin.bitcoins');
+    Route::patch('control/bitcoins/{trans}/edit', 'BitcoinsController@edit')->name('admin.bitcoins.edit');
+    Route::patch('control/bitcoins/funding/{trans}/edit', 'BitcoinsController@funding')->name('admin.bitcoins.fundings');
+
+
     //Data Dashbaord
     Route::patch('control/datas/{trans}/edit', 'DatasController@edit')->name('admin.datas.edit');
     Route::get('control/datas', 'DatasController@show')->name('admin.datas');
@@ -178,6 +216,11 @@ Route::namespace('Control')->middleware('admin')->group(function () {
     //bills configurations
     Route::get('settings/bills/{product}', 'BillsController@show')->name('admin.bills.config');
     Route::patch('settings/bills/{subProduct}/edit', 'BillsController@edit')->name('admin.bill.config.edit');
+
+    //Coin configurations
+    Route::get('settings/coins/config', 'BitcoinsController@settings')->name('admin.coins.config');
+    Route::patch('settings/coins/{coin}/edit', 'BitcoinsController@editCoinsConfig')->name('admin.coins.config.edit');
+
 
     //Banks
     //Route::get('settings/banks', 'BanksController@bankSettings')->name('admin.banks'); // not in use

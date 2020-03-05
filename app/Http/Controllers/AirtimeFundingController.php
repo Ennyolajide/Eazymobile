@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Airtime;
 use App\Transaction;
 use App\AirtimePercentage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AirtimeFundingController extends WalletController
+class AirtimeFundingController extends TransactionController
 {
 
     protected $modalResponse;
@@ -21,15 +22,22 @@ class AirtimeFundingController extends WalletController
      */
     public function store()
     {
-        //return request()->all();
-        //validation
+        request()->merge([
+            'amount' => request()->airtimeAmount,
+            'network' => request()->selectedNetwork
+        ]);
+        $network = AirtimePercentage::whereId(request()->network)
+            ->where('airtime_to_cash_percentage_status', true)->first();
+
         $this->validate(request(), [
-            'airtimeAmount'  => 'required|numeric',
-            'network' => 'required|numeric',
             'swapFromPhone' => 'required|string|min:10|max:13',
+            'network' => ['bail', 'required', 'numeric', function ($attribute, $value, $fail) use ($network) {
+                $network ? false : $fail('Network not available at the moment');
+            }],
+            'amount'  => $network ? 'required|numeric|min:' . $network->airtime_to_cash_min . '|max:' . $network->airtime_to_cash_max : '',
         ]);
 
-        $status = $this->processAirtimeFunding() ? true : false;
+        $status = $this->processAirtimeFunding($network) ? true : false;
 
         return $status ? back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
     }
@@ -37,9 +45,8 @@ class AirtimeFundingController extends WalletController
     /**
      * Record Transaction
      */
-    protected function processAirtimeFunding()
+    protected function processAirtimeFunding($network)
     {
-        $network = AirtimePercentage::find(request()->network);
 
         $status = $network ? $this->airtimeFunding($network) : false;
 
@@ -66,7 +73,7 @@ class AirtimeFundingController extends WalletController
     {
         return Airtime::create([
             'user_id' => Auth::user()->id, 'amount' => request()->airtimeAmount, 'from_network' => $network->network, 'status' => null,
-            'percentage' => $network->airtime_swap_percentage, 'from_phone' => request()->swapFromPhone, 'class' => 'App\Airtime',
+            'percentage' => $network->airtime_to_cash_percentage, 'from_phone' => request()->swapFromPhone, 'class' => 'App\Airtime',
             'type' => 'Airtime Funding', 'transaction_type' => 4, 'recipients' => $network->airtime_to_cash_phone_numbers
         ]);
     }

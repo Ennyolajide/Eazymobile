@@ -2,33 +2,50 @@
 
     @section('title') Transaction Search @endsection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Transactions <small></small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Search</li>
+            </ol>
+        </section>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Transactions</h3>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Transactions</h3>
+                            <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.transaction.search.index') }}" class="btn btn-flat btn-info pull-right">Search</a></span></h3>
+                        </div>
                         <!-- /.box-header -->
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Search</label>
-                                <div class="col-sm-7 col-xs-12">
-                                    <input type="text" id="reference" name="reference" class="form-control pull-right" placeholder="Enter transaction reference ......."/>
-                                    <div id="loader">checking ... <img src="\images/loaders/ajax-horizontal-loader.gif"> ......</div>
+                        <div class="box-body">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Search</label>
+                                    <div class="col-sm-7 col-xs-12">
+                                        <input type="text" id="reference" name="reference" class="form-control pull-right" placeholder="Enter transaction reference ......."/>
+                                        <div id="loader">checking ... <img src="\images/loaders/ajax-horizontal-loader.gif"> ......</div>
+                                    </div>
+                                    <div class="clearfix"></div>
                                 </div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="form-group">
-                                <br/>
-                                <table id="result" class="table table-hover">
+                                <div class="form-group">
+                                    <br/>
+                                    <table id="result" class="table table-hover">
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     @endSection
 
     <div id="result_modal"></div>

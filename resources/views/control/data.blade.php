@@ -3,16 +3,31 @@
         Data Settings
     @endsection
 
+
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Configuration <small>Settings</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Configuration</a></li>
+                <li class="active">Settings</li>
+            </ol>
+        </section>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Data Settings</h3>
-                    <div class="row">
-                        <div class="table-responsive">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Data Setings</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
                             @include('dashboard.layouts.errors')
-                            <table class="table table-small-font table-bordered table-striped">
+                            <table class="table table-striped table-hover table-bordered table-responsive">
                                 <tbody>
                                     <tr>
                                         <td>#</td>
@@ -57,12 +72,15 @@
                             </table>
                         </div>
                     </div>
-                </div>
 
-                <div class="box-content">
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-small-font table-bordered table-striped">
+
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Data Setings</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-striped table-hover table-bordered table-responsive">
                                 <thead class="bg-blue">
                                     <tr>
                                         <th>id</th>
@@ -104,7 +122,7 @@
                 <!-- /.box -->
             </div>
             <!-- /.col -->
-        </div>
+        </section>
         <!-- /.content -->
     @endSection
 
@@ -282,4 +300,3 @@
             });
         </script>
     @endSection
-    });

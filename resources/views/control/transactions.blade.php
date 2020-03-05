@@ -2,16 +2,30 @@
 
     @section('title') Transactions @endsection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>All Transactions <small></small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Transactions</li>
+            </ol>
+        </section>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Daily Recap Report
-                        <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.transaction.search.index') }}" class="btn btn-rounded btn-info pull-right">Search</a></span></h3>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-small-font table-bordered table-striped">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Airtime Topup Transaction</h3>
+                            <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.transaction.search.index') }}" class="btn btn-flat btn-info pull-right">Search</a></span></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-small-font table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th class="hidden-xs">Reference</th>
@@ -33,7 +47,13 @@
                                     @foreach ($transactions as $transaction)
                                         <tr>
                                             <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
-                                            <td class="text-right">@naira($transaction->amount)</td>
+                                            <td class="text-right">
+                                                @if($transaction->class_type == 'App\CoinTransaction')
+                                                    @dollar($transaction->amount)
+                                                @else
+                                                    @naira($transaction->amount)
+                                                @endif
+                                            </td>
                                             <td>{{ $transaction->class->type }}</td>
 
                                             <td>{{ getStatus($transaction->status) }}</td>
@@ -73,7 +93,7 @@
                 <!-- /.box -->
             </div>
             <!-- /.col -->
-        </div>
+        </section>
         <!-- /.row -->
     @endSection
 
@@ -102,7 +122,15 @@
                         </div>
                         <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                         <small>Transaction Amount : </small>
-                            <p class=""><b>@naira($transaction->amount) </b></p>
+                            <p class="">
+                                <b>
+                                    @if($transaction->class_type == 'App\CoinTransaction')
+                                        @dollar($transaction->amount)
+                                    @else
+                                        @naira($transaction->amount)
+                                    @endif
+                                </b>
+                            </p>
                         </div>
                         <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                             <small> Before : </small>

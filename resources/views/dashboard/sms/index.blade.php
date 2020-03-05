@@ -2,97 +2,123 @@
 
     @section('title') Bulk Sms @endsection
 
+    @section('content-header')
+        <section class="content-header">
+            <h1>Bulk Sms</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#"><i class="fa fa-dashboard"></i> Home</a>
+                </li>
+                <li class="active">Sms</li>
+            </ol>
+        </section>
+    @endsection
+
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Sms</h2>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <br/>
-                            <form id="send-bulk-sms-form" method="POST" action="">
-                                @csrf
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-xs-12 control-label">Package</label>
-                                    <div class="col-sm-8 col-xs-12 form-grouping text-bold">
-                                        <select style="height: 40px;" class="form-control" id="route" name="route">
-                                            <option value="" disabled selected><strong>Choose Sms Type</strong></option>
-                                            @foreach ($smsConfigs as $smsConfig)
-                                                <option value="{{ $smsConfig }}">
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="box box-purple">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-envelope"></i> Send Bulk Sms</h3>
 
-                                                    {{ $smsConfig->route }} =
-                                                    <span class="pull-right">
-                                                        @if($smsConfig->amount_per_unit == 0 )
-                                                            @foreach ($smsConfigs as $item)
-                                                                @continue($item->amount_per_unit == 0 )
-                                                                @naira($item->amount_per_unit / 100)
-                                                                @if($loop->first) / @endif
-                                                            @endforeach
-                                                        @else
-                                                            @naira($smsConfig->amount_per_unit / 100)
-                                                        @endif
-                                                        Per Page Per Sms
-                                                    </span>
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <br/>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-xs-12 control-label">Sender Id</label>
-                                    <div class="col-sm-8 col-xs-12 form-grouping">
-                                        <input type="text" class="form-control" name="senderId" placeholder="Enter Sender Id" required>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <section class="container">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
                                         <br/>
-                                    </div>
-                                </div>
+                                        @include('dashboard.layouts.errors')
+                                        <form id="send-bulk-sms-form" method="POST" action="">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-xs-12 control-label">Package</label>
+                                                <div class="col-sm-8 col-xs-12 form-grouping text-bold">
+                                                    <select style="height: 40px;" class="form-control" id="route" name="route">
+                                                        <option value="" disabled selected><strong>Choose Sms Type</strong></option>
+                                                        @foreach ($smsConfigs as $smsConfig)
+                                                            <option value="{{ $smsConfig }}">
 
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-xs-12 control-label">Recepient</label>
-                                    <div class="col-sm-8 col-xs-12 form-grouping">
-                                        <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
-                                        <div class="">
-                                            <p id="numbers" class="pull-left text-success" style="font-size:18px"></p>
-                                        </div>
+                                                                {{ $smsConfig->route }} =
+                                                                <span class="pull-right">
+                                                                    @if($smsConfig->amount_per_unit == 0 )
+                                                                        @foreach ($smsConfigs as $item)
+                                                                            @continue($item->amount_per_unit == 0 )
+                                                                            @naira($item->amount_per_unit / 100)
+                                                                            @if($loop->first) / @endif
+                                                                        @endforeach
+                                                                    @else
+                                                                        @naira($smsConfig->amount_per_unit / 100)
+                                                                    @endif
+                                                                    Per Page Per Sms
+                                                                </span>
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-xs-12 control-label">Sender Id</label>
+                                                <div class="col-sm-8 col-xs-12 form-grouping">
+                                                    <input type="text" class="form-control" name="senderId" placeholder="Enter Sender Id" required>
+                                                    <br/>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-xs-12 control-label">Recepient</label>
+                                                <div class="col-sm-8 col-xs-12 form-grouping">
+                                                    <textarea placeholder="Enter recepient number seperate by space or comma" id="recepients" name="recepients" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
+                                                    <div class="">
+                                                        <p id="numbers" class="pull-left text-success" style="font-size:18px"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-xs-12  control-label">Message</label>
+                                                <div class="col-sm-8 col-xs-12  form-grouping">
+                                                    <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
+                                                    <div class="count">
+                                                        <p id="characters" class="pull-left text-success" style="font-size:18px"></p>
+                                                        <p id="pages" class="pull-right text-success" style="font-size:18px"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-2 col-xs-12 control-label"></label>
+                                                <div class="col-sm-8 col-xs-12 form-grouping">
+                                                    <button id="continue" class="btn btn-primary btn-rounded waves-effect waves-light pull-right" disabled="true" type="submit">Send
+                                                        <i class="fa fa-arrow-circle-right"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="smsPages">
+                                            <input type="hidden" id="totalNumbersOfRecepient">
+                                            <br/>
+                                        </form>
+                                        <!--/div-->
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-xs-12  control-label">Message</label>
-                                    <div class="col-sm-8 col-xs-12  form-grouping">
-                                        <textarea placeholder="Enter message" id="message" name="message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 2px solid #dddddd; padding: 10px;" disabled="true"></textarea>
-                                        <div class="count">
-                                            <p id="characters" class="pull-left text-success" style="font-size:18px"></p>
-                                            <p id="pages" class="pull-right text-success" style="font-size:18px"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-xs-12 control-label"></label>
-                                    <div class="col-sm-8 col-xs-12 form-grouping">
-                                        <button id="continue" class="btn btn-primary btn-rounded waves-effect waves-light pull-right" disabled="true" type="submit">Send
-                                            <i class="fa fa-arrow-circle-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="smsPages">
-                                <input type="hidden" id="totalNumbersOfRecepient">
-                                <br/>
-                            </form>
-                            <!--/div-->
+                            </section>
                         </div>
                     </div>
-                    @include('dashboard.layouts.errors')
+                    <!-- /.box-body -->
+                    <!-- .box-footer -->
+                    @include('dashboard.layouts.box-footer')
+                    <!-- /.box-footer -->
                 </div>
-
-                <!-- /.box-body -->
-
-                <!-- .box-footer -->
-                @include('dashboard.layouts.box-footer')
-                <!-- /.box-footer -->
-                <!-- /.box -->
             </div>
-        </div>
+        </section>
     @endSection
 
     <!--Modal-->

@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(BanksTableSeeder::class);
         $this->call(BanksTableSeeder::class);
-        //factory(App\Bank::class, 5)->create();
+        $this->call(CoinsTableSeeder::class);
+        factory(App\Voucher::class, 10)->create();
         $this->call(ChargesTableSeeder::class);
         $this->call(DataPlansTableSeeder::class); //First time Run
 

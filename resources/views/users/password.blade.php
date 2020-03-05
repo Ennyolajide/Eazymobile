@@ -1,58 +1,77 @@
 @extends('users.layouts.master')
 
-    @section('title')
-        {{ config('constants.site.name') }} | Change Password
-    @endsection
+@section('title')
+    {{ config('constants.site.name') }} | Change Password
+@endsection
 
-    @section('content')
+@section('bodyClass')
+    login-page
+@endsection
 
-        <div id="single-wrapper">
-            <form method="post" action="{{ route('user.password.reset.change', ['email' => $email, 'token' => $token ]) }}" class="frm-single">
-                @csrf @method('patch')
-                <div class="inside">
-                    <div class="title">
-                        <strong><a href="{{ route('index') }}"><img src="{{ config('constants.site.logo') }}" class="img-fluid"></a></strong>
-                    </div>
-                    <!-- /.title -->
-                    <div class="frm-title">Change Password</div>
-                    <!-- /.frm-title -->
-                    {{-- <p class="text-center margin-bottom-20">Enter your email address and we'll send you an email with instructions to reset your password.</p> --}}
+@section('content')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ route('index') }}">
+                <img class="img-responsive" src="{{ config('constants.site.logo') }}">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            @include('errors')
 
-                    @include('errors')
-
-                    @if(session('response'))
-                        <div class="alert alert-{{ session('status') ? 'success' : 'danger' }} alert-dismissible">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            {{ session('response') }}
-                        </div>
-                    @endif
-                    @isset($response)
-                        <div class="alert alert-{{ $response['status'] ? 'success' : 'danger' }} alert-dismissible">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            {{ $response['message'] }}
-                        </div>
-                    @endif
-
-                    <div class="frm-input">
-                        <input type="password" name="password" placeholder="Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i>
-                    </div>
-
-                    <div class="frm-input">
-                        <input type="password" name="password_confirmation" placeholder="Retype Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i>
-                    </div>
-                    <!-- /.frm-input -->
-                    <button type="submit" class="frm-submit">Change Password<i class="fa fa-arrow-circle-right"></i></button>
-
-                    <a href="{{ route('user.login') }}" class="a-link"><i class="fa fa-sign-in"></i>Already have account? Login.</a>
-
-                    <a href="{{ route('user.login') }}" class="a-link"><i class="fa fa-sign-up"></i>Dont have an account? Register.</a>
-
-                    <div class="frm-footer text-center">{{ config('constants.site.name') }} © {{ config('constants.site.year') }}.</div>
-                    <!-- /.footer -->
+            @if(session('response'))
+                <div class="alert alert-{{ session('status') ? 'success' : 'danger' }} alert-dismissible">
+                    <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
+                    {{ session('response') }}
                 </div>
-                <!-- .inside -->
-            </form>
-            <!-- /.frm-single -->
-        </div><!--/#single-wrapper -->
-    @endSection
+            @endif
+            @isset($response)
+                <div class="alert alert-{{ $response['status'] ? 'success' : 'danger' }} alert-dismissible">
+                    <!--a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a-->
+                    {{ $response['message'] }}
+                </div>
+            @endif
 
+            <form action="{{ route('user.password.reset.change', ['email' => $email, 'token' => $token ]) }}" method="post">
+                @csrf @method('patch')
+            <div class="form-group has-feedback">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Retype Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-flat pull-right">Change Password</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <div class="">
+                    <a href="{{ route('user.login') }}" class="pull-left"><strong>Login</strong></a>
+                    - OR -
+                    <a href="{{ route('user.register') }}" class="text-success pull-right"><strong>Register</strong></a>
+                </div>
+                <br/>
+                <a href="{{ route('facebook.login') }}" class="btn btn-block btn-social btn-facebook btn-flat">
+                    <i class="fa fa-facebook"></i> Sign in using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                    <i class="fa fa-google-plus"></i> Sign in using Google+
+                </a>
+            </div>
+            <!-- /.social-auth-links -->
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+@endSection
+
+@section('scripts')
+
+@endsection

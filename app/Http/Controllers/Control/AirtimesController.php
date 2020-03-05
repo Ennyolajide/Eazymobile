@@ -83,6 +83,7 @@ class AirtimesController extends ModController
         if (request()->has('completed')) {
             $transactionStatus = ['status' =>  2];
             $trans->class->update($transactionStatus);
+            $trans->update(['status' =>  2, 'balance_after' => ($trans->user->balance + $creditAmout)]);
             $status = $this->creditUserWallet($trans->user->id, $creditAmout);
             $status ? $trans->update($transactionStatus) : false;
             $status ? $this->notify($this->creditNotification($creditAmout, $trans->method)) : false;

@@ -75,7 +75,7 @@ class AirtimeToCashController extends TransactionController
     {
         return Airtime::create([
             'user_id' => Auth::user()->id, 'amount' => request()->amount, 'from_network' => $network->network,
-            'percentage' => $network->airtime_swap_percentage, 'from_phone' => request()->swapFromPhone,
+            'percentage' => $network->airtime_to_cash_percentage, 'from_phone' => request()->swapFromPhone,
             'class' => 'App\Airtime', 'type' => 'Airtime To Cash', 'transaction_type' => 2, 'status' => null,
             'recipients' => $network->airtime_to_cash_phone_numbers, 'bank_id' => null
         ]);

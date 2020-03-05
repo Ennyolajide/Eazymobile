@@ -47,6 +47,11 @@ class Controller extends BaseController
         return '₦' . number_format($amount, 2);
     }
 
+    public function dollar($amount)
+    {
+        return '$' . number_format($amount, 2);
+    }
+
     public function creditWallet($amount)
     {
         try {

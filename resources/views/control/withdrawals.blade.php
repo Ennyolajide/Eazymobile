@@ -2,14 +2,29 @@
 
     @section('title') Withdrawals @endsection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Withdrawals</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Withdrawals</li>
+            </ol>
+        </section>
+    @endSection
+
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Withdrawals</h3>
-                    <div class="row">
-                        <div class="table-responsive">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Withdrawals</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
                             <table id="transactions-table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -71,7 +86,7 @@
                 <!-- /.box -->
             </div>
             <!-- /.col -->
-        </div>
+        </section>
         <!-- /.content -->
     @endSection
 

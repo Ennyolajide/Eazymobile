@@ -1,47 +1,65 @@
 @extends('users.layouts.master')
 
-    @section('title')
-        {{ config('constants.site.name') }} | Password Reset
-    @endsection
+@section('title')
+    {{ config('constants.site.name') }} | Password Reset
+@endsection
 
-    @section('content')
+@section('bodyClass')
+    login-page
+@endsection
 
-        <div id="single-wrapper">
-            <form method="post" action="{{ route('user.password.reset.request') }}" class="frm-single">
-                @csrf
-                <div class="inside">
-                    <div class="title">
-                        <strong><a href="{{ route('index') }}"><img src="{{ config('constants.site.logo') }}" class="img-fluid"></a></strong>
-                    </div>
-                    <!-- /.title -->
-                    <div class="frm-title">Reset Password</div>
-                    <!-- /.frm-title -->
-                    <p class="text-center margin-bottom-20">Enter your email address and we'll send you an email with instructions to reset your password.</p>
-
-                    @include('errors')
-
-                    @if(session('response'))
-                        <div class="alert alert-{{ session('status') ? 'success' : 'danger' }} alert-dismissible">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            {{ session('response') }}
-                        </div>
-                    @endif
-
-                    <div class="frm-input">
-                        <input type="email" name="email" placeholder="Enter Email" class="frm-inp"><i class="fa fa-envelope frm-ico"></i>
-                    </div>
-
-                    <!-- /.frm-input -->
-                    <button type="submit" class="frm-submit">Send Email<i class="fa fa-arrow-circle-right"></i></button>
-
-                    <a href="{{ route('user.login') }}" class="a-link"><i class="fa fa-sign-in"></i>Already have account? Login.</a>
-
-                    <div class="frm-footer text-center">{{ config('constants.site.name') }} © {{ config('constants.site.year') }}.</div>
-                    <!-- /.footer -->
+@section('content')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ route('index') }}">
+                <img class="img-responsive" src="{{ config('constants.site.logo') }}">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            @if(session('response'))
+                <div class="alert alert-{{ session('status') ? 'success' : 'danger' }} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('response') }}
                 </div>
-                <!-- .inside -->
+            @else
+                <p class="login-box-msg">Sign in to start your session</p>
+            @endif
+            <form action="{{ route('user.password.reset.request') }}" method="post">
+                @csrf
+            <div class="form-group has-feedback">
+                <input type="email" name="email" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-primary btn-flat pull-right">Reset</button>
+                </div>
+                <!-- /.col -->
+            </div>
             </form>
-            <!-- /.frm-single -->
-        </div><!--/#single-wrapper -->
-    @endSection
 
+            <div class="social-auth-links text-center">
+                <p>- OR -</p>
+                <a href="{{ route('facebook.login') }}" class="btn btn-block btn-social btn-facebook btn-flat">
+                    <i class="fa fa-facebook"></i> Sign in using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                    <i class="fa fa-google-plus"></i> Sign in using Google+
+                </a>
+            </div>
+            <!-- /.social-auth-links -->
+
+            <a href="{{ route('user.login') }}">I already have a membership</a><br>
+            <a href="{{ route('user.register') }}" class="text-center">Register a new membership</a>
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+@endSection
+
+@section('scripts')
+
+@endsection

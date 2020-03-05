@@ -42,4 +42,13 @@ class FundingsController extends ModController
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
+
+    public function paystackTransactions()
+    {
+        $transactions = collect(Paystack::getAllTransactions())
+            ->where('status', 'success')
+            ->where('createdAt', '>=', Carbon::now()->subDay(1));
+
+        return view('control.paystackTransactions', compact('transactions'));
+    }
 }

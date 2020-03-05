@@ -27,9 +27,9 @@ class TransactionController extends ReferralController
     /**
      * Record Transaction
      */
-    protected function recordTransaction($transactionRecord, $reference, $status = false, $chargeable = true, $method = false, $isInstant = false)
+    protected function recordTransaction($transactionRecord, $reference, $status = false, $chargeable = true, $method = false, $isInstant = false, $rate=1)
     {
-        $balanceAfter = $chargeable ? (Auth::user()->balance - $transactionRecord->amount) : Auth::user()->balance;
+        $balanceAfter = $chargeable ? (Auth::user()->balance - ($transactionRecord->amount * $rate)) : Auth::user()->balance;
 
         return Transaction::create([
             'user_id' => $transactionRecord->user_id, 'amount' => $transactionRecord->amount,

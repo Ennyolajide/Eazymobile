@@ -20,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('naira', function ($amount) {
             return "<?= '₦'. number_format($amount,2);?>";
         });
+        Blade::directive('dollar', function ($amount) {
+            return "<?= '$'. number_format($amount,2);?>";
+        });
     }
 
     /**

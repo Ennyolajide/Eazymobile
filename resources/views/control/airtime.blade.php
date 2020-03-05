@@ -4,47 +4,63 @@
         Airtime Settings
     @endsection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Configuration <small>Settings</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Configuration</a></li>
+                <li class="active">Settings</li>
+            </ol>
+        </section>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Airtime Setings</h3>
-                    <div class="row">
-                        @include('dashboard.layouts.errors')
-                        <div class="table-responsive">
-                            <table class="table table-small-font table-bordered table-striped">
-                                <thead class="bg-green">
-                                    <tr>
-                                        <th class="hidden-xs">id</th>
-                                        <th>Network</th>
-                                        <th>Swap %</th>
-                                        <th>Topup %</th>
-                                        <th class="hidden-xs">Transfer Code</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($networks as $item)
-                                        <tr>
-                                            <td class="hidden-xs">{{ $item->id }}</td>
-                                            <td><img src="\images/networks/{{ strtolower($item->network).'.png'  }}" style="max-height: 50px; display:inline-block;"></td>
-                                            <td>{{ $item->airtime_swap_percentage }}%</td>
-                                            <td>{{ $item->airtime_topup_percentage }}%</td>
-                                            <td class="hidden-xs text-primary">{{ $item->transfer_code }}</td>
-                                            <td><a href="" data-toggle="modal" data-target="#{{ $item->id }}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</a></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- /.box-body -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Airtime Setings</h3>
+                            <div class="row">
+                                @include('dashboard.layouts.errors')
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-small-fonttable-bordered table-striped">
+                                        <thead class="bg-blue">
+                                            <tr>
+                                                <th class="hidden-xs">id</th>
+                                                <th>Network</th>
+                                                <th>Swap %</th>
+                                                <th>Topup %</th>
+                                                <th class="hidden-xs">Transfer Code</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($networks as $item)
+                                                <tr>
+                                                    <td class="hidden-xs">{{ $item->id }}</td>
+                                                    <td><img src="\images/networks/{{ strtolower($item->network).'.png'  }}" style="max-height: 50px; display:inline-block;"></td>
+                                                    <td>{{ $item->airtime_swap_percentage }}%</td>
+                                                    <td>{{ $item->airtime_topup_percentage }}%</td>
+                                                    <td class="hidden-xs text-primary">{{ $item->transfer_code }}</td>
+                                                    <td><a href="" data-toggle="modal" data-target="#{{ $item->id }}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-        </div>
+        </section>
         <!-- /.content -->
     @endSection
 

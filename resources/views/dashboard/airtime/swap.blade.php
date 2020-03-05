@@ -1,109 +1,133 @@
 @extends('dashboard.layouts.master')
 
-
-    @section('title')
-        Airtime Swap
+    @section('content-header')
+        <section class="content-header">
+            <h1>Airtime Swap</h1>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="#" ><i class="fa fa-dashboard"></i> Airtime</a>
+                </li>
+                <li class="active">Airtime Swap</li>
+            </ol>
+        </section>
     @endsection
 
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing" id="content">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box_title">Airtime Swap</h3>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-                            <form id="airtime-swap-form" class="form-horizontal form-prevent-multiple-submits" method="post" action="{{ route('airtime.swap') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
-                                    <div class="col-sm-10 form-grouping">
-                                        <div class="row">
-                                            <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3" style="display:none;">
-                                                <img class="img-responsive">
-                                            </div>
-                                            <div class="swap-from-network-image col-xs-4 col-sm-6 col-md-6 col-lg-6 text-center" style="display:none;">
-                                                <br/><br/>
-                                                <i class="fa fa-arrow-right fa-3x"></i>
-                                            </div>
-                                            <div id="swapToNetworkImage" class="col-xs-4 col-sm-3 col-md-3 col-lg-3  pull-right" style="display:none;">
-                                                <img class="img-responsive">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="box box-purple">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Airtime Swap</h3>
 
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label" >Network</label>
-                                    <div class="col-sm-10">
-                                        <div id="swap-from-network" data-networks="{{ $networks }}">
-                                            <select class="form-control" name="network" id="network">
-                                                <option value="" disabled selected>Choose Network</option>
-                                                @foreach ($networks as $network)
-                                                    <option value="{{ $network->id }}">
-                                                        {{ $network->network }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <p class="help-block">Select the network you want to swap airtime from.</p>
-                                        </div>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <section class="container">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
+                                        <form id="airtime-swap-form" class="form-horizontal form-prevent-multiple-submits" method="post" action="{{ route('airtime.swap') }}">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
+                                                <div class="col-sm-10 form-grouping">
+                                                    <div class="row">
+                                                        <div class="swap-from-network-image col-xs-4 col-sm-3 col-md-3 col-lg-3" style="display:none;">
+                                                            <img class="img-responsive">
+                                                        </div>
+                                                        <div class="swap-from-network-image col-xs-4 col-sm-6 col-md-6 col-lg-6 text-center" style="display:none;">
+                                                            <br/><br/>
+                                                            <i class="fa fa-arrow-right fa-3x"></i>
+                                                        </div>
+                                                        <div id="swapToNetworkImage" class="col-xs-4 col-sm-3 col-md-3 col-lg-3  pull-right" style="display:none;">
+                                                            <img class="img-responsive">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label" >Network</label>
+                                                <div class="col-sm-10">
+                                                    <div id="swap-from-network" data-networks="{{ $networks }}">
+                                                        <select class="form-control" name="network" id="network">
+                                                            <option value="" disabled selected>Choose Network</option>
+                                                            @foreach ($networks as $network)
+                                                                <option value="{{ $network->id }}">
+                                                                    {{ $network->network }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <p class="help-block">Select the network you want to swap airtime from.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Phone Number</label>
+                                                <div class="col-sm-10 form-grouping">
+                                                    <input type="text" class="form-control" name="swapFromPhone">
+                                                    <p class="help-block">The phone number you want to swap airtime from</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Amount</label>
+                                                <div class="col-sm-10 form-grouping">
+                                                    <input type="text" id="amount" class="form-control" name="amount" disabled="true">
+                                                    <p class="help-block">Enter amount you want to fund.</p>
+                                                </div>
+                                            </div>
+                                            <div id="wallet-amount" class="form-group" style="display:none;">
+                                                <label class="col-sm-2 control-label">Amount To Wallet</label>
+                                                <div class="col-sm-10 form-grouping">
+                                                    <input type="text" class="form-control" disabled="true">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Network</label>
+                                                <div class="col-sm-10">
+                                                    <div id="swap-to-network" >
+                                                        <select class="form-control" name="swapToNetwork" id="swapToNetwork">
+                                                            <option value="" disabled selected>Choose Network</option>
+                                                        </select>
+                                                        <p class="help-block">Select the network you want to swap airtime to.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Phone Number</label>
+                                                <div class="col-sm-10 form-grouping">
+                                                    <input type="text" class="form-control" name="swapToPhone">
+                                                    <p class="help-block">The phone number you want to swap to</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <button id="submit" class="btn btn-rounded btn-success form-prevent-multiple-submits pull-right">Swap</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        @include('dashboard.layouts.errors')
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Phone Number</label>
-                                    <div class="col-sm-10 form-grouping">
-                                        <input type="text" class="form-control" name="swapFromPhone">
-                                        <p class="help-block">The phone number you want to swap airtime from</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Amount</label>
-                                    <div class="col-sm-10 form-grouping">
-                                        <input type="text" id="amount" class="form-control" name="amount" disabled="true">
-                                        <p class="help-block">Enter amount you want to fund.</p>
-                                    </div>
-                                </div>
-                                <div id="wallet-amount" class="form-group" style="display:none;">
-                                    <label class="col-sm-2 control-label">Amount To Wallet</label>
-                                    <div class="col-sm-10 form-grouping">
-                                        <input type="text" class="form-control" disabled="true">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Network</label>
-                                    <div class="col-sm-10">
-                                        <div id="swap-to-network" >
-                                            <select class="form-control" name="swapToNetwork" id="swapToNetwork">
-                                                <option value="" disabled selected>Choose Network</option>
-                                            </select>
-                                            <p class="help-block">Select the network you want to swap airtime to.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Phone Number</label>
-                                    <div class="col-sm-10 form-grouping">
-                                        <input type="text" class="form-control" name="swapToPhone">
-                                        <p class="help-block">The phone number you want to swap to</p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <button id="submit" class="btn btn-rounded btn-success form-prevent-multiple-submits pull-right">Swap</button>
-                                    </div>
-                                </div>
-                            </form>
+                            </section>
                         </div>
                     </div>
-                    @include('dashboard.layouts.errors')
+                    <!-- /.box-body -->
+                    @include('dashboard.layouts.box-footer')
+                    <!-- /.box-footer -->
                 </div>
-
-                <!-- /.box-body -->
-                @include('dashboard.layouts.box-footer')
-                <!-- /.box-footer -->
             </div>
-        </div>
+        </section>
     @endSection
+
     @if(session('modal'))
         <!-- /Modal -->
         @php $imgSrc = "\images/networks/".session('modal')->swapFromNetwork.".png"; @endphp
@@ -159,7 +183,8 @@
             </div>
         </div>
         <!-- /Modal -->
-        @endif
+    @endif
+
     @section('scripts')
 
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>

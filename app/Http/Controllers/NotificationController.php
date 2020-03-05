@@ -41,7 +41,7 @@ class NotificationController extends  DashboardController
     protected function voucherWalletFundingNotification($voucher)
     {
         $notification['subject'] = 'Credit Notification';
-        $notification['content'] = 'Your wallet has been credited with ' . $this->naira($voucher->value);
+        $notification['content'] = 'Your wallet has been credited with ' . $this->naira($voucher->amount);
         $notification['content'] .= ' using Voucher pin ( ' . $voucher->voucher . ')';
 
         return $notification;
@@ -69,12 +69,36 @@ class NotificationController extends  DashboardController
     {
         $notification['subject'] = 'Credit Notification';
         $notification['content'] = 'Your wallet has been credited with ';
-        $notification['content'] .= $this->naira($trans->class->amount) . ' for data topup( ' . $trans->class->phone . ' ) ';
-        $notification['content'] .= 'reversal as a result of technical timeout <br/>';
-        $notification['content'] .= 'We apologize for any inconvenience this may have caused';
+        $notification['content'] .= $this->naira($trans->class->amount) . 'as a result of';
+        $notification['content'] .= 'reversal of your transaction( Data Topup ) due to technical timeout';
+        $notification['content'] .= '<br/> We apologize for any inconvenience this may have caused';
 
         return $notification;
     }
+
+    protected function bitcoinPurchaseNotification($trans)
+    {
+        $notification['subject'] = 'Debit Notification';
+        $notification['content'] = 'Your wallet has been debited with '.$this->dollar($trans->amount);
+        $notification['content'] .= ' ( '.$this->naira($trans->amount * $trans->class->rate). ' ) for ';
+        $notification['content'] .= 'Bitcoin Purchase to this bitcoin wallet address <span class"text-primary">';
+        $notification['content'] .= '<strong>' .$trans->class->wallet. '</strong></span>';
+
+        return $notification;
+    }
+
+
+    protected function bitcoinPurchaseDeclineNotification($trans)
+    {
+        $notification['subject'] = 'Credit Notification';
+        $notification['content'] = 'Your wallet has been credited with '.$this->dollar($trans->amount);
+        $notification['content'] .= ' ( '.$this->naira($trans->amount * $trans->class->rate) . ' ) as a ';
+        $notification['content'] .= 'result ofreversal of your transaction( Bitcoin Purchase ) due to technical';
+        $notification['content'] .= '  timeout <br/> We apologize for any inconvenience this may have caused';
+
+        return $notification;
+    }
+
 
     /**
      * notification for airtimeSwap
@@ -148,7 +172,7 @@ class NotificationController extends  DashboardController
             $notification['content'] .= ' for ' . $details['product'] . '(' . $details['type'] . ')';
             $notification['content'] .= 'Transaction Reference : <span class="text-primary">' . $uniqueReference.'</span><br/><br/>';
             $notification['content'] .= $responseObject->pin_based ? '<pre class="text-success">'.json_encode($responseObject->pins).'</pre>' : '';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             Log::info('Cound not Format Misc Topup Notification');
         }
         return $notification;

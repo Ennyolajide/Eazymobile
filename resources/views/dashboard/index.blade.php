@@ -10,191 +10,150 @@
     @endsection
 
     @section('content-header')
-
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Dashboard</h1>
+            <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+            </ol>
+        </section>
     @endSection
 
+
     @section('content')
-        <!-- top tiles -->
+        <!-- Main content -->
+        <section class="content">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-cart-outline"></i></span>
 
-        <div class="row small-spacing">
-            <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-success text-white">
-                    <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-shopping-cart"></i>
-                        <p class="text text-white">Transactions</p>
-                        <h2 class="counter">{{ $transactions->count() }}</h2>
-                    </div>
-                </div>
-                <!-- /.box-content -->
-            </div>
-            <!-- /.col-lg-3 col-md-6 col-xs-12 -->
-            <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-danger text-white">
-                    <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-evelope"></i>
-                        <p class="text text-white">Notifications</p>
-                        <h2 class="counter" id="unread_messages"></h2>
-                    </div>
-                </div>
-                <!-- /.box-content -->
-            </div>
-            <!-- /.col-lg-3 col-md-6 col-xs-12 -->
-            <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-info text-white">
-                    <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-envelope"></i>
-                        <p class="text text-white">Referrals</p>
-                        <h2 class="counter">{{ Auth::user()->referrals->count() }}</h2>
-                    </div>
-                </div>
-                <!-- /.box-content -->
-            </div>
-            <!-- /.col-lg-3 col-md-6 col-xs-12 -->
-            <div class="col-lg-3 col-md-6 col-xs-12">
-                <div class="box-content bg-warning text-white">
-                    <div class="statistics-box with-icon">
-                        <i class="ico small fa fa-money"></i>
-                        <p class="text text-white">Balance</p>
-                        <h3 class="counter">@naira(Auth::user()->balance)</h3>
-                    </div>
-                </div>
-                <!-- /.box-content -->
-            </div>
-            <!-- /.col-lg-3 col-md-6 col-xs-12 -->
-        </div>
-        <!-- .row -->
-        <div class="row small-spacing">
-            <div class="col-lg-4 col-xs-12">
-                <div class="box-content">
-                    <h4 class="box-title">Instructions</h4>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="bar bg-primary">
-                                <div class="dot bg-primary"></div>
-                                <!-- /.dot -->
-                            </div>
-                            <!-- /.bar -->
-                            <div class="content">
-                                <div class="date">MTN</div>
-                                <!-- /.date -->
-                                <div class="text text-bold">
-                                    <img src="\images/networks/mtn.png"  class="inline img-icon">
-                                    MTN >> *461*4#
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.content -->
+                        <div class="info-box-content">
+                            <span class="info-box-text">Transactions</span>
+                            <span class="info-box-number">{{ $transactions->count() }}<small></small></span>
                         </div>
-                        <!-- /.activity-item -->
-                        <div class="activity-item">
-                            <div class="bar bg-danger">
-                                <div class="dot bg-danger"></div>
-                                <!-- /.dot -->
-                            </div>
-                            <!-- /.bar -->
-                            <div class="content">
-                                <div class="date">9mobile</div>
-                                <!-- /.date -->
-                                <div class="text text-bold">
-                                    <img src="\images/networks/9mobile.png"  class="inline img-icon pull-left">
-                                    <div class="inline">
-                                    9mobile >> *229*9(SME)
-                                        <br/>
-                                    9mobile >> *228#(GIFTING)
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
 
+                        <div class="info-box-content">
+                            <span class="info-box-text">Referrals</span>
+                            <span class="info-box-number">{{ Auth::user()->referrals->count() }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="ion ion-android-notifications"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Notifications</span>
+                            <span class="info-box-number" id="unread_messages"></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="ion ion-cash"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Balance</span>
+                            <span class="info-box-number">@naira(Auth::user()->balance)</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Purchases | <small>Recent Transactions</small></h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="box-content">
+                                        <table class="table table-striped margin-bottom-10">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th class="hidden-xs">Reference</th>
+                                                    <th>Amount</th>
+                                                    <th>Type</th>
+                                                    <th>Status</th>
+                                                    <th class="hidden-xs">Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    function getStatus($status){
+                                                        $array = ['Declined','Pending','Success','Canceled'];
+                                                        return $status ? $array[$status] : 'Decline';
+                                                    }
+                                                @endphp
+
+                                                @foreach ($transactions as $transaction)
+                                                    <tr>
+                                                        <th scope="row">{{ $loop->iteration }}</th>
+                                                        <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
+                                                        <td class="text-right">
+                                                            @if($transaction->class_type == 'App\CoinTransaction')
+                                                                @dollar($transaction->amount)
+                                                            @else
+                                                                @naira($transaction->amount)
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $transaction->class->type }}</td>
+
+                                                        <td>{{ getStatus($transaction->status) }}</td>
+                                                        <td class="hidden-xs">{{ $transaction->created_at }}</td>
+                                                        <td>
+                                                        <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
+                                                                <i class="fa fa-eye"></i>view
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-
-                                </div>
-                                <!-- /.text -->
+                                <div>
                             </div>
-                            <!-- /.content -->
-                        </div>
-                        <!-- /.activity-item -->
-                        <div class="activity-item">
-                            <div class="bar bg-success">
-                                <div class="dot bg-success"></div>
-                                <!-- /.dot -->
-                            </div>
-                            <!-- /.bar -->
-                            <div class="content">
-                                <div class="date">Glo</div>
-                                <!-- /.date -->
-                                <div class="text text-bold">
-                                    <img src="\images/networks/glo.png"  class="inline img-icon">
-                                    GLO >> *127*0#
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.content -->
-                        </div>
-                        <!-- /.activity-item -->
-                        <div class="activity-item">
-                            <div class="bar bg-violet">
-                                <div class="dot bg-violet"></div>
-                                <!-- /.dot -->
-                            </div>
-                            <!-- /.bar -->
-                            <div class="content">
-                                <div class="date">AIRTEL</div>
-                                <!-- /.date -->
-                                <div class="text text-bold">
-                                    <img src="\images/networks/airtel.png"  class="inline img-icon">
-                                    Airtel >> *140#
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.content -->
                         </div>
                     </div>
-                    <!-- /.activity-list -->
-                    <a href="#" class="activity-link">View all Instructions <i class="fa fa-angle-down"></i></a>
                 </div>
             </div>
-
-            <div class="col-lg-8 col-xs-12">
-                <div class="box-content">
-                    <h4 class="box-title">Purchases | <small>Recent Transactions</small></h4>
-                    <table class="table table-striped margin-bottom-10">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="hidden-xs">Reference</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th class="hidden-xs">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                function getStatus($status){
-                                    $array = ['Declined','Pending','Success','Canceled'];
-                                    return $status ? $array[$status] : 'Decline';
-                                }
-                            @endphp
-
-                            @foreach ($transactions as $transaction)
-                                <tr>
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td class="hidden-xs">{{ str_limit($transaction->reference, 10, '...') }}</td>
-                                    <td class="text-right">@naira($transaction->amount)</td>
-                                    <td>{{ $transaction->class->type }}</td>
-
-                                    <td>{{ getStatus($transaction->status) }}</td>
-                                    <td class="hidden-xs">{{ $transaction->created_at }}</td>
-                                    <td>
-                                    <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
-                                            <i class="fa fa-eye"></i>view
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            <div>
-        </div>
-        <!-- /page content -->
+            <!-- /page content -->
+        </section>
     @endSection
 
 
@@ -224,7 +183,15 @@
                         </div>
                         <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                         <small>Transaction Amount : </small>
-                            <p class=""><b>@naira($transaction->amount) </b></p>
+                            <p class="">
+                                <b>
+                                    @if($transaction->class_type == 'App\CoinTransaction')
+                                        @dollar($transaction->amount)
+                                    @else
+                                        @naira($transaction->amount)
+                                    @endif
+                                </b>
+                            </p>
                         </div>
                         <div class="col-md-5 col-xs-11 col-xs-offset-1 col-sm-offset-1 col-md-offset-1">
                             <small> Before : </small>
@@ -257,9 +224,6 @@
         <!-- Toastr -->
 	    <script src="\plugins/toastr/toastr.min.js"></script>
         <!--script src="\js/toastr.demo.min.js"></script-->
-        <!-- Sparkline Chart -->
-        <script src="\plugins/chart/sparkline/jquery.sparkline.min.js"></script>
-        <script src="\js/chart.sparkline.init.min.js"></script>
 
         <script>
             setTimeout(function(){

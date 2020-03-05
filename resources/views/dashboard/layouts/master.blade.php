@@ -1,34 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- Meta, title, CSS, favicons, etc. -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="_token" content="{{ csrf_token() }}" />
-        <meta name="description" content="">
-        <meta name="author" content="Eniseyin Olajide">
         <title>@yield('title') | Dashboard</title>
         <!-- Tell the browser to be responsive to screen width -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-        <link rel="icon" href="images/favicon.ico" type="image/ico" />
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <meta name="description" content="{{ config('constants.site.description') }}">
+        <meta name="author" content="Eniseyin Olajide">
+        <!-- Bootstrap 3.3.7 -->
+        <link rel="stylesheet" href="\bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="\bower_components/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="\bower_components/Ionicons/css/ionicons.min.css">
+        <!-- jvectormap -->
+        <link rel="stylesheet" href="\bower_components/jvectormap/jquery-jvectormap.css">
         <!-- Theme style -->
-        <link href="\styles/style.min.css" rel="stylesheet">
-        <!-- Themify Icon -->
-        <link rel="stylesheet" href="\plugins/fonts/themify-icons/themify-icons.css">
-        <!-- mCustomScrollbar -->
-	    <link rel="stylesheet" href="\plugins/mCustomScrollbar/jquery.mCustomScrollbar.min.css">
-	    <!-- Waves Effect -->
-	    <link rel="stylesheet" href="\plugins/waves/waves.min.css">
-        <!-- Animate.css -->
-        <!--link href="\css/animate.min.css" rel="stylesheet"-->
-        <!-- Sweet Alert -->
-	    <link rel="stylesheet" href="\plugins/sweet-alert/sweetalert.css">
-        <!-- Custom Theme Style -->
-        <link href="\styles/custom.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="\dist/css/AdminLTE.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+            folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="\dist/css/skins/_all-skins.min.css">
+        <!-- Custom style -->
+        <link rel="stylesheet" href="\css/style.css">
+        <!-- Animate style -->
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css"/>
         <!-- Additional css -->
         @yield('css')
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Google Font -->
+        <link rel="stylesheet"
+                href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        {{--  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script> --}}
+
         <!-- Custom styles -->
         @yield('style')
 
@@ -49,62 +61,51 @@
         <!--End of Tawk.to Script-->
     </head>
 
-    <body>
-        <div class="main-menu">
-            <header class="header">
-                <a href="{{ route('dashboard.index') }}" class="logo">
-                    <img src="\images/logo-white.png" height="40px" width="230px" alt="" class="img-auto" title="modelc">
-                </a>
-                <button type="button" class="button-close fa fa-times js__menu_close"></button>
-            </header>
-            <!-- /.header -->
-            <div class="content">
-                @include('dashboard.layouts.sidebar')
-            </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.main-menu -->
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
 
-
+        @include('dashboard.layouts.sidebar')
 
         @include('dashboard.layouts.header')
 
+            <!-- Content Wrapper. fContains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                @yield('content-header')
 
-        <!-- page content -->
-        <div id="wrapper">
-            <div class="main-content">
                 <!-- loader-->
                 @include('dashboard.layouts.loader')
+
                 <!-- Main content -->
                 @yield('content')
                 <!-- /.content  -->
 
+
             </div>
+            <!-- /.content-wrapper -->
 
-            <!-- /.main-content -->
+            @yield('modal')
+
+            @include('dashboard.layouts.footer')
+
+            <!-- Notifier -->
+            {{-- simple modal without header and footer to display response form server to client --}}
+            @include('dashboard.layouts.notifier')
+                <!-- Add the sidebar's background. This div must be placed
+            immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+
         </div>
-        @include('dashboard.layouts.footer')
+        <!-- ./wrapper -->
 
-        <!-- Notifier -->
-        {{-- simple modal without header and footer to display response form server to client --}}
-        @include('dashboard.layouts.notifier')
-        <!-- /.Notifier -->
-
-        @yield('modals')
-
-        <!-- jQuery -->
-        <script src="\js/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="\js/modernizr.min.js"></script>
-        <script src="\js/bootstrap.min.js"></script>
-        <!-- mCustomScroller -->
-        <script src="\plugins/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-        <!-- NProgress -->
-        <script src="\plugins/nprogress/nprogress.js"></script>
-        <!-- Sweet-alert -->
-        <script src="\plugins/sweet-alert/sweetalert.min.js"></script>
-        <!-- Waves -->
-        <script src="\plugins/waves/waves.min.js"></script>
+       <!-- jQuery 3 -->
+       <script src="\bower_components/jquery/dist/jquery.min.js"></script>
+       <!-- Bootstrap 3.3.7 -->
+       <script src="\bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+       <!-- FastClick -->
+       <script src="\bower_components/fastclick/lib/fastclick.js"></script>
+       <!-- AdminLTE App -->
+       <script src="\dist/js/adminlte.min.js"></script>
 
         <!-- Notify -->
         @if( session('notification'))
@@ -127,6 +128,6 @@
         </script>
 
         <!-- Custom Theme Scripts -->
-        <script src="\js/main.min.js"></script>
+        <!--script src="\js/main.min.js"></script-->
     </body>
 </html>

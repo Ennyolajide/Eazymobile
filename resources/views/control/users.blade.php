@@ -2,16 +2,30 @@
 
     @section('title') Users @endsection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Users<small></small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Users</li>
+            </ol>
+        </section>
+    @endSection
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Users &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.user.search.index') }}" class="btn btn-rounded btn-info pull-right">Search</a></h3>
-                    <!-- /.box-header -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="table-responsive">
-                            <table id="transactions-table" class="table table-bordered table-hover">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Users</h3>
+                            <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.user.search.index') }}" class="btn btn-flat btn-info pull-right">Search</a></span></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -67,6 +81,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     @endSection
 

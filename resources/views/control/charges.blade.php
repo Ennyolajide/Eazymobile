@@ -2,16 +2,32 @@
 
     @section('title') Charge Settings @endSection
 
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Configuration <small>Settings</small></h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Configuration</a></li>
+                <li class="active">Settings</li>
+            </ol>
+        </section>
+
+    @endSection
+
+
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Bulk Sms Charges Settings</h3>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-small-font table-bordered table-striped">
-                                <thead class="bg-green">
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Bulk Sms Settings</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table class="table table-striped table-hover table-bordered table-responsive">
+                                <thead class="bg-blue">
                                     <tr>
                                         <th>id</th>
                                         <th>&nbsp;&nbsp;Route &nbsp;&nbsp;&nbsp;</th>
@@ -40,13 +56,16 @@
                     <!-- /.col -->
                 </div>
 
-
-                <div class="box-content">
-                    <h3 class="box-title">Service Charges Setings</h3>
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table table-small-font table-bordered table-striped">
-                                <thead class="bg-green">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Service Charges Setings</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            @include('dashboard.layouts.errors')
+                            <table class="table table-striped table-hover table-bordered table-responsive">
+                                <thead class="bg-blue">
                                     <tr>
                                         <th>id</th>
                                         <th>Service</th>
@@ -68,7 +87,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @include('dashboard.layouts.errors')
                         </div>
                         <!-- /.box-body -->
 
@@ -77,7 +95,7 @@
                 </div>
             </div>
             <!-- /.row -->
-        </div>
+        </section>
         <!-- /.content -->
     @endSection
 

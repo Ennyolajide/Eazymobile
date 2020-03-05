@@ -19,5 +19,19 @@ class PaymentGatewaysTableSeeder extends Seeder
             'name' => 'Bank Transfer',
             'route' => 'bank-transfer',
         ]);
+
+        DB::table('payment_gateways')->insert([
+            'name' => 'Airtime',
+            'route' => 'airtime',
+        ]);
+
+        DB::table('payment_gateways')->insert([
+            'name' => 'Bitcoin',
+            'route' => 'bitcoin',
+        ]);
+        DB::table('payment_gateways')->insert([
+            'name' => 'Ecard',
+            'route' => 'ecard',
+        ]);
     }
 }

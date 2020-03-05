@@ -1,14 +1,10 @@
-<footer class="footer bg-white">
-    <ul class="list-inline">
-        <li>2019 © {{ config('constants.site.name') }}.</li>
-        <li><a href="#">Privacy</a></li>
-        <li><a href="#">Terms</a></li>
-        <li><a href="#">Help</a></li>
-        <li class="pull-right text-bold text-success">
-            Site By
-            <a href="https://facebook.com/9jaloads">
-                <span class="text-primary">Redhost3r</span>
-            </a>
-        </li>
-    </ul>
-</footer>
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2019 <a href="#">{{ config('constants.site.name') }}.</a>.</strong> All rights reserved.
+  </footer>
+

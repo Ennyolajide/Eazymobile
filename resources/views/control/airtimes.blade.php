@@ -2,80 +2,90 @@
 
     @section('title') Airtime Transactions @endsection
 
-    @section('css')
-        <!-- Data Tables -->
-        <link rel="stylesheet" href="\plugins/datatables/media/css/dataTables.bootstrap.min.css">
-        <link rel="stylesheet" href="\plugins/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
-    @endsection
+    @section('content-header')
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Airtime<small> Airtime Topup</small></h1>
+            <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            <li class="active">Airtime Topup</li>
+            </ol>
+        </section>
+    @endSection
 
     @section('content')
         <!-- Main content -->
-        <div class="row small-spacing">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="box-content">
-                    <h3 class="box-title">Airtime Transactions</h3>
-                    <div class="row">
-                        <table id="transactions-table" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="hidden-xs">Reference</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="hidden-xs">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    function getStatus($status){
-                                        $array = ['Declined','Pending','Success','Canceled'];
-                                        return $status === NULL ? 'Pending' : $array[$status];
-                                    }
-                                @endphp
-
-                                @foreach ($transactions as $transaction)
-                                    <tr>
-                                        <td class="hidden-xs">{{ $transaction->reference }}</td>
-                                        <td>@naira($transaction->amount)</td>
-                                        <td>{{ $transaction->class->type }}</td>
-
-                                        <td>{{ getStatus($transaction->status) }}</td>
-                                        <td class="hidden-xs">{{ $transaction->created_at }}</td>
-                                        <td>
-                                            <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
-                                                <i class="fa fa-eye"></i>view
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th class="hidden-xs">Reference</th>
-                                    <th>Amount</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="hidden-xs">Date</th>
-                                    <th >Action</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        <div class="col-md-12 col-xs-12">
-                            @php $paginator = $transactions; @endphp
-                            <span class="hidden-xs text-bold" style="font-size:16px;">
-                                {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
-                            </span>
-                            <span class="pull-right">
-                                @include('dashboard.layouts.pagination')
-                            </span>
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Airtime Topup Transaction</h3>
                         </div>
-                        @include('dashboard.layouts.errors')
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="transactions-table" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden-xs">Reference</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th class="hidden-xs">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        function getStatus($status){
+                                            $array = ['Declined','Pending','Success','Canceled'];
+                                            return $status === NULL ? 'Pending' : $array[$status];
+                                        }
+                                    @endphp
+
+                                    @foreach ($transactions as $transaction)
+                                        <tr>
+                                            <td class="hidden-xs">{{ $transaction->reference }}</td>
+                                            <td>@naira($transaction->amount)</td>
+                                            <td>{{ $transaction->class->type }}</td>
+
+                                            <td>{{ getStatus($transaction->status) }}</td>
+                                            <td class="hidden-xs">{{ $transaction->created_at }}</td>
+                                            <td>
+                                                <a href="#" data-toggle="modal" data-target="#{{ $transaction->id }}">
+                                                    <i class="fa fa-eye"></i>view
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="hidden-xs">Reference</th>
+                                        <th>Amount</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th class="hidden-xs">Date</th>
+                                        <th >Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="col-md-12 col-xs-12">
+                                @php $paginator = $transactions; @endphp
+                                <span class="hidden-xs text-bold" style="font-size:16px;">
+                                    {{ $transactions->firstItem() }} - {{ $transactions->lastItem() }}/{{ $transactions->total() }}
+                                </span>
+                                <span class="pull-right">
+                                    @include('dashboard.layouts.pagination')
+                                </span>
+                            </div>
+                            @include('dashboard.layouts.errors')
+                        </div>
                     </div>
+                    <!-- /.box -->
                 </div>
-                <!-- /.box -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
-        </div>
+        </section>
     @endSection
 
     @foreach ($transactions as $transaction)
@@ -91,7 +101,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="row" style="font-size: 20px;">
-                            <h2>{{ $transaction->class->transaction_type }}</h2>
                             @if($transaction->class->transaction_type == 1)
                                 <div class="col-md-5 col-xs-6 col-sm-offset-1 col-md-offset-1">
                                     <small>Network : </small>
@@ -121,7 +130,7 @@
                             @endif
 
                             @if($transaction->class->transaction_type == 3)
-                                <div class="col-md-3 col-xs-3 col-sm-offset-1 col-md-offset-1">
+                                <div class="col-md-3 col-xs-3 col-sm-offset-1 col-md-offset-1 col-xs-offset-1">
                                     <img class="img-responsive block-center"  style="height:50px;" src="\images/networks/{{ strtolower($transaction->class->from_network).'.png' }}">
                                     <span class="text-purple text-bold">@naira($transaction->class->amount)</span>
                                     <p class=""><b>{{ $transaction->class->from_phone }}</b></p>

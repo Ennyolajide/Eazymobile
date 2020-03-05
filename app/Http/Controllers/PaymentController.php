@@ -7,9 +7,9 @@ use App\Payment;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Bitcoin\CurrencyController;
 
-
-class PaymentController extends Controller
+class PaymentController extends CurrencyController
 {
     protected $user;
     /**

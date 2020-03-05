@@ -16,4 +16,17 @@ class HomeController extends Controller
         $dataPlans = DataPlan::all()->groupBy('network_id');
         return view('index', compact('dataPlans'));
     }
+
+    public function faq(){
+        return view('faq');
+    }
+
+    public function contact(){
+        return view('contact');
+    }
+
+    public function bitcoin(){
+        return view('buy-sell');
+    }
+
 }

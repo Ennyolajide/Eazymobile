@@ -1,64 +1,78 @@
 @extends('users.layouts.master')
 
-    @section('title')
-        {{ config('constants.site.name') }} | Login
-    @endsection
+@section('title')
+   {{ config('constants.site.name') }} | Login
+@endsection
 
-    @section('content')
-        <div id="single-wrapper">
-            <form method="post" action="{{ route('user.login') }}" class="frm-single">
-                @csrf
-                <div class="inside">
-                    <div class="title">
-                        <strong><a href="{{ route('index') }}"><img src="{{ config('constants.site.logo') }}" class="img-fluid"></a></strong>
-                    </div>
-                    <!-- /.title -->
-                    <div class="frm-title">Login</div>
-                    <!-- /.frm-title -->
-                    @include('dashboard.layouts.errors')
+@section('bodyClass')
+    login-page
+@endsection
 
-                    @if(session('response'))
-                        <div class="alert alert-danger" role="alert">
-                            <h4 class="alert-heading text-center">
-                                <i class="fa-exclamation-triangle"></i>
-                                {{ session('response') }}
-                            </h4>
-                        </div>
-                    @endif
-                    <div class="frm-input"><input type="text" placeholder="Username/email" name="email" class="frm-inp"><i class="fa fa-user frm-ico"></i></div>
-                    <!-- /.frm-input -->
-                    <div class="frm-input"><input type="password" placeholder="Password" name="password" class="frm-inp"><i class="fa fa-lock frm-ico"></i></div>
-                    <!-- /.frm-input -->
-                    <div class="clearfix margin-bottom-20">
-                        <div class="pull-left">
-                            <div class="checkbox primary"><input type="checkbox" name="remember" id="rememberme"><label for="rememberme">Remember me</label></div>
-                            <!-- /.checkbox -->
-                        </div>
-                        <!-- /.pull-left -->
-                        <div class="pull-right"><a href="{{ route('user.password.reset') }}" class="a-link"><i class="fa fa-unlock-alt"></i>Forgot password?</a></div>
-                        <!-- /.pull-right -->
-                    </div>
-                    <!-- /.clearfix -->
-                    <button type="submit" class="frm-submit">Login<i class="fa fa-arrow-circle-right"></i></button>
-                    <div class="row small-spacing">
-                        <div class="col-sm-12">
-                            <div class="txt-login-with txt-center">or login with</div>
-                            <!-- /.txt-login-with -->
-                        </div>
-                        <!-- /.col-sm-12 -->
-                        <div class="col-sm-6"><a href="{{ route('facebook.login') }}" class="btn btn-sm btn-icon btn-icon-left btn-social-with-text btn-facebook text-white waves-effect waves-light"><i class="ico fa fa-facebook"></i><span>Facebook</span></a></div>
-                        <!-- /.col-sm-6 -->
-                        <div class="col-sm-6"><button type="button" class="btn btn-sm btn-icon btn-icon-left btn-social-with-text btn-google-plus text-white waves-effect waves-light"><i class="ico fa fa-google-plus"></i>Google+</button></div>
-                        <!-- /.col-sm-6 -->
-                    </div>
-                    <!-- /.row -->
-                    <a href="{{ route('user.register') }}" class="a-link"><i class="fa fa-key"></i>New to {{ config('constants.site.name') }}? Register.</a>
-                    <div class="frm-footer text-center">{{ config('constants.site.name') }} © {{ config('constants.site.year') }}.</div>
-                    <!-- /.footer -->
+@section('content')
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ route('index') }}">
+                <img class="img-responsive" src="{{ config('constants.site.logo') }}">
+            </a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            @if(session('response'))
+                <div class="alert alert-danger text-center">
+                    <i class="fa-exclamation-triangle"></i>
+                    {{ session('response') }}
                 </div>
-                <!-- .inside -->
-            </form>
-            <!-- /.frm-single -->
-        </div><!--/#single-wrapper -->
-    @endSection
+            @else
+                <p class="login-box-msg">Sign in to start your session</p>
+            @endif
 
+            <form action="{{ route('user.login') }}" method="post">
+                @csrf
+                <div class="form-group has-feedback">
+                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="remember"> Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <div class="">
+                    <a href="{{ route('user.register') }}" class="pull-left"><strong>Register</strong></a>
+                    - OR -
+                    <a href="{{ route('user.password.reset') }}" class="text-danger pull-right"><strong>Forgot password?</strong></a>
+                </div>
+                <br/>
+                <a href="{{ route('facebook.login') }}" class="btn btn-block btn-social btn-facebook btn-flat">
+                    <i class="fa fa-facebook"></i> Sign in using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat">
+                    <i class="fa fa-google-plus"></i> Sign in using Google+
+                </a>
+            </div>
+            <!-- /.social-auth-links -->
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+@endSection
+
+@section('scripts')
+
+@endsection
