@@ -2,10 +2,14 @@
 
 return [
 
+
     'site' => [
+
         'year' => 2019,
+        'env' => env('APP_ENV'),
         'url' => env('APP_URL'),
         'name' => env('APP_NAME'),
+
         'spanName' => '<b>Eazy</b> Mobile',
         'logo' => '\images/logo.png',
         'email' => 'support@eazymobile.net',
