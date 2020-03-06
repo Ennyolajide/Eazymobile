@@ -74,7 +74,8 @@ class CurrencyController extends Controller
     public function rates()
     {
         $coin = Coins::first();
-        $exchangeRate = $this->getExchangeRate();
+        //$exchangeRate = $this->getExchangeRate();
+        $exchangeRate = $this->rate();
         return [
             'buy_rate' =>  $exchangeRate ? $exchangeRate + $coin->buy_rate : 0,
             'sell_rate' => $exchangeRate ? $exchangeRate + $coin->sell_rate : 0

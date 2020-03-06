@@ -16,7 +16,7 @@
                         <div class="col-sm-6 al-right">
                             <ul class="top-nav">
                                 <li><a href="{{ route('faq') }}">Help</a></li>
-                                <li><a href="{{ route('faq') }}">Support</a></li>
+                                <li><a href="{{ route('faq') }}">Faq</a></li>
                                 <li><a href="{{ route('user.login') }}">Login</a></li>
                                 <li><a href="{{ route('user.register') }}">Register</a></li>
                             </ul>
