@@ -27,23 +27,35 @@ class LoginController extends Controller
 
     public function login()
     {
-        $invalidResponse = 'Invalid Username/Password';
         $inactiveResponse = 'Account Inactive, please check your email inbox or email spam ';
         $inactiveResponse .= 'folder to verify email and complete registration.';
 
-        $userData = $this->validate(request(), [
+        $this->validate(request(), [
             'email'     => 'required|exists:users|email|min:5|max:40',
             'password'  => 'required|min:5',
-            //'active'    => true
         ]);
+
+        //create user date for authentication
+        $userData = [
+            'email'     => request()->email,
+            'password'  => request()->password,
+            'active'    => true
+        ];
 
         if (Auth::attempt($userData, request()->has('remember'))) {
 
-            return redirect('/dashboard');
-        } else {
-            $user = User::whereEmail(request()->email)->first();
+            $user = User::where('email', request()->email)->first();
+            $token = request()->wantsJson() ? $user->createToken('bearer')->accessToken : false; //;
 
-            return back()->withResponse($user->active ? $invalidResponse : $inactiveResponse);
+            return $token ? response()->json($token, 201) : redirect('/dashboard');
+        } else {
+            $user = User::where('email', request()->email)->first();
+
+            $response = $user->active ? 'Invalid Username/Password' : $inactiveResponse;
+
+            return request()->wantsJson() ?
+                response()->json([ 'status' => false, 'response' => $response ], 200) : back()->with('response', $response);
+
         }
     }
 

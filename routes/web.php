@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -124,9 +123,9 @@ Route::post('dashboard/wallet/withdraw', 'WithdrawalController@store')->name('wa
 
 //Paystack
 Route::post('dashboard/payments/card', 'PaystackController@redirectToGateway')->name('paystack.pay');
-Route::get('dashboard/payments/callback', 'PaystackController@handleGatewayCallback')->name('paystack.callback');
+Route::get('dashboard/payments/callbacks/paystack', 'PaystackController@handleGatewayCallback')->name('paystack.callback');
 Route::post('control/payments.query', 'PaystackController@queryPaysackTransaction')->name('paystack.transaction.query');
-Route::post('payments/webhook', 'WebhookController@paystackHook')->name('paystack.webhook');
+Route::post('payments/webhooks/paystack', 'WebhookController@paystackHook')->name('paystack.webhook');
 
 //Sms
 Route::get('dashboard/sms/bulk', 'SmsController@display')->name('sms.bulk');

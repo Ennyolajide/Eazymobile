@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BanksTableSeeder::class);
         $this->call(BanksTableSeeder::class);
         $this->call(CoinsTableSeeder::class);
-        factory(App\Voucher::class, 10)->create();
+        //factory(App\Voucher::class, 10)->create();
         $this->call(ChargesTableSeeder::class);
         $this->call(DataPlansTableSeeder::class); //First time Run
 

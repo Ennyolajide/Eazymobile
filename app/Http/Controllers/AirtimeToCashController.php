@@ -22,7 +22,14 @@ class AirtimeToCashController extends TransactionController
     {
         $networks = AirtimePercentage::where('airtime_to_cash_percentage_status', true)->whereAddon(false)->get();
 
-        return view('dashboard.airtime.cash', compact('networks'));
+        $networks->makeHidden([
+            'addon','group_network','has_addon','alternate_name','created_at',
+            'airtime_swap_percentage','airtime_swap_percentage_status','updated_at',
+            'airtime_to_cash_percentage_status','airtime_topup_ussd_code','airtime_topup_status',
+            'airtime_topup_sim_route','airtime_topup_percentage','hosted_sim_api_token','hosted_sim_server_token',
+        ]);
+
+        return request()->wantsJson() ? response()->json($networks, 200) : view('dashboard.airtime.cash', compact('networks'));
     }
 
     /**
@@ -32,6 +39,9 @@ class AirtimeToCashController extends TransactionController
     {
         $network = AirtimePercentage::whereId(request()->network)
             ->where('airtime_to_cash_percentage_status', true)->first();
+        if (!$network) {
+            return request()->wantsJson() ? response()->json(['status' => false, 'response' => 'Invalid Network'],200) : back();
+        }
 
         $this->validate(request(), [
             'swapFromPhone' => 'required|string|min:10|max:13',
@@ -40,9 +50,14 @@ class AirtimeToCashController extends TransactionController
             }],
             'amount'  => $network ? 'required|numeric|min:' . $network->airtime_to_cash_min . '|max:' . $network->airtime_to_cash_max : '',
         ]);
+
         $status = $this->processAirtimeToCash($network) ? true : false;
 
-        return $status ? back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
+        if(request()->wantsJson()){
+            return response()->json(['status' => $status, 'response' => $status ? $this->modalResponse : $this->failureResponse ],200);
+        }else{
+            return $status ? back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
+        }
     }
 
     /**
@@ -96,7 +111,7 @@ class AirtimeToCashController extends TransactionController
             'swapFromPhone' => request()->swapFromPhone,
             'swapFromNetwork' => strtolower($network->network),
             'recipients' => json_decode($network->airtime_to_cash_phone_numbers),
-            'walletAmount' => floor($network->airtime_swap_percentage / 100 * request()->amount)
+            'walletAmount' => floor($network->airtime_to_cash_percentage / 100 * request()->amount)
         ];
     }
 
@@ -109,6 +124,8 @@ class AirtimeToCashController extends TransactionController
 
         $message = $status ? $this->successResponse : $this->failureResponse;
 
-        return back()->withNotification($this->clientNotify($message, $status));
+        return request()->wantsJson() ?
+            response()->json(['status' => $status, 'response' => $message ])
+            : back()->withNotification($this->clientNotify($message, $status));
     }
 }

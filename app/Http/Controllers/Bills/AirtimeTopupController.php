@@ -21,7 +21,7 @@ class AirtimeTopupController extends RingoController
      */
     public function index()
     {
-        $networks = AirtimePercentage::whereAddon(false)->get();
+        $networks = AirtimePercentage::where('airtime_topup_status', true)->whereAddon(false)->get();
         return view('dashboard.airtime.topup', compact('networks'));
     }
 
@@ -48,6 +48,10 @@ class AirtimeTopupController extends RingoController
 
         $status = $this->processAirtimeTopup();
         $message = $status ? $this->successResponse : $this->failureResponse;
+
+        if (request()->wantsJson()) {
+            return response()->json(['status' => $status, 'message' => $message], 200);
+        }
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
