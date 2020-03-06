@@ -13,11 +13,47 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return 'olajide';
+Route::post('/user/auth', 'LoginController@login'); //working
+Route::post('/user/signup', 'RegisterController@register');
+Route::get('/user/info', 'DashboardController@info');
+Route::get('/user/banks', 'DashboardController@myBanks');
+Route::get('/user/balance', 'DashboardController@balance');
+Route::get('/user/transactions', 'TransactionController@transactionIndex');
+Route::get('/user/transaction/{reference}', 'TransactionController@reference');
+
+Route::get('/user/inbox', 'MessageController@messageIndex');
+Route::get('/user/inbox/{message}', 'MessageController@showMessage');
+
+
+Route::get('/data/plans', 'DataController@DataPlans');
+Route::post('/data/purchase', 'DataController@store');
+Route::post('/wallet/withdrawal', 'WithdrawalController@store');
+
+Route::post('/user/bank/add', 'BankController@storeBank');
+Route::post('/user/bank/{bank}/delete', 'BankController@deleteBank');
+
+Route::get('/airtime/cash/networks','AirtimeToCashController@index');
+Route::post('/airtime/cash','AirtimeToCashController@store');
+Route::post('/airtime/cash/{airtimeRecord}','AirtimeToCashController@completed');
+
+
+Route::namespace('Bills')->group(function () {
+
+    Route::get('/airtime/networks', 'AirtimeTopupController@networks'); //
+    Route::post('/airtime/topup', 'AirtimeTopupController@store'); //
+
+    Route::get('/bills/services', 'BillController@bills'); //
+
+    Route::get('/bills/electricity/discos', 'ElectricityController@discos'); //
+    Route::post('/bills/electricity/topup', 'ElectricityController@store'); //
+    Route::post('/bills/electricity/{serviceId}/validate', 'ElectricityController@validateMeter'); //
+
+    Route::get('/bills/misc/services', 'MiscController@serviceList'); //
+    Route::post('/bills/misc/purchase', 'MiscController@store'); //
+
+    Route::post('/bills/tv/topup', 'TvController@store'); //
+    Route::get('/bills/tv/services', 'TvController@tvProviders'); //
+    Route::get('/bills/tv/{provider}/packages', 'TvController@tvPackages'); //
+    Route::post('/bills/tv/{serviceId}/validate', 'TvController@validateSmartCard'); //
+
 });
-
-Route::any('/waec', 'TestController@waec');
-
-
-

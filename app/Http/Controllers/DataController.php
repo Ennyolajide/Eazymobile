@@ -23,6 +23,25 @@ class DataController extends TransactionController
     }
 
     /**
+     * Get all Available DataPlans
+     */
+    public function DataPlans()
+    {
+        return response()->json(
+            DataPlan::all()->mapToGroups(function ($item, $key) {
+                return [
+                    $item['network'] => [
+                        'plan' => $item['id'],
+                        'volume' => $item['volume'],
+                        'amount' => '₦' . $item['amount'],
+                    ]
+                ];
+            }),
+            200
+        );
+    }
+
+    /**
      * Entry Point for Data Topup
      */
     public function store()
@@ -34,6 +53,10 @@ class DataController extends TransactionController
         $status = $dataPlan ? $this->processDataPurchase($dataPlan) : false;
 
         $message = $status ? $this->successResponse : $this->failureResponse;
+
+        if (request()->wantsJson()) {
+            return response()->json(['status' => $status, 'message' => $message], 200);
+        }
 
         return back()->withNotification($this->clientNotify($message, $status));
     }
