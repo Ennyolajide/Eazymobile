@@ -37,14 +37,6 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-//dd(config('constants.site.env'));
-
-
-// set the public path to this directory
-/* $app->bind('path.public', function() {
-    return __DIR__.'/../public';
-});
- */
 
 /*
 |--------------------------------------------------------------------------
