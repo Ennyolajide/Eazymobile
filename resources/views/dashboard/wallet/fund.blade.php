@@ -68,14 +68,19 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Amount</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
-                                                        <input type="text" class="form-control" name="amount" required>
-                                                        <p class="help-block text-olive">Enter amount you want to fund.</p>
+                                                        <input type="text" class="form-control" name="amount" placeholder="Enter amount you want to fund" required>
+                                                        <!--p class="help-block text-olive">Enter amount you want to fund.</p-->
+                                                        <p id="atm-component" class="help-block text-olive" style="display:none;">
+                                                            Payment Advice : Use Bank transfer option for payment above ₦2499
+                                                            as payment above ₦2499 will attract ₦100 charges
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div id="bank-transfer" style="display:none;">
                                                 <div class="form-group">
+                                                    <br/>
                                                     <label class="col-sm-3 col-xs-12 control-label">Depositor</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
                                                         <input type="text" class="form-control" name="depositor" value="" required>
@@ -163,7 +168,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="bitcoin-component" class="bitcoin-components" style="display:none;">
+                                            <div id="bitcoin-component" style="display:none;">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
@@ -173,6 +178,7 @@
                                             </div>
 
                                             <div id="ecard-form" style="display:none;">
+                                                <br/>
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">Voucher Pin</label>
                                                     <div class="col-sm-9 form-grouping">
@@ -184,16 +190,16 @@
 
 
                                             <div class="form-group">
-                                                <div class="col-sm-6 col-sm-offset-3 hidden-xs bitcoin-components" style="display:none;"s>
-                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto" width="270" height="90">
+                                                <div class="col-sm-6 col-sm-offset-3 bitcoin-components" style="display:none;">
+                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto hidden-xs" width="270" height="90">
                                                 </div>
                                                 <div class="col-sm-3 col-xs-12 pull-right">
                                                     <br/>
                                                     <button id="submit" class="btn btn-success btn-rounded pull-right">Continue</button>
                                                 </div>
                                                 <br/>
-                                                <div class="col-sm-12 col-xs-12 visible-xs bitcoin-components" style="display:none;">
-                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto" width="270" height="90">
+                                                <div class="col-sm-12 col-xs-12 bitcoin-components" style="display:none;">
+                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto visible-xs" width="270" height="90">
                                                 </div>
                                             </div>
 
@@ -346,21 +352,22 @@
                 $('#gateway').change(function() {
                     var gateway = $('#gateway').val();
                     let limit;
+                    console.log(gateway);
                     if(gateway == 1){
                         $('#fund-wallet-form').validate().destroy();
-                        $('#atmBankBitcoin-form,#amount-field').show();
-                        $('#ecard-form,#airtime-form,#bank-transfer,.bitcoin-components').hide();
+                        $('#atmBankBitcoin-form,#amount-field,#atm-component').show();
+                        $('#ecard-form,#airtime-form,#bank-transfer,#bitcoin-component,.bitcoin-components').hide();
                         $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
                         limit = validateCardFunding([{{ config('constants.fundings.paystack.min') }},{{ config('constants.fundings.paystack.max') }}]);
                     }else if(gateway == 2){
-                        $('#ecard-form,#airtime-form,.bitcoin-components').hide();
+                        $('#atm-component,#ecard-form,#airtime-form,bitcoin-component,.bitcoin-components').hide();
                         $('#fund-wallet-form').validate().destroy();
                         limit = validateBankTransfer([1000, 50000]);
                         $('#atmBankBitcoin-form,#amount-field,#bank-transfer').show();
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}').attr('novalidate',true);
                     }else if(gateway == 3){//airtime
                         $('#fund-wallet-form').attr('action',"{{ route('wallet.fund.airtime') }}");
-                        $('#amount-field,#ecard-form,#bank-transfer,.bitcoin-components').hide();
+                        $('#amount-field,#atm-component,#ecard-form,#bank-transfer,.bitcoin-components').hide();
                         $('#airtime-form').show();
                         $('#network').change(function(){
                             $('#wallet-amount').hide();
@@ -390,7 +397,7 @@
                         });
 
                     }else if(gateway == 4){
-                        $('#bank-transfer,#ecard-form,#airtime-form').hide();
+                        $('#bank-transfer,#atm-component,#ecard-form,#airtime-form').hide();
                         $('#atmBankBitcoin-form,#amount-field,.bitcoin-components').show();
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bitcoin") }}');
                         $('#amount-field').find('input').keyup(function(){
@@ -401,7 +408,7 @@
                         });
                     }else if(gateway == 5){
                         $('#ecard-form').show();
-                        $('#amount-field,#airtime-form,#bank-transfer,.bitcoin-components').hide();
+                        $('#amount-field,#atm-component,#airtime-form,#bank-transfer,.bitcoin-components').hide();
                         $('#fund-wallet-form').validate().destroy();
                         limit = validateVoucherFunding($('#fund-wallet-form'));
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.voucher") }}');

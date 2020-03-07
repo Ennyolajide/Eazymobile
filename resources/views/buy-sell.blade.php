@@ -57,7 +57,9 @@
                         <li><a href="{{ route('buy-sell') }}">Buy &amp; Sell</a></li>
                         <li><a href="{{ config('constants.site.api.url') }}">Api</a></li>
                         <li><a href="{{ route('index') }}#dataPlans">Data Plans</a></li>
+                        <li><a href="{{ route('index') }}#about">About Us</a></li>
                         <li><a href="{{ route('contact-us') }}">Contact</a></li>
+
                         <li><a href="{{ route('user.register') }}">Signup</a></li>
                         <li><a href="{{ route('user.login') }}">Login</a></li>
                     </ul>

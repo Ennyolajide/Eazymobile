@@ -61,6 +61,7 @@
                             <li><a href="{{ route('buy-sell') }}">Buy &amp; Sell</a></li>
                             <li><a href="{{ config('constants.site.api.url') }}">Api</a></li>
                             <li><a href="#dataPlans">Data Plans</a></li>
+                            <li><a href="#about">About Us</a></li>
                             <li><a href="{{ route('contact-us') }}">Contact</a></li>
                             <li><a href="{{ route('user.register') }}">Signup</a></li>
                             <li><a href="{{ route('user.login') }}">Login</a></li>
@@ -305,7 +306,7 @@
                         <div class="box-alt">
                             <span class="pe pe-7s-airplay"></span>
                             <h4>Cross-Platform Trading</h4>
-                            <p>Morbi eget varius risus, ut venenatis libero Pellentesque in porta dui.</p>
+                            <p>We venture into diverse of Telecom needs business to make life easier for our customers.</p>
                         </div>
                     </div>
                     <div class="col-md-4 res-m-bttm-lg">
@@ -332,7 +333,7 @@
                         <div class="box-alt">
                             <span class="pe pe-7s-graph"></span>
                             <h4>Advanced Reporting</h4>
-                            <p>Morbi eget varius risus, ut venenatis libero Pellentesque in porta dui.</p>
+                            <p>We will keep listening to you to bring more ease to all challenges in having Telecom needs at your pace.</p>
                         </div>
                         <div class="box-alt">
                             <span class="pe pe-7s-graph1"></span>
@@ -386,9 +387,29 @@
             </div>
         </div>
         <!--End Section -->
+        <!--Section -->
+        <div id="about" class="section section-pad bg-grey">
+            <div class="container">
+                <div class="section-head">
+                    <div class="row text-center">
+                        <div class="col-md-12 col-sm-12">
+                            <h2 class="heading-section text-center">About Us</h2>
+                            <p>{{ config('constants.site.name') }} is a subsidiary of EAZY GLOBAL SOLUTIONS (RC 3062123). This facet of the network deals with Telecom Needs.</p>
+                            <p>ey differentiator is our customer satisfaction and intimacy positioning.</p>
+                            <p>We strongly believe that you DO NOT need our services just for mobile needs but to get satisfaction</p>
+                            <p>We take our work seriously and not ourselves because we are not the service but just a medium.</p>
+                            <p>To fulfill our role, we work to make the accessibility, usability and renewability of our service as simple as ABC.</p>
+                            <p>This we do by constantly listening to you and developing creative solutions to meet your needs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gaps size-3x"></div>
+            </div>
+        </div>
+        <!--End Section -->
 
         <!-- Section -->
-		<div class="section section-pad-md bg-grey">
+		<div class="section section-pad-md bg-white">
 			<div class="container">
 				<div class="content row">
                     <h2 class="heading-section text-center">Our Partners</h2>

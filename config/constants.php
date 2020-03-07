@@ -5,7 +5,7 @@ return [
 
     'site' => [
 
-        'year' => 2019,
+        'year' => 2020,
         'env' => env('APP_ENV'),
         'url' => env('APP_URL'),
         'name' => env('APP_NAME'),
