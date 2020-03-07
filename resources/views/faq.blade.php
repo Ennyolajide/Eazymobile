@@ -9,14 +9,14 @@
                             <ul class="social">
                                 <li><a href="{{ config('constants.site.facebook') }}"><em class="fa fa-facebook"></em></a></li>
                                 <li><a href="{{ config('constants.site.twitter') }}"><em class="fa fa-twitter"></em></a></li>
-                                <li><a href="{{ config('constants.site.linkedin') }}"><em class="fa fa-linkedin"></em></a></li>
-                                <li><a href="{{ config('constants.site.google') }}"><em class="fa fa-google-plus"></em></a></li>
+                                <li><a href="{{ config('constants.site.instagram') }}"><em class="fa fa-instagram"></em></a></li>
+                                <li><a href="{{ config('constants.site.telegram') }}"><em class="fa fa-telegram"></em></a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6 al-right">
                             <ul class="top-nav">
                                 <li><a href="{{ route('faq') }}">Help</a></li>
-                                <li><a href="{{ route('faq') }}">Support</a></li>
+                                <li><a href="{{ route('faq') }}">Faq</a></li>
                                 <li><a href="{{ route('user.login') }}">Login</a></li>
                                 <li><a href="{{ route('user.register') }}">Register</a></li>
                             </ul>
@@ -53,6 +53,7 @@
                         <li><a href="{{ route('buy-sell') }}">Buy &amp; Sell</a></li>
                         <li><a href="{{ config('constants.site.api.url') }}">Api</a></li>
                         <li><a href="{{ route('index') }}#dataPlans">Data Plans</a></li>
+                        <li><a href="{{ route('index') }}#about">About Us</a></li>
                         <li><a href="{{ route('contact-us') }}">Contact</a></li>
                         <li><a href="{{ route('user.register') }}">Signup</a></li>
                         <li><a href="{{ route('user.login') }}">Login</a></li>

@@ -24,6 +24,7 @@ class CoinsTableSeeder extends Seeder
             'buy_rate' => 10,
             'sell_rate' => -20,
             'logo' => 'coins/ethereum.png',
+            'status' => false,
         ]);
     }
 }

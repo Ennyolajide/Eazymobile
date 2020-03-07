@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email', 40)->unique();
             $table->boolean('active')->default(false);
+            $table->boolean('blocked')->default(false);
             $table->string('facebook_id')->nullable();
             $table->string('token')->nullable();
             $table->string('role')->default('customer');

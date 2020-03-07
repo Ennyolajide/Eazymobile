@@ -19,7 +19,7 @@
         <div class="login-box-body">
             @if(session('response'))
                 <div class="alert alert-danger text-center">
-                    <i class="fa-exclamation-triangle"></i>
+                    <i class="fa fa-exclamation-triangle"></i>
                     {{ session('response') }}
                 </div>
             @else

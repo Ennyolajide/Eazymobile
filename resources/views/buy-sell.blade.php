@@ -13,14 +13,14 @@
                         <ul class="social">
                             <li><a href="{{ config('constants.site.facebook') }}"><em class="fa fa-facebook"></em></a></li>
                             <li><a href="{{ config('constants.site.twitter') }}"><em class="fa fa-twitter"></em></a></li>
-                            <li><a href="{{ config('constants.site.linkedin') }}"><em class="fa fa-linkedin"></em></a></li>
-                            <li><a href="{{ config('constants.site.google') }}"><em class="fa fa-google-plus"></em></a></li>
+                            <li><a href="{{ config('constants.site.instagram') }}"><em class="fa fa-instagram"></em></a></li>
+                            <li><a href="{{ config('constants.site.telegram') }}"><em class="fa fa-telegram"></em></a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 al-right">
                         <ul class="top-nav">
                             <li><a href="{{ route('faq') }}">Help</a></li>
-                            <li><a href="{{ route('faq') }}">Support</a></li>
+                            <li><a href="{{ route('faq') }}">Faq</a></li>
                             <li><a href="{{ route('user.login') }}">Login</a></li>
                             <li><a href="{{ route('user.register') }}">Register</a></li>
                         </ul>
@@ -57,7 +57,9 @@
                         <li><a href="{{ route('buy-sell') }}">Buy &amp; Sell</a></li>
                         <li><a href="{{ config('constants.site.api.url') }}">Api</a></li>
                         <li><a href="{{ route('index') }}#dataPlans">Data Plans</a></li>
+                        <li><a href="{{ route('index') }}#about">About Us</a></li>
                         <li><a href="{{ route('contact-us') }}">Contact</a></li>
+
                         <li><a href="{{ route('user.register') }}">Signup</a></li>
                         <li><a href="{{ route('user.login') }}">Login</a></li>
                     </ul>
@@ -127,25 +129,25 @@
       	<div class="features-box section section-pad no-pb">
             <div class="container">
                 <div class="row text-center">
-                    <div class="col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2 res-m-bttm">
+                    <div class="col-md-4 col-md-offset-0 col-sm-4 res-m-bttm">
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-a.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">We sell bitcoin</h6>
-                            <p class="small">Compliant with dolorts adipis sit <br/> ametcon sectetur.</p>
+                            <p class="small">Conveniently buy  Bitcoin with us hassle free purchase.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2 res-m-bttm">
+                    <div class="col-md-4 col-md-offset-0 col-sm-4 res-m-bttm">
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-e.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">Buy with credit card</h6>
-                            <p class="small">Lorem ipsum dolor sit amet cont <br/> etur adipiscing eli.</p>
+                            <p class="small">We offer smart  buying using your ATM CARD.</p>
                         </div>
                     </div>
-                    <div class="col-md-4 col-md-offset-0 col-sm-8 col-sm-offset-2">
+                    <div class="col-md-4 col-md-offset-0 col-sm-4">
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-c.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">Fast-track transaction</h6>
-                            <p class="small">Dolore magna aliqa. Ut enim ad <br/> minim venim quis.</p>
+                            <p class="small">We offer reliable transations history for all your request.</p>
                         </div>
                     </div>
                 </div>
@@ -160,43 +162,40 @@
     	<div class="section section-pad">
     		<div class="container">
     			<div class="row">
-    				<div class="col-md-8">
+    				<div class="col-md-8 col-sm-8 col-xs-12">
     					<div class="text-block">
-							<h3>Buy Bitcoin Instantly from a Safe Exchange</h3>
-							<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et lorem nec felis finibus laoreet. The company is officially registered in the UK, has a Money Services Busialiquam tellus, sit amet tristique ipsum. </p>
-							<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et lorem nec felis finibus laoreet. The company is officially registered in the UK has a Money Services Business status.</p>
+							<h3>Easy To Use</h3>
+							<p>Our system is built for you and tailored to suit your everyday need.
+                                secure transations icon.
+                            </p>
+
 						</div>
     				</div>
-    				<div class="col-md-4">
+    				<div class="col-md-4 col-sm-4 hidden-xs">
     					<div class="icon-block">
     						<div class="icon-image">
     							<img src="\home/images/icons/icon-a.png" alt="icon">
     						</div>
     						<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit</p>
-    						<ul>
-    							<li>Lorem ipsum dolor sit amet.</li>
-    							<li>Many services nowadays offer.</li>
-    							<li>Busialiquam tellus, sit amet.</li>
-    						</ul>
     					</div>
     				</div>
     			</div>
     			<div class="gaps size-2x"></div>
     			<div class="row">
-    				<div class="col-md-8">
+    				<div class="col-md-8 col-sm-8 col-xs-12">
     					<div class="text-block">
-							<h3>Buy Bitcoin Instantly from a Safe Exchange</h3>
-							<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et lorem nec felis finibus laoreet. The company is officially registered in the UK, has a Money Services Busialiquam tellus, sit amet tristique ipsum. </p>
-							<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et lorem nec felis finibus laoreet. The company is officially registered in the UK has a Money Services Business status.</p>
+							<h3>Secure Transactions</h3>
+							<p>The things that matter to you matter to us, you’re secure with us.
+                                fast payment icon.
+                            </p>
 						</div>
     				</div>
-    				<div class="col-md-4">
+    				<div class="col-md-4 col-sm-4 hidden-xs">
     					<div class="icon-block">
     						<div class="icon-image">
     							<img src="\home/images/icons/icon-b.png" alt="icon">
     						</div>
     						<p>Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit</p>
-    						<p>Nowadays offer their Many services users to buy Bitcoins, Lorem ipsum dolor sit amet Many services nowadays offer their users to buy Bitcoins, Lorem ipsum dolor sit amet</p>
     					</div>
     				</div>
     			</div>

@@ -29,6 +29,8 @@ class LoginController extends Controller
     {
         $inactiveResponse = 'Account Inactive, please check your email inbox or email spam ';
         $inactiveResponse .= 'folder to verify email and complete registration.';
+        $blokedResponse = 'You have been temporarily suspended by the admin kindly contact support for help';
+
 
         $this->validate(request(), [
             'email'     => 'required|exists:users|email|min:5|max:40',
@@ -39,7 +41,8 @@ class LoginController extends Controller
         $userData = [
             'email'     => request()->email,
             'password'  => request()->password,
-            'active'    => true
+            'active'    => true,
+            'blocked'   => false
         ];
 
         if (Auth::attempt($userData, request()->has('remember'))) {
@@ -51,7 +54,7 @@ class LoginController extends Controller
         } else {
             $user = User::where('email', request()->email)->first();
 
-            $response = $user->active ? 'Invalid Username/Password' : $inactiveResponse;
+            $response = $user->active ? 'Invalid Username/Password' : $user->blocked ? $blokedResponse : $inactiveResponse;
 
             return request()->wantsJson() ?
                 response()->json([ 'status' => false, 'response' => $response ], 200) : back()->with('response', $response);

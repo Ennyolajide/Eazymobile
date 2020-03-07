@@ -5,7 +5,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6 hidden-xs wgs-box res-m-bttm-lg">
+            <div class="col-md-4 col-sm-6 hidden-xs wgs-box res-m-bttm-lg">
                 <!-- Each Widget -->
                 <div class="wgs-footer wgs-menu">
                     <h5 class="wgs-title ucap">Services</h5>
@@ -21,7 +21,7 @@
                 </div>
                 <!-- End Widget -->
             </div>
-            <div class="col-md-3 col-sm-6 hidden-xs wgs-box res-m-bttm-lg">
+            <div class="col-md-4 col-sm-6 hidden-xs wgs-box res-m-bttm-lg">
                 <!-- Each Widget -->
                 <div class="wgs-footer wgs-menu">
                     <h5 class="wgs-title ucap">Information</h5>
@@ -30,41 +30,15 @@
                             <li><a href="#">Airtime Swap</a></li>
                             <li><a href="#">Bulk Sms </a></li>
                             <li><a href="{{ route('user.register') }}">Getting Started</a></li>
-                            <li><a href="index.html#">Bi;;</a></li>
+                            <li><a href="index.html#">Bill Payments</a></li>
                             <li><a href="#">Data Reselling Guide</a></li>
                         </ul>
                     </div>
                 </div>
                 <!-- End Widget -->
             </div>
-            <div class="col-md-3 col-sm-6 wgs-box res-m-bttm-lg">
-                <!-- Each Widget -->
-                <div class="wgs-footer wgs-post">
-                    <h5 class="wgs-title ucap">Recent News</h5>
-                    <div class="wgs-content">
-                        <div class="wgs-post-single">
-                            <div class="wgs-post-thumb">
-                                <img src="\home/images/thumbs/b.jpg" alt="post-thumb">
-                            </div>
-                            <div class="wgs-post-entry">
-                                <h6 class="wgs-post-title"><a href="#">Working Hard to Keep Pace with Demand </a></h6>
-                                <span class="wgs-post-meta">December 19, 2017</span>
-                            </div>
-                        </div>
-                        <div class="wgs-post-single">
-                            <div class="wgs-post-thumb">
-                                <img src="\home/images/thumbs/c.jpg" alt="post-thumb">
-                            </div>
-                            <div class="wgs-post-entry">
-                                <h6 class="wgs-post-title"><a href="#">Working Hard to Keep Pace with Demand </a></h6>
-                                <span class="wgs-post-meta">December 19, 2017</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Widget -->
-            </div>
-            <div class="col-md-3 col-sm-6 wgs-box res-m-bttm">
+
+            <div class="col-md-4 col-sm-6 wgs-box res-m-bttm">
                 <!-- Each Widget -->
                 <div class="wgs-footer wgs-contact">
                     <h5 class="wgs-title ucap">get in touch</h5>
@@ -102,8 +76,8 @@
                 <ul class="social">
                     <li><a href="{{ config('constants.site.facebook') }}"><em class="fa fa-facebook"></em></a></li>
                     <li><a href="{{ config('constants.site.twitter') }}"><em class="fa fa-twitter"></em></a></li>
-                    <li><a href="{{ config('constants.site.linkedin') }}"><em class="fa fa-linkedin"></em></a></li>
-                    <li><a href="{{ config('constants.site.google') }}"><em class="fa fa-google-plus"></em></a></li>
+                    <li><a href="{{ config('constants.site.instagram') }}"><em class="fa fa-instagram"></em></a></li>
+                    <li><a href="{{ config('constants.site.telegram') }}"><em class="fa fa-telegram"></em></a></li>
                 </ul>
             </div>
         </div>

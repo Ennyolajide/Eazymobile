@@ -2,10 +2,14 @@
 
 return [
 
+
     'site' => [
-        'year' => 2019,
+
+        'year' => 2020,
+        'env' => env('APP_ENV'),
         'url' => env('APP_URL'),
         'name' => env('APP_NAME'),
+
         'spanName' => '<b>Eazy</b> Mobile',
         'logo' => '\images/logo.png',
         'email' => 'support@eazymobile.net',
@@ -13,7 +17,7 @@ return [
         'phone2' => '',
 
         'telegram' => 'https://t.me/eazymobilenig',
-        'address' => 'Shop 15, off Gtbank, <br/>Alabata, Ogun State, Nigeria',
+        'address' => 'SHOP 15, OFF GTBANK, <br/>OFF ALABATA ROAD, FUNAAB ABEOKUTA',
         'twitter' => 'https://www.t.me/eazymobilenig',
         'facebook' => 'https://facebook.com/eazymobilenig',
         'instagram' => 'https://instagram.com/eazymobilenig',
@@ -21,9 +25,8 @@ return [
         'linkedin' => '#',
         'bussinessName' => 'Eazy Mobile',
         'googleMap' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.38262768085247!2d3.450448169084706!3d7.2269181021081685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103a37421bbc279f%3A0xbdd81c8328b04ef4!2sModelc%20Global%20Enterprise!5e0!3m2!1sen!2sng!4v1577543120150!5m2!1sen!2sng',
-        'about' => 'Copyright &copy; 2018 EazyMobile.',
-        'address' => 'Shop 15, off Gtbank, <br/>Alabata, Ogun State, Nigeria',
-        'description' => 'CryptoCoin is a powerful Bitcoin Crypto Currency Wallet and Mining Template with full of customization options and features',
+        'about' => 'Copyright &copy; 2019 EazyMobile.',
+        'description' => 'The fastest way to convert airtime to cash, buy cheap internet data bundle, trade Bitcoin, and all other Telecom needs',
         'sms' => [
             'sender' => env('SITE_SMS_SENDER'),
         ],
@@ -41,13 +44,13 @@ return [
     ],
 
     'livechat' => [
-        'tawk' => 'https://embed.tawk.to/5e02461d7e39ea1242a1afd2/default'
+        'tawk' => 'https://embed.tawk.to/5e62d3c4c32b5c19173a0a0a/default'
     ],
 
     'fundings' => [
         'paystack' => [
-            'min' =>  500,
-            'max' =>  2499,
+            'min' =>  100,
+            'max' =>  50000,
         ]
     ],
 
