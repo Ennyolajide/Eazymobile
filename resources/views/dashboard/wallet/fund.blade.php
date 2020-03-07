@@ -163,7 +163,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="bitcoin-component" style="display:none;">
+                                            <div id="bitcoin-component" class="bitcoin-components" style="display:none;">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
@@ -401,7 +401,7 @@
                         });
                     }else if(gateway == 5){
                         $('#ecard-form').show();
-                        $('#amount-field,#airtime-form,.bitcoin-components').hide();
+                        $('#amount-field,#airtime-form,#bank-transfer,.bitcoin-components').hide();
                         $('#fund-wallet-form').validate().destroy();
                         limit = validateVoucherFunding($('#fund-wallet-form'));
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.voucher") }}');

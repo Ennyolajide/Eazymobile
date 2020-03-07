@@ -20,7 +20,7 @@
                     <div class="col-sm-6 al-right">
                         <ul class="top-nav">
                             <li><a href="{{ route('faq') }}">Help</a></li>
-                            <li><a href="{{ route('faq') }}">Support</a></li>
+                            <li><a href="{{ route('faq') }}">Faq</a></li>
                             <li><a href="{{ route('user.login') }}">Login</a></li>
                             <li><a href="{{ route('user.register') }}">Register</a></li>
                         </ul>
@@ -131,21 +131,21 @@
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-a.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">We sell bitcoin</h6>
-                            <p class="small">Compliant with dolorts adipis sit <br/> ametcon sectetur.</p>
+                            <p class="small">Conveniently buy  Bitcoin with us hassle free purchase.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-md-offset-0 col-sm-4 res-m-bttm">
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-e.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">Buy with credit card</h6>
-                            <p class="small">Lorem ipsum dolor sit amet cont <br/> etur adipiscing eli.</p>
+                            <p class="small">We offer smart  buying using your ATM CARD.</p>
                         </div>
                     </div>
                     <div class="col-md-4 col-md-offset-0 col-sm-4">
                         <div class="box round shadow-alt">
                             <img src="\home/images/icons/box-icon-c.png" alt="box-icon" class="box-icon">
                             <h6 class="ucap">Fast-track transaction</h6>
-                            <p class="small">Dolore magna aliqa. Ut enim ad <br/> minim venim quis.</p>
+                            <p class="small">We offer reliable transations history for all your request.</p>
                         </div>
                     </div>
                 </div>

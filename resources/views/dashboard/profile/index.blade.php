@@ -96,7 +96,7 @@
                                             <br/>
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Select Bank</label>
-                                                <div class="col-sm-10 form-grouping text-bold">
+                                                <div class="col-sm-7 form-grouping text-bold">
                                                     <select style="height: 40px;" class="form-control" id="banks">
                                                         <option value="" disabled selected><strong>Choose Bank</strong></option>
                                                         @foreach ($banks as $bank)
@@ -113,7 +113,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Account Number</label>
 
-                                                <div class="col-sm-10 form-grouping">
+                                                <div class="col-sm-7 form-grouping">
                                                     <input type="text" class="form-control" name="accountNumber" id="accountNumber">
                                                 </div>
                                             </div>
@@ -121,14 +121,15 @@
                                             <div class="form-group" id="accountNameField"  style="display: none;">
                                                 <label class="col-sm-2 control-label">Account Name</label>
 
-                                                <div class="col-sm-10 form-grouping">
+                                                <div class="col-sm-7 form-grouping">
                                                     <input  type="text" class="form-control name-input" name="accountName" id="accountName" disabled="true">
                                                 </div>
                                             </div>
+                                            <br/>
                                             <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-3">
-                                                    <button  id="resolveBankDetails" class="btn btn-danger btn-flat" disabled="true">Proceed</button>
-                                                    <button  id="addBank" type="submit" class="btn btn-danger btn-flat" style="display: none;">Submit</button>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <button  id="resolveBankDetails" class="btn btn-danger btn-flat pull-right" disabled="true">Proceed</button>
+                                                    <button  id="addBank" type="submit" class="btn btn-danger btn-flat pull-right" style="display: none;">Submit</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -187,32 +188,31 @@
                                     @csrf
                                     <br/>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Current Password</label>
+                                        <label class="col-sm-2 col-xs-12 control-label">Current Password</label>
 
-                                        <div class="col-sm-10 form-grouping">
+                                        <div class="col-sm-7 col-xs-12 form-grouping">
                                             <input type="password" class="form-control" name="currentPassword">
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">New Password</label>
+                                        <label for="inputName" class="col-sm-2 col-xs-12 control-label">New Password</label>
 
-                                        <div class="col-sm-10 form-grouping">
+                                        <div class="col-sm-7 col-xs-12 form-grouping">
                                             <input type="password" class="form-control" id="password" name="password">
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="form-group">
-                                        <label for="inputNo" class="col-sm-2 control-label">Comfirm Password</label>
-
-                                        <div class="col-sm-10 form-grouping">
+                                        <label for="inputNo" class="col-sm-2 col-xs-12 control-label">Comfirm Password</label>
+                                        <div class="col-sm-7 col-xs-23 form-grouping">
                                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger btn-flat">Submit</button>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <button type="submit" class="btn btn-danger btn-flat pull-right">Submit</button>
                                         </div>
                                     </div>
                                 </form>

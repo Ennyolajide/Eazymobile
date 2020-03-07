@@ -59,7 +59,7 @@
                                             <div class="form-group" id="amount-field">
                                                 <label class="col-sm-3 col-xs-12 control-label">Amount</label>
                                                 <div class="col-sm-9 col-xs-12 form-grouping">
-                                                    <input id="amount" type="text" class="form-control" name="amount" placeholder="Enter the you want to withdraw" required>
+                                                    <input id="amount" type="text" class="form-control" name="amount" placeholder="Enter the amount you want to withdraw" required>
                                                     <p id="amount-error" style="display:none; font-size:14px;" class="text-danger">Amount Exceeds Withdrawable Balance</p>
                                                 </div>
                                             </div>
