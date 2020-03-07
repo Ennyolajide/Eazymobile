@@ -10,8 +10,8 @@
                         <ul class="social">
                             <li><a href="{{ config('constants.site.facebook') }}"><em class="fa fa-facebook"></em></a></li>
                             <li><a href="{{ config('constants.site.twitter') }}"><em class="fa fa-twitter"></em></a></li>
-                            <li><a href="{{ config('constants.site.linkedin') }}"><em class="fa fa-linkedin"></em></a></li>
-                            <li><a href="{{ config('constants.site.google') }}"><em class="fa fa-google-plus"></em></a></li>
+                            <li><a href="{{ config('constants.site.instagram') }}"><em class="fa fa-instagram"></em></a></li>
+                            <li><a href="{{ config('constants.site.telegram') }}"><em class="fa fa-telegram"></em></a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 al-right">
@@ -146,11 +146,11 @@
                         </form>
                     </div>
                 </div><!-- .col  -->
-                <div class="col-md-6">
+                <!--div class="col-md-6">
                     <br/><br/>
-                    <iframe src="{{ config('constants.site.googleMap') }}" width="100%" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
-                    <!--a href="#" class="map-link">View on google map <span class="fa fa-caret-right"></span></a-->
-                </div><!-- .col  -->
+                    <iframe src="{{-- config('constants.site.googleMap') --}}" width="100%" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <a href="#" class="map-link">View on google map <span class="fa fa-caret-right"></span></a>
+                </div--><!-- .col  -->
             </div>
         </div>
     </div>

@@ -13,8 +13,8 @@
                         <ul class="social">
                             <li><a href="{{ config('constants.site.facebook') }}"><em class="fa fa-facebook"></em></a></li>
                             <li><a href="{{ config('constants.site.twitter') }}"><em class="fa fa-twitter"></em></a></li>
-                            <li><a href="{{ config('constants.site.linkedin') }}"><em class="fa fa-linkedin"></em></a></li>
-                            <li><a href="{{ config('constants.site.google') }}"><em class="fa fa-google-plus"></em></a></li>
+                            <li><a href="{{ config('constants.site.instagram') }}"><em class="fa fa-instagram"></em></a></li>
+                            <li><a href="{{ config('constants.site.telegram') }}"><em class="fa fa-telegram"></em></a></li>
                         </ul>
                     </div>
                     <div class="col-sm-6 al-right">
