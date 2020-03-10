@@ -165,6 +165,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="item">
+                    <img src="\home/images/sliders/bg-f.jpg" alt="New York" style="width:100%;">
+                    <div class="carousel-caption">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
+                                <ul class="btns animate-bottom delayms9">
+                                    <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
+                                    <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
               </div>
 
