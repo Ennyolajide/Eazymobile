@@ -39,7 +39,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
                                         @include('dashboard.layouts.errors')
-                                        <form id="fund-wallet-form" class="form-horizontal`" method="post">
+                                        <form id="fund-wallet-form" class="form-horizontal" method="post">
                                             @csrf
                                             <div class="bitcoin-components" style="display:none;">
                                                 <p class="h4 text-danger text-center">$1 = @naira($bitcoinRate)</p>
@@ -63,13 +63,11 @@
                                                 </div>
                                                 <input type="hidden" name="email" value="{{ Auth::user()->email }}">
                                             </div>
-                                            <br/>
                                             <div id="amount-field" style="display:none;">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Amount</label>
-                                                    <div class="col-sm-9 col-xs-12 form-grouping">
+                                                    <div class="col-sm-9 col-xs-12 form-grouping" style="margin-bottom: 5px;">
                                                         <input type="text" class="form-control" name="amount" placeholder="Enter amount you want to fund" required>
-                                                        <!--p class="help-block text-olive">Enter amount you want to fund.</p-->
                                                         <p id="atm-component" class="help-block text-olive" style="display:none;">
                                                             Payment Advice : Use Bank transfer option for payment above ₦2499
                                                             as payment above ₦2499 will attract ₦100 charges
@@ -78,9 +76,9 @@
                                                 </div>
                                             </div>
 
+
                                             <div id="bank-transfer" style="display:none;">
                                                 <div class="form-group">
-                                                    <br/>
                                                     <label class="col-sm-3 col-xs-12 control-label">Depositor</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
                                                         <input type="text" class="form-control" name="depositor" value="" required>
@@ -112,7 +110,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <br/>
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Reference (optional)</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
@@ -191,7 +188,7 @@
 
                                             <div class="form-group">
                                                 <div class="col-sm-6 col-sm-offset-3 bitcoin-components" style="display:none;">
-                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto hidden-xs" width="270" height="90">
+                                                    <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="img-responsive hidden-xs" width="270" height="90">
                                                 </div>
                                                 <div class="col-sm-3 col-xs-12 pull-right">
                                                     <br/>
@@ -408,7 +405,7 @@
                         });
                     }else if(gateway == 5){
                         $('#ecard-form').show();
-                        $('#amount-field,#atm-component,#airtime-form,#bank-transfer,.bitcoin-components').hide();
+                        $('#amount-field,#atm-component,#airtime-form,#bank-transfer,#bitcoin-component,.bitcoin-components').hide();
                         $('#fund-wallet-form').validate().destroy();
                         limit = validateVoucherFunding($('#fund-wallet-form'));
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.voucher") }}');
@@ -478,7 +475,7 @@
                     rules: { voucher: { required: true, minlength: 16, maxlength: 20 } },
                     messages: {
                         voucher: {
-                            required: "Pls enter the Voucher pin.",
+                            required: "Please enter the Voucher pin.",
                             minlength: jQuery.validator.format("Minimum of {0} characters required."),
                             maxlength: jQuery.validator.format("Maximum {0} characters.")
                         }

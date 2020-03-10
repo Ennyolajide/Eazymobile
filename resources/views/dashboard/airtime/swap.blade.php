@@ -34,7 +34,8 @@
                             <section class="container">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6">
-                                        <form id="airtime-swap-form" class="form-horizontal form-prevent-multiple-submits" method="post" action="{{ route('airtime.swap') }}">
+                                        @include('dashboard.layouts.errors')
+                                        <form id="airtime-swap-form" class="form-horizontal" method="post" action="{{ route('airtime.swap') }}">
                                             @csrf
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label hidden-xs">&nbsp;</label>
@@ -56,7 +57,7 @@
 
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label" >Network</label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 form-grouping">
                                                     <div id="swap-from-network" data-networks="{{ $networks }}">
                                                         <select class="form-control" name="network" id="network">
                                                             <option value="" disabled selected>Choose Network</option>
@@ -92,7 +93,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Network</label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 form-grouping">
                                                     <div id="swap-to-network" >
                                                         <select class="form-control" name="swapToNetwork" id="swapToNetwork">
                                                             <option value="" disabled selected>Choose Network</option>
@@ -110,11 +111,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <button id="submit" class="btn btn-rounded btn-success form-prevent-multiple-submits pull-right">Swap</button>
+                                                    <button class="btn btn-rounded btn-success form-prevent-multiple-submits pull-right">Swap</button>
                                                 </div>
                                             </div>
                                         </form>
-                                        @include('dashboard.layouts.errors')
                                     </div>
                                 </div>
                             </section>
@@ -201,6 +201,8 @@
                     }
                 });
 
+
+
                 $('#amount').keyup(function(){
                     let amount = $('#amount').val();
                     let networks = @json($networks);
@@ -211,14 +213,17 @@
 
                 $('#network').change(function(){
                     $('.networkList').remove();
-                    $('#amount').removeAttr('disabled');
                     let network = $(this).val();
                     let networks = @json($networks);
-                    let fromNetwork = networks.splice((network-1),1)[0].network.toLowerCase();
-                    $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetwork+'.png');
+                    $('#amount').removeAttr('disabled');
+                    $('#airtime-swap-form').validate().destroy();
+                    let fromNetwork = networks.splice((network-1),1)[0];
+                    let fromNetworkName = fromNetwork.network.toLowerCase();
+                    validateAirtimeSwap([fromNetwork.airtime_to_cash_min, fromNetwork.airtime_to_cash_max]);
+                    $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetworkName+'.png');
                     $.each(networks,function(i, val){
                         $('#swapToNetwork').append('<option class="networkList">'+val.network+'</option>');
-                    })
+                    });
                 })
 
                 $('#swapToNetwork').change(function(){
@@ -226,45 +231,52 @@
                     $('#swapToNetworkImage').show().find('img').attr('src', '/images/networks/'+networkImage+'.png');
                 })
 
+                let validateAirtimeSwapDefault = () => {
+                    $('#airtime-swap-form').validate({
+                        rules: { network: {required : true },},
+                        messages: { network: { required: "Please select a network to swap from."} },
+                    });
+                }
 
-                $('#airtime-swap-form').validate({
-                    rules: {
-                        network: {
-                            required : true
-                        },
-                        swapFromPhone: {
-                            required : true
-                        },
-                        amount: {
-                            required : true
-                        },
-                        swapToNetwork: {
-                            required : true
-                        },
-                        swapToPhone: {
-                            required: true,
-                            digit: true
-                        }
-                    },
-                    messages: {
-                        network: {
-                            required: "Pls select a network to swap from.",
-                        },
-                        swapFromPhone: {
-                            required: "Pls enter phone number to swap airtime from.",
-                        },
-                        amount: {
-                            required: "Pls enter swap amount",
-                        },
-                        swapToNetwork: {
-                            required: "Pls select a network to swap to",
-                        },
-                        swapToPhone: {
-                            required: "Pls enter phone number to swap airtime to.",
-                        }
-                    }
-                });
 
+                let validateAirtimeSwap = (limit) => {
+                    $('#airtime-swap-form').validate({
+                        rules: {
+                            network: {required : true },
+                            swapFromPhone: { required : true, number : true, minlength:10, maxlength:13 },
+                            amount: { required : true, number : true , range : limit },
+                            swapToNetwork: { required : true },
+                            swapToPhone: { required: true, number : true, minlength:10, maxlength:13}
+                        },
+                        messages: {
+                            network: {
+                                required: "Please select a network to swap from.",
+                            },
+                            swapFromPhone: {
+                                required: "Please enter phone number to swap airtime from.",
+                                number:  "Valid phone numbers only ",
+                                minlength: jQuery.validator.format("Minimum of {0} characters required."),
+                                maxlength: jQuery.validator.format("Maximum {0} characters."),
+                            },
+                            amount: {
+                                required: "Please enter swap amount",
+                                number : "Invalid swap amount",
+                                range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),
+                            },
+                            swapToNetwork: {
+                                required: "Please select a network to swap to",
+                            },
+                            swapToPhone: {
+                                required: "Please enter phone number to swap airtime to.",
+                                number:  "Valid phone numbers only ",
+                                minlength: jQuery.validator.format("Minimum of {0} characters required."),
+                                maxlength: jQuery.validator.format("Maximum {0} characters."),
+                            }
+                        }
+                    });
+                }
+
+                validateAirtimeSwapDefault();
             });
 
         </script>
