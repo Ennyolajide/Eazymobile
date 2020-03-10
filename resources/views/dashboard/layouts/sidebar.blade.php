@@ -23,6 +23,7 @@
             <li><a href="{{ route('admin.transactions') }}"><i class="fa fa-gears"></i> <span>Transactions</span></a></li>
             <li><a href="{{ route('admin.airtimes') }}"><i class="fa fa-gear"></i> <span>Airtimes</span></a></li>
             <li><a href="{{ route('admin.datas') }}"><i class="fa fa-gear"></i> <span>Data</span></a></li>
+            <li><a href="{{ route('admin.vouchers') }}"><i class="fa fa-gear"></i> <span>Vouchers</span></a></li>
             <li><a href="{{ route('admin.fundings') }}"><i class="fa fa-gear"></i> <span>Fundings</span></a></li>
             <li><a href="{{ route('admin.bitcoins') }}"><i class="glyphicon glyphicon-bitcoin"></i> <span>Bitcoins</span></a></li>
             <li><a href="{{ route('admin.withdrawals') }}"><i class="fa fa-gear"></i> <span>Withdrawals</span></a></li>

@@ -18,7 +18,7 @@ class User
     {
         $roles = ['customer'];
 
-        if (!in_array(Auth::user()->role, $roles)) {
+        if (!in_array(Auth::user()->role, $roles) || !isset(Auth::user()->id))  {
             return redirect()->route('user.logout');
         }
         return $next($request);

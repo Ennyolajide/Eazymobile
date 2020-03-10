@@ -53,6 +53,7 @@ class LoginController extends Controller
             return $token ? response()->json($token, 201) : redirect('/dashboard');
         } else {
             $user = User::where('email', request()->email)->first();
+
             $response = $user->active ?
             ($user->blocked ? $blokedResponse : 'Invalid Username/Password')
             : ($user->blocked ? $blokedResponse : $inactiveResponse);

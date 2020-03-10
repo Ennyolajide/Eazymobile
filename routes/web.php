@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +17,6 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 */
-
 
 
 Route::get('/', 'HomeController@index')->name('index');
@@ -220,6 +221,11 @@ Route::namespace('Control')->middleware('admin')->group(function () {
     Route::get('settings/coins/config', 'BitcoinsController@settings')->name('admin.coins.config');
     Route::patch('settings/coins/{coin}/edit', 'BitcoinsController@editCoinsConfig')->name('admin.coins.config.edit');
 
+
+    //Vouchers
+    Route::get('control/vouchers', 'VouchersController@show')->name('admin.vouchers');
+    Route::get('control/voucher', 'VouchersController@voucher')->name('admin.voucher.view');
+    Route::post('control/voucher/generate', 'VouchersController@generate')->name('admin.voucher.generate');
 
     //Banks
     //Route::get('settings/banks', 'BanksController@bankSettings')->name('admin.banks'); // not in use

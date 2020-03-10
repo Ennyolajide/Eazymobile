@@ -18,7 +18,7 @@ return [
 
         'telegram' => 'https://t.me/eazymobilenig',
         'address' => 'SHOP 15, OFF GTBANK, <br/>OFF ALABATA ROAD, FUNAAB ABEOKUTA',
-        'twitter' => 'https://www.t.me/eazymobilenig',
+        'twitter' => 'https://twitter.com/eazymobilenig',
         'facebook' => 'https://facebook.com/eazymobilenig',
         'instagram' => 'https://instagram.com/eazymobilenig',
         'google' => '#',

@@ -15,9 +15,9 @@ class VoucherController extends TransactionController
     protected function recordAndMarkVoucherAsUsed($voucherRecord)
     {
         $reference = $this->getUniqueReference();
-        $updated = $voucherRecord->update(['status' => false, 'class' => 'App\Vouchers','user_id' => Auth::user()->id]);
+        $updated = $voucherRecord->update(['status' => false, 'class' => 'App\Voucher','user_id' => Auth::user()->id]);
 
-        return $updated ? $this->recordTransaction($voucherRecord, $reference, false, false, 'Voucher', true) : false;
+        return $updated ? $this->recordTransaction($voucherRecord, $reference, true, false, 'Voucher', true) : false;
     }
 
 
@@ -31,13 +31,13 @@ class VoucherController extends TransactionController
         if (empty($voucher) || !$voucher->user_id || $voucher->status) {
             //mark Voucher as used to prevent multiple usage
             $marked = $this->recordAndMarkVoucherAsUsed($voucher);
-            $status = $marked ? $this->creditWallet($voucher->value) : false;
+            $status = $marked ? $this->creditWallet($voucher->amount) : false;
             $status ? $this->notify($this->voucherWalletFundingNotification($voucher)) : false;
             $message = $status ? $this->successResponse : $this->failureResponse;
 
             return back()->withNotification($this->clientNotify($message, $status));
         }else{
-            return back()->withNotification($this->clientNotify($this->$failureResponse, false));
+            return back()->withNotification($this->clientNotify($this->failureResponse, false));
         }
 
     }
