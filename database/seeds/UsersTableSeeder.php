@@ -18,10 +18,10 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin',
             'permission' => true,
             'active' => true,
-            'number' => '09066685702',
+            'number' => '09021666608',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'wallet_id' => 'MODELC',
+            'wallet_id' => 'EAZYMOBILE',
         ]);
 
         DB::table('users')->insert([
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
             'number' => '07063637002',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'wallet_id' => strtoupper(Str::random('2')) . rand(1, 100) . strtoupper(Str::random(2)),
+            'wallet_id' => 'OLAJIDE',
         ]);
 
         DB::table('users')->insert([
