@@ -56,8 +56,8 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-sm-2 col-xs-12 control-label" >Network</label>
-                                                <div class="col-sm-10 col-xs-12">
+                                                <label class="col-sm-3 col-xs-12 control-label" >Network</label>
+                                                <div class="col-sm-9 col-xs-12 form-grouping">
                                                     <div id="swap-from-network" data-networks="{{ $networks }}">
                                                         <select class="form-control" name="network" id="network">
                                                             <option value="" disabled selected>Choose Network</option>
@@ -72,30 +72,30 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-sm-2 col-xs-12 control-label">Phone Number</label>
-                                                <div class="col-sm-10 col-xs-12 form-grouping">
+                                                <label class="col-sm-3 col-xs-12 control-label">Phone Number</label>
+                                                <div class="col-sm-9 col-xs-12 form-grouping">
                                                     <input type="text" class="form-control" name="swapFromPhone">
                                                     <p class="help-block">The phone number you want to transfer airtime from</p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-sm-2 col-xs-12 control-label">Amount</label>
-                                                <div class="col-sm-10 col-xs-12 form-grouping">
-                                                    <input type="text" id="amount" class="form-control" name="amount" disabled="true">
+                                                <label class="col-sm-3 col-xs-12 control-label">Amount</label>
+                                                <div class="col-sm-9 col-xs-12 form-grouping">
+                                                    <input type="text" id="amount" class="form-control" name="amount" placeholder="Enter amount you want to fund" disabled="true">
                                                     <label id="amount-info" style="font-size:15px; display:none;" class="text-primary" for="amount"></label>
                                                     <!--p class="help-block">Enter amount you want to fund.</p-->
                                                 </div>
                                             </div>
                                             <div id="wallet-amount" class="form-group" style="display:none;">
-                                                <label class="col-sm-2 col-xs-12 control-label">Amount To Wallet</label>
-                                                <div class="col-sm-10 col-xs-12 form-grouping">
+                                                <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
+                                                <div class="col-sm-9 col-xs-12 form-grouping">
                                                     <input type="text" class="form-control" disabled="true">
                                                 </div>
                                             </div>
                                             <br/>
                                             <div class="form-group">
-                                                <label class="col-sm-2 col-xs-12 control-label" ></label>
-                                                <div class="col-sm-10 col-xs-12">
+                                                <label class="col-sm-3 col-xs-12 control-label" ></label>
+                                                <div class="col-sm-9 col-xs-12">
                                                     <button class="btn btn-rounded btn-success button-prevent-multiple-submits pull-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                                 </div>
                                             </div>
@@ -205,8 +205,14 @@
                     let returnAmount = networks[(network-1)].airtime_to_cash_percentage / 100 * amount;
                     amount.length > 2 ? $('#wallet-amount').show().find('input').val(returnAmount) : false;
                     amount.length > 2 ? $('.bank').show() : false;
-
                 });
+
+                let validateAirtimeToCashDefault = () => {
+                    $('#airtime-to-cash-form').validate({
+                        rules: { network: {required : true },},
+                        messages: { network: { required: "Please select a network to swap from."} },
+                    });
+                }
 
                 let validateAirtimeToCash = (limit) => {
                     console.log(limit);
@@ -234,6 +240,8 @@
                         }
                     });
                 }
+
+                validateAirtimeToCashDefault();
 
             });
 

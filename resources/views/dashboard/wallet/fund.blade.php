@@ -58,8 +58,9 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                        <p class="help-block text-olive">Select your desired payment method</p>
                                                     </div>
-                                                    <br/>
+
                                                 </div>
                                                 <input type="hidden" name="email" value="{{ Auth::user()->email }}">
                                             </div>

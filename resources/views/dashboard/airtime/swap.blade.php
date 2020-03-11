@@ -81,8 +81,9 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Amount</label>
                                                 <div class="col-sm-10 form-grouping">
-                                                    <input type="text" id="amount" class="form-control" name="amount" disabled="true">
-                                                    <p class="help-block">Enter amount you want to fund.</p>
+                                                    <input type="text" id="amount" class="form-control" name="amount" placeholder="Enter amount you want to fund" disabled="true">
+                                                    <!--p class="help-block">Enter amount you want to fund.</p-->
+                                                    <label id="amount-info" style="font-size:15px; display:none;" class="text-primary" for="amount"></label>
                                                 </div>
                                             </div>
                                             <div id="wallet-amount" class="form-group" style="display:none;">
@@ -221,6 +222,7 @@
                     let fromNetworkName = fromNetwork.network.toLowerCase();
                     validateAirtimeSwap([fromNetwork.airtime_to_cash_min, fromNetwork.airtime_to_cash_max]);
                     $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetworkName+'.png');
+                    $('#amount-info').text(`Minimum of ₦${fromNetwork.airtime_to_cash_min}, Maximum of ₦${fromNetwork.airtime_to_cash_max} for ${fromNetwork.network} to other networks`).show();
                     $.each(networks,function(i, val){
                         $('#swapToNetwork').append('<option class="networkList">'+val.network+'</option>');
                     });
