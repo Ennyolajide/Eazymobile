@@ -8,6 +8,12 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
     @endSection
 
+    <style>
+        .margin-top-negavtive-20{
+            margin-top: -20px !important;
+        }
+    </style>
+
     @section('header')
         <!-- Topbar -->
             <div class="topbar">
@@ -75,12 +81,69 @@
 
     @section('slider')
         <!-- Banner/Slider -->
-        <div id="header" class="banner header-slider">
-            <div class="single-slide light row-vm" style="background-image:url('\home/images/sliders/bg-a.jpg')">
-                <div class="container">
-                    <div class="banner-content">
+            <div id="myCarousel"  class="slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+              </ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+
+                <div class="item active">
+                  <img src="\home/images/sliders/bg-a.jpg" alt="Los Angeles" style="width:100%;">
+                  <div class="carousel-caption">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 text-center">
+                            <ul class="btns animate-bottom delayms9">
+                                <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
+                                <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <img src="\home/images/sliders/bg-b.jpg" alt="Chicago" style="width:100%;">
+                  <div class="carousel-caption">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
+                            <ul class="btns animate-bottom delayms9">
+                                <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
+                                <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <br/>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="item">
+                  <img src="\home/images/sliders/bg-c.jpg" alt="New York" style="width:100%;">
+                  <div class="carousel-caption">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
+                            <ul class="btns animate-bottom delayms9">
+                                <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
+                                <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                    <img src="\home/images/sliders/bg-d.jpg" alt="New York" style="width:100%;">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-3 text-center">
+                            <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
                                 <ul class="btns animate-bottom delayms9">
                                     <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
                                     <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
@@ -89,12 +152,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="single-slide light row-vm" style="background-image:url('\home/images/sliders/bg-b.jpg')">
-                <div class="container">
-                    <div class="banner-content">
+                <div class="item">
+                    <img src="\home/images/sliders/bg-e.jpg" alt="New York" style="width:100%;">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-3 text-center">
+                            <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
                                 <ul class="btns animate-bottom delayms9">
                                     <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
                                     <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
@@ -103,50 +165,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="single-slide light row-vm" style="background-image:url('\home/images/sliders/bg-c.jpg')">
-                <div class="container">
-                    <div class="banner-content">
+                <div class="item">
+                    <img src="\home/images/sliders/bg-f.jpg" alt="New York" style="width:100%;">
+                    <div class="carousel-caption">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-3 text-center">
+                            <div class="col-md-6 col-md-offset-3 text-center margin-top-negavtive-20">
                                 <ul class="btns animate-bottom delayms9">
                                     <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
-                                    <li><a href="{{ route('user.register') }}" class="btn btn-success"><strong>Login</strong></a></li>
+                                    <li><a href="{{ route('user.login') }}" class="btn btn-success"><strong>Login</strong></a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+              </div>
+
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="fa fa-arrow-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="fa fa-arror-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
             </div>
-            <div class="single-slide light row-vm" style="background-image:url('\home/images/sliders/bg-d.jpg')">
-                <div class="container">
-                    <div class="banner-content">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 text-center">
-                                <ul class="btns animate-bottom delayms9">
-                                    <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
-                                    <li><a href="{{ route('user.register') }}" class="btn btn-success"><strong>Login</strong></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="single-slide light row-vm" style="background-image:url('\home/images/sliders/bg-e.jpg')">
-                <div class="container">
-                    <div class="banner-content">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 text-center">
-                                <ul class="btns animate-bottom delayms9">
-                                    <li><a href="{{ route('user.register') }}" class="btn btn-primary">Get Started</a></li>
-                                    <li><a href="{{ route('user.register') }}" class="btn btn-sucess"><strong>Login</strong></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- End Banner/Slider -->
     @endsection
 
@@ -395,7 +440,7 @@
                         <div class="col-md-12 col-sm-12">
                             <h2 class="heading-section text-center">About Us</h2>
                             <p>{{ config('constants.site.name') }} is a subsidiary of EAZY GLOBAL SOLUTIONS (RC 3062123). This facet of the network deals with Telecom Needs.</p>
-                            <p>ey differentiator is our customer satisfaction and intimacy positioning.</p>
+                            <p>Our key differentiator is our customer satisfaction and intimacy positioning.</p>
                             <p>We strongly believe that you DO NOT need our services just for mobile needs but to get satisfaction</p>
                             <p>We take our work seriously and not ourselves because we are not the service but just a medium.</p>
                             <p>To fulfill our role, we work to make the accessibility, usability and renewability of our service as simple as ABC.</p>

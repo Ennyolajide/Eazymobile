@@ -20,7 +20,7 @@ class AirtimeSwapController extends TransactionController
 
     public function index()
     {
-        $networks = AirtimePercentage::where('airtime_to_cash_percentage_status', true)->whereAddon(false)->get();
+        $networks = AirtimePercentage::where('airtime_swap_percentage_status', true)->whereAddon(false)->get();
 
         return view('dashboard.airtime.swap', compact('networks'));
     }
@@ -30,15 +30,20 @@ class AirtimeSwapController extends TransactionController
      */
     public function store()
     {
+        $network = AirtimePercentage::whereId(request()->network)
+                    ->where('airtime_swap_percentage_status', true)->first();
+
         $this->validate(request(), [
-            'amount'  => 'required|numeric',
-            'network' => 'required|numeric',
             'swapToNetwork' => 'required|string',
             'swapToPhone' => 'required|string|min:10|max:13',
             'swapFromPhone' => 'required|string|min:10|max:13',
+            'network' => ['bail', 'required', 'numeric', function ($attribute, $value, $fail) use ($network) {
+                $network ? false : $fail('Network not available at the moment');
+            }],
+            'amount'  => $network ? 'required|numeric|min:' . $network->airtime_to_cash_min . '|max:' . $network->airtime_to_cash_max : '',
         ]);
 
-        $status = $this->processAirtimeSwap() ? true : false;
+        $status =  $this->processAirtimeSwap($network) ? true : false;
 
         return $status ? back()->withModal($this->modalResponse) : back()->withNotification($this->clientNotify($this->failureResponse, $status));
     }
@@ -46,10 +51,8 @@ class AirtimeSwapController extends TransactionController
     /**
      * Record Transaction
      */
-    protected function processAirtimeSwap()
+    protected function processAirtimeSwap($network)
     {
-        $network = AirtimePercentage::find(request()->network);
-
         $status = $network ? $this->airtimeSwap($network) : false;
 
         return $status;

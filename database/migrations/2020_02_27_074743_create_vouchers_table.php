@@ -15,11 +15,11 @@ class CreateVouchersTable extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('voucher');
+            $table->string('voucher')->unique();
             $table->unsignedInteger('amount');
             $table->unsignedInteger('user_id')->nullable();
-            $table->string('class')->default('App\Voucher');
-            $table->string('type')->default('Vouchers');
+            $table->string('class')->default('App\Vouchers');
+            $table->string('type')->default('Voucher Funding');
             $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });

@@ -25,7 +25,7 @@
         <meta name="theme-color" content="#159fff">
         <!-- /Fav Icon  -->
 		<!-- Site Title  -->
-		<title>{{ config('constants.site.name') }} - Bitcoin Crypto Currency Wallet and Mining Template</title>
+		<title>{{ config('constants.site.name') }} - {{ config('constants.site.description') }}</title>
 		<!-- Vendor Bundle CSS -->
 		<link rel="stylesheet" href="\home/assets/css/vendor.bundle.css" >
 		<!-- Custom styles for this template -->

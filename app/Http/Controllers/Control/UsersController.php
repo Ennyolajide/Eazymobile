@@ -71,12 +71,4 @@ class UsersController extends ModController
         return back()->withNotification($this->clientNotify($message, $status));
     }
 
-    public function edit(RingoSubProductList $subProduct)
-    {
-        $this->validate(request(), ['amount' => 'required|numeric|min:1']);
-        $status = $subProduct->update(['selling_price' => request()->amount]);
-        $message = $status ? $this->successResponse : $this->failureResponse;
-
-        return back()->withNotification($this->clientNotify($message, $status));
-    }
 }
