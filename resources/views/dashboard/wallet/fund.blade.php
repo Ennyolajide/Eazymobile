@@ -41,7 +41,7 @@
                                         @include('dashboard.layouts.errors')
                                         <form id="fund-wallet-form" class="form-horizontal" method="post">
                                             @csrf
-                                            <div class="bitcoin-components" style="display:none;">
+                                            <div class="bitcoin-components bit-components" style="display:none;">
                                                 <p class="h4 text-danger text-center">$1 = @naira($bitcoinRate)</p>
                                                 <input type="hidden" name="funding">
                                             </div>
@@ -128,7 +128,7 @@
 
                                             <div id="airtime-form" style="display:none;">
                                                 <div class="form-group">
-                                                    <label class="col-sm-3 col-xs-12 control-label" >Network</label>
+                                                    <label class="col-sm-3 col-xs-12 control-label">Network</label>
                                                     <div class="col-sm-9 col-xs-12">
                                                         <div id="percentages" data-networks="{{ $networks }}" class="form-grouping">
                                                             <select class="form-control" name="network" id="network">
@@ -166,7 +166,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="bitcoin-component" style="display:none;">
+                                            <div id="bitcoin-component" class="bit-components" style="display:none;">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 col-xs-12 control-label">Amount To Wallet</label>
                                                     <div class="col-sm-9 col-xs-12 form-grouping">
@@ -188,7 +188,7 @@
 
 
                                             <div class="form-group">
-                                                <div class="col-sm-6 col-sm-offset-3 bitcoin-components" style="display:none;">
+                                                <div class="col-sm-6 col-sm-offset-3 bitcoin-components bit-components" style="display:none;">
                                                     <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="img-responsive hidden-xs" width="270" height="90">
                                                 </div>
                                                 <div class="col-sm-3 col-xs-12 pull-right">
@@ -196,7 +196,7 @@
                                                     <button id="submit" class="btn btn-success btn-rounded pull-right">Continue</button>
                                                 </div>
                                                 <br/>
-                                                <div class="col-sm-12 col-xs-12 bitcoin-components" style="display:none;">
+                                                <div class="col-sm-12 col-xs-12 bitcoin-components bit-components" style="display:none;">
                                                     <img src="https://www.coinpayments.net/images/pub/buynow-grey.png" class="mx-auto visible-xs" width="270" height="90">
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@
     @endSection
 
     @if(session('modal'))
-    <!-- Modal -->
+        <!-- Modal -->
         @if(session('modal')->name == 'AirtimeFunding')
             <!-- AirtimeToWallet-Modal -->
             @php $imgSrc = "\images/networks/".session('modal')->swapFromNetwork.".png"; @endphp
@@ -358,10 +358,11 @@
                         $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
                         limit = validateCardFunding([{{ config('constants.fundings.paystack.min') }},{{ config('constants.fundings.paystack.max') }}]);
                     }else if(gateway == 2){
-                        $('#atm-component,#ecard-form,#airtime-form,bitcoin-component,.bitcoin-components').hide();
-                        $('#fund-wallet-form').validate().destroy();
-                        limit = validateBankTransfer([1000, 50000]);
-                        $('#atmBankBitcoin-form,#amount-field,#bank-transfer').show();
+                        validateBankTransfer([1000, 50000]);
+                        $('#amount-field').removeAttr('value');
+                        $('#atmBankBitcoin-form,#bank-transfer').show();
+                        $('#atm-component,#ecard-form,#airtime-form,.bit-components').hide();
+                        $('#amount-field').find('input').keyup(() => validateBankTransfer([1000, 50000]));
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}').attr('novalidate',true);
                     }else if(gateway == 3){//airtime
                         $('#fund-wallet-form').attr('action',"{{ route('wallet.fund.airtime') }}");
@@ -448,6 +449,8 @@
             }
 
             let validateBankTransfer = (limit) => {
+                $('.bit-components').hide();
+                $('#fund-wallet-form').validate().destroy();
                 $('#fund-wallet-form').validate({
                     rules: { amount: { required: true, range: limit } },
                     messages: { amount: { required: "Please enter amount.", range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),}}
