@@ -24,18 +24,23 @@ class VoucherController extends TransactionController
     public function store()
     {
         //validate post data
-        $this->validate(request(), ['voucher' => 'required|min:16|max:20']);
+        $this->validate(request(), ['voucher' => 'required|digits_between:15,20']);
 
         $voucher = Voucher::whereVoucher(request()->voucher)->first();
-        //check if the voucher is valid and it has not been used
-        if (empty($voucher) || !$voucher->user_id || $voucher->status) {
-            //mark Voucher as used to prevent multiple usage
-            $marked = $this->recordAndMarkVoucherAsUsed($voucher);
-            $status = $marked ? $this->creditWallet($voucher->amount) : false;
-            $status ? $this->notify($this->voucherWalletFundingNotification($voucher)) : false;
-            $message = $status ? $this->successResponse : $this->failureResponse;
+        //dd($voucher);
+        if(!is_null($voucher)){
+            //check if the voucher is valid and it has not been used
+            if (!$voucher->user_id || $voucher->status) {
+                //mark Voucher as used to prevent multiple usage
+                $marked = $this->recordAndMarkVoucherAsUsed($voucher);
+                $status = $marked ? $this->creditWallet($voucher->amount) : false;
+                $status ? $this->notify($this->voucherWalletFundingNotification($voucher)) : false;
+                $message = $status ? $this->successResponse : $this->failureResponse;
 
-            return back()->withNotification($this->clientNotify($message, $status));
+                return back()->withNotification($this->clientNotify($message, $status));
+            }else{
+                return back()->withNotification($this->clientNotify($this->failureResponse, false));
+            }
         }else{
             return back()->withNotification($this->clientNotify($this->failureResponse, false));
         }

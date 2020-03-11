@@ -476,10 +476,11 @@
 
             let validateVoucherFunding = ([]) => {
                 $('#fund-wallet-form').validate({
-                    rules: { voucher: { required: true, minlength: 16, maxlength: 20 } },
+                    rules: { voucher: { required: true, number: true, minlength: 16, maxlength: 20 } },
                     messages: {
                         voucher: {
-                            required: "Please enter the Voucher pin.",
+                            required: "Please enter the voucher pin.",
+                            number:  "Please enter a valid voucher pin.",
                             minlength: jQuery.validator.format("Minimum of {0} characters required."),
                             maxlength: jQuery.validator.format("Maximum {0} characters.")
                         }
