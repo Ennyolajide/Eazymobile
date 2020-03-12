@@ -24,7 +24,7 @@
                             <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.voucher.view') }}" class="btn btn-flat btn-info pull-right">Generate New</a></span></h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>

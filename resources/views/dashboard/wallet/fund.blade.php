@@ -360,7 +360,7 @@
                     }else if(gateway == 2){
                         validateBankTransfer([1000, 50000]);
                         $('#amount-field').removeAttr('value');
-                        $('#atmBankBitcoin-form,#bank-transfer').show();
+                        $('#amount-field,#atmBankBitcoin-form,#bank-transfer').show();
                         $('#atm-component,#ecard-form,#airtime-form,.bit-components').hide();
                         $('#amount-field').find('input').keyup(() => validateBankTransfer([1000, 50000]));
                         $('#fund-wallet-form').attr('action','{{ route("wallet.fund.bank") }}').attr('novalidate',true);
