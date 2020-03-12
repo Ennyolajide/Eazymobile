@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArtisanController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,7 +20,6 @@ Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 */
 
-
 Route::get('/', 'HomeController@index')->name('index');
 
 Route::get('/faq', 'HomeController@faq')->name('faq');
@@ -32,9 +33,15 @@ Route::get('/users/login', 'LoginController@index')->name('user.login');
 Route::post('/users/login', 'LoginController@login')->name('user.login');
 Route::get('/users/logout', 'LoginController@logout')->name('user.logout');
 
+//Artisan Comand
+Route::get('/app/artisan/recache', 'ArtisanController@recache')->name('artisan.recache');
+
+
 //Registration
 Route::get('/register/{referrer?}', 'RegisterController@index')->name('user.register');
 Route::post('/register/create', 'RegisterController@register')->name('user.register.create');
+
+
 
 //Socialite
 Route::get('/users/facebook/redirect', 'SocialAuthFacebookController@redirect')->name('facebook.login');
@@ -237,4 +244,5 @@ Route::namespace('Control')->middleware('admin')->group(function () {
     Route::get('control/users/search', 'UsersController@searchIndex')->name('admin.user.search.index');
     Route::patch('control/user/{user}', 'UsersController@setUserStatus')->name('admin.toggle.user.status');
     Route::patch('control/user/balance/{user}/alter', 'UsersController@alterUserBalance')->name('admin.alter.user.balance');
+
 });
