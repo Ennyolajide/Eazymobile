@@ -39,10 +39,10 @@ class LoginController extends Controller
 
         //create user date for authentication
         $userData = [
+            'active'    => true,
+            'blocked'   => false,
             'email'     => request()->email,
             'password'  => request()->password,
-            'active'    => true,
-            'blocked'   => false
         ];
 
         if (Auth::attempt($userData, request()->has('remember'))) {
