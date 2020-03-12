@@ -352,11 +352,11 @@
                     let limit;
                     console.log(gateway);
                     if(gateway == 1){
-                        $('#fund-wallet-form').validate().destroy();
+                        validateCardFunding();
                         $('#atmBankBitcoin-form,#amount-field,#atm-component').show();
                         $('#ecard-form,#airtime-form,#bank-transfer,#bitcoin-component,.bitcoin-components').hide();
                         $('#fund-wallet-form').attr('action','{{ route("paystack.pay") }}');
-                        limit = validateCardFunding([{{ config('constants.fundings.paystack.min') }},{{ config('constants.fundings.paystack.max') }}]);
+                        $('#amount-field').find('input').keyup(() => validateCardFunding() );
                     }else if(gateway == 2){
                         validateBankTransfer([1000, 50000]);
                         $('#amount-field').removeAttr('value');
@@ -458,10 +458,13 @@
                 return limit
             }
 
-            let validateCardFunding = (limit) => {
+            let validateCardFunding = () => {
+                $('#fund-wallet-form').validate().destroy();
+                limit = [{{ config('constants.fundings.paystack.min') }},{{ config('constants.fundings.paystack.max') }}];
+                console.log(limit);
                 $('#fund-wallet-form').validate({
-                    rules: { amount: { required: true, range: limit } },
-                    messages: { amount: { required: "Please enter amount.", range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),}}
+                    rules: { amount: { required: true, number: true, range: limit } },
+                    messages: { amount: { required: "Please enter amount.", number: "Please enter a vailid amount.", range: jQuery.validator.format("Minimum of ₦{0} Maximum of ₦{1}"),}}
                 });
                 return limit
             }
