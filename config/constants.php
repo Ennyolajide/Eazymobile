@@ -49,8 +49,8 @@ return [
 
     'fundings' => [
         'paystack' => [
-            'min' =>  100,
-            'max' =>  50000,
+            'min' =>  500,
+            'max' =>  3000,
         ]
     ],
 
@@ -88,7 +88,7 @@ return [
         'paystack' => [
             'cappedCharge' => 2000,
             'addtionalCharge' => 100,
-            'chargePercentage' => 1.5,
+            'chargePercentage' => 0,
         ],
     ],
 
