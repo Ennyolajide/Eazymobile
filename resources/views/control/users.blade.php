@@ -24,11 +24,11 @@
                             <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.user.search.index') }}" class="btn btn-flat btn-info pull-right">Search</a></span></h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th class="hidden-xs">#</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>

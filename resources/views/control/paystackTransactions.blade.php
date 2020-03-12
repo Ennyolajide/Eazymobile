@@ -23,7 +23,7 @@
                             <h3 class="box-title">Data Transactions</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <br/>
                             <form action="{{ route('paystack.transaction.query') }}" method="POST">
                                 @csrf

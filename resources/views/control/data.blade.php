@@ -25,7 +25,7 @@
                             <h3 class="box-title">Data Setings</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             @include('dashboard.layouts.errors')
                             <table class="table table-striped table-hover table-bordered table-responsive">
                                 <tbody>
@@ -79,7 +79,7 @@
                             <h3 class="box-title">Data Setings</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table class="table table-striped table-hover table-bordered table-responsive">
                                 <thead class="bg-blue">
                                     <tr>

@@ -25,7 +25,7 @@
                             <h3 class="box-title">Bulk Sms Settings</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table class="table table-striped table-hover table-bordered table-responsive">
                                 <thead class="bg-blue">
                                     <tr>
@@ -62,7 +62,7 @@
                             <h3 class="box-title">Service Charges Setings</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             @include('dashboard.layouts.errors')
                             <table class="table table-striped table-hover table-bordered table-responsive">
                                 <thead class="bg-blue">

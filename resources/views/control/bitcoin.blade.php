@@ -25,9 +25,9 @@
                             <h3 class="box-title">Bitcoin Settings</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             @include('dashboard.layouts.errors')
-                            <table class="table table-striped table-hover table-bordered table-responsive">
+                            <table class="table table-striped table-hover table-bordered">
                                 <thead class="bg-blue">
                                     <tr>
                                         <th>id</th>

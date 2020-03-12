@@ -24,7 +24,7 @@
                             <span class="pull-right"> &nbsp;&nbsp;&nbsp;<a href="{{ route('admin.transaction.search.index') }}" class="btn btn-flat btn-info pull-right">Search</a></span></h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table class="table table-small-font table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>

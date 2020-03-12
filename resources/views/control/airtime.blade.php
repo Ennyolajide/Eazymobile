@@ -26,7 +26,7 @@
                             <div class="row">
                                 @include('dashboard.layouts.errors')
                                 <!-- /.box-header -->
-                                <div class="box-body">
+                                <div class="box-body table-responsive">
                                     <table class="table table-small-fonttable-bordered table-striped">
                                         <thead class="bg-blue">
                                             <tr>

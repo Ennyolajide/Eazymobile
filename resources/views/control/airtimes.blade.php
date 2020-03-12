@@ -23,7 +23,7 @@
                             <h3 class="box-title">Airtime Topup Transaction</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body">
+                        <div class="box-body table-responsive">
                             <table id="transactions-table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
