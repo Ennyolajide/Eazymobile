@@ -54,7 +54,7 @@
                                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="email" value="{{ Auth::user()->name }}" disabled >
+                                            <input type="email" class="form-control" id="email" value="{{ Auth::user()->email }}" disabled >
                                         </div>
                                     </div>
                                     <br/>
