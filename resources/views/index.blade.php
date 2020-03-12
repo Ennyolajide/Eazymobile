@@ -416,7 +416,7 @@
                                     </h1>
                                     <ul>
                                         @foreach ($networks as $plan)
-                                            @if($loop->iteration == 8) @continue @endif
+                                            @if($loop->iteration > 8) @continue @endif
                                             <li><strong>{{ $plan->volume }} - @naira($plan->amount)</strong></li>
                                         @endforeach
                                     </ul>
