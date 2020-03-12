@@ -407,7 +407,7 @@
                     @foreach ($dataPlans as $networks)
 
                         @if($loop->iteration > 4 ) @continue @endif
-                        <div class="col-xs-6 col-sm-6 col-md-3 res-m-bttm">
+                        <div class="col-md-3 col-sm-6 col-xs-12 res-m-bttm">
                             <div class="block block-pricing">
                                 <div class="table table-{{ strtolower($networks[0]->network) }}">
                                     <h6 class="category"></h6>
@@ -416,6 +416,7 @@
                                     </h1>
                                     <ul>
                                         @foreach ($networks as $plan)
+                                            @if($loop->iteration == 8) @continue @endif
                                             <li><strong>{{ $plan->volume }} - @naira($plan->amount)</strong></li>
                                         @endforeach
                                     </ul>

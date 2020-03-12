@@ -31,8 +31,8 @@
 
                             <form action="{{ route('admin.toggle.user.status',['user' => $user->id]) }}" method="post">
                                 @method('patch') @csrf
-                                <input type="hidden" name="action" value="{{ $user->active ? 0 : 1 }}">
-                                <button class="btn {{ $user->active ? 'btn-danger' : 'btn-success' }}"><i class="fa fa-edit m-right-xs"></i>{{ $user->active ? 'Block User' : 'Unblock User' }}</button>
+                                <input type="hidden" name="blocked" value="{{ $user->blocked ? 0 : 1 }}">
+                                <button class="btn {{ !$user->blocked ? 'btn-danger' : 'btn-success' }}"><i class="fa fa-edit m-right-xs"></i>{{ !$user->blocked ? 'Block User' : 'Unblock User' }}</button>
                             </form>
                             <br />
                         </div>

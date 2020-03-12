@@ -46,8 +46,8 @@ class UsersController extends ModController
      */
     public function setUserStatus(User $user)
     {
-        $this->validate(request(), ['action' => 'required|boolean']);
-        $status = $user->update(['active' => request()->action]);
+        $this->validate(request(), ['blocked' => 'required|boolean']);
+        $status = $user->update(['blocked' => request()->blocked]);
         $message = $status ? $this->successResponse : $this->failureResponse;
 
         return back()->withNotification($this->clientNotify($message, $status));
