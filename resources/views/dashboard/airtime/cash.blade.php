@@ -192,7 +192,7 @@
                     let networks = @json($networks);
                     network = networks.splice((network-1),1)[0];
                     let fromNetwork = network.network.toLowerCase();
-                    validateAirtimeToCash(['{{ $network->airtime_to_cash_min }}' , '{{ $network->airtime_to_cash_min }}']);
+                    validateAirtimeToCash([ network.airtime_to_cash_min ,network.airtime_to_cash_max]);
                     $('.swap-from-network-image').show().find('img').attr('src', '/images/networks/'+fromNetwork+'.png');
                     $('#amount-info').text(`Minimum of ₦${network.airtime_to_cash_min}, Maximum of ₦${network.airtime_to_cash_max} for ${network.network}`).show();
                     //$('#swapToNetworkImage').show().find('img').attr('src', '/images/networks/'+networkImage+'.png');
@@ -215,7 +215,7 @@
                 }
 
                 let validateAirtimeToCash = (limit) => {
-                    console.log(limit);
+                    $('#airtime-to-cash-form').validate().destroy();
                     $('#airtime-to-cash-form').validate({
                         rules: {
                             network: {required : true },
